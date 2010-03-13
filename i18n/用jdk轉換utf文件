@@ -1,0 +1,6 @@
+
+native2ascii -encoding UTF-8 labels Labels_zh_TW.properties
+
+native2ascii -reverse  Labels_zh_TW.properties labels
+
+

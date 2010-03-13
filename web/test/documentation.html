@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="overflow: hidden; height: 100%;"><head>
+
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<title>UI.Layout Plug-in - Documentation</title>
+
+	<link rel="stylesheet" href="documentation_files/global.css" type="text/css">
+	<link rel="stylesheet" href="documentation_files/documentation.css" type="text/css">
+	<!--[if lte IE 7]>
+		<style type="text/css"> body { font-size: 85%; } </style>
+	<![endif]-->
+
+	<!-- REQUIRED scripts for layout widget -->
+	<script type="text/javascript" src="documentation_files/jquery-1.js"></script>
+	<script type="text/javascript" src="documentation_files/jquery-ui-1.js"></script>
+	<script type="text/javascript" src="documentation_files/jquery.js"></script>
+	<script type="text/javascript" src="documentation_files/global.js"></script>
+
+	<script type="text/javascript">
+	var pageLayout;
+
+	$(document).ready(function(){
+		// create page layout
+		pageLayout = $('body').layout({
+			scrollToBookmarkOnLoad:		false // handled by custom code so can 'unhide' section first
+		,	defaults: {
+			}
+		,	north: {
+				size:					"auto"
+			,	spacing_open:			0
+			,	closable:				false
+			,	resizable:				false
+			}
+		,	west: {
+				size:					250
+			,	spacing_closed:			22
+			,	togglerLength_closed:	140
+			,	togglerAlign_closed:	"top"
+			,	togglerContent_closed:	"C<BR>o<BR>n<BR>t<BR>e<BR>n<BR>t<BR>s"
+			,	togglerTip_closed:		"Open & Pin Contents"
+			,	sliderTip:				"Slide Open Contents"
+			,	slideTrigger_open:		"mouseover"
+			}
+		});
+
+		// goto bookmark after creating the layout
+		scrollToBookmark( self.location.hash );
+
+	});
+	</script>
+
+</head><body style="border: medium none ; margin: 0px; padding: 0px; overflow: hidden; position: relative; height: 100%;">
+
+
+
+
+<div style="margin: 0px; position: absolute; left: 22px; right: 0px; top: 86px; bottom: 0px; height: 416px; width: 1191px; z-index: 1; visibility: visible; display: block;" class="ui-layout-center content ui-layout-pane ui-layout-pane-center">
+
+主頁面
+
+</div>
+
+<!--
+	=======================
+	*	TABLE OF CONTENTS  *
+	=======================
+-->
+<div class="ui-layout-west ui-layout-pane ui-layout-pane-west" style="margin: 0px; position: absolute; left: 0px; right: auto; top: 86px; bottom: 0px; height: 479px; z-index: 1; visibility: visible; width: 249px; display: none;">
+	<div class="header">Contents</div>
+	<div style="position: relative; height: 380px;" class="ui-layout-content">
+		<ul id="TOC">
+			<li><a href="#top">UI.Layout</a></li>
+			<li><a href="#Depends_on">Depends on</a></li>
+			<li><a href="#Browsers">Supported Browsers</a></li>
+			<li><a href="#Demos">Demos</a></li>
+			<li><a href="#Example">Example</a></li>
+			<li><a href="#Auto-Generated_IDs">Auto-Generated IDs</a></li>
+			<li><a href="#Content-Scrolling">Content-Scrolling <span style="font-size: 0.8em; white-space: nowrap;">&nbsp;(Headers &amp; Footers)</span></a></li>
+			<li><span class="tocBtn"></span><a href="#Utilities">Special Utility Methods</a>
+				<ul>
+					<li><a href="#Custom_Buttons">Creating Custom Toggler Buttons</a></li>
+					<li><a href="#Drop-Downs">Working with Drop-Downs and Pop-Ups</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="ui-layout-resizer ui-layout-resizer-north ui-layout-resizer-open ui-layout-resizer-north-open" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; font-size: 1px; text-align: left; z-index: 2; top: 86px; cursor: default; display: none;" id=""></div><div aria-disabled="true" title="Slide Open Contents" class="ui-layout-resizer ui-layout-resizer-west ui-layout-resizer-closed ui-layout-resizer-west-closed ui-draggable-disabled" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; font-size: 1px; text-align: left; z-index: 2; left: 0px; cursor: pointer; height: 479px; width: 21px; top: 86px;" id=""><div title="Open &amp; Pin Contents" class="ui-layout-toggler ui-layout-toggler-west ui-layout-toggler-closed ui-layout-toggler-west-closed" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; text-align: center; font-size: 1px; cursor: pointer; z-index: 1; height: 138px; width: 21px; top: 0px; left: 0px;" id=""><span style="display: block; margin-top: 13px;" class="content content-closed">C<br>o<br>n<br>t<br>e<br>n<br>t<br>s</span></div></div><div class="ui-layout-resizer ui-layout-resizer-north ui-layout-resizer-open ui-layout-resizer-north-open" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; font-size: 1px; text-align: left; z-index: 2; top: 86px; cursor: default; display: none;" id=""></div><div aria-disabled="true" title="Slide Open Contents" class="ui-layout-resizer ui-layout-resizer-west ui-layout-resizer-closed ui-layout-resizer-west-closed ui-draggable-disabled" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; font-size: 1px; text-align: left; z-index: 2; left: 0px; cursor: pointer; height: 479px; width: 21px; top: 86px;" id=""><div title="Open &amp; Pin Contents" class="ui-layout-toggler ui-layout-toggler-west ui-layout-toggler-closed ui-layout-toggler-west-closed" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; text-align: center; font-size: 1px; cursor: pointer; z-index: 1; height: 138px; width: 21px; top: 0px; left: 0px;" id=""><span style="display: block; margin-top: 13px;" class="content content-closed">C<br>o<br>n<br>t<br>e<br>n<br>t<br>s</span></div></div></body></html>

@@ -1,0 +1,36 @@
+.tableHead {
+	text-align: center;
+	BACKGROUND-IMAGE: url(../img/tableHead.gif);
+	font-size: 12px;
+	font-family: "Times New Roman", Times, serif;
+	color: #003366;
+}
+.tableHead2 {
+	text-align: center;
+	BACKGROUND-IMAGE: url(../img/tableHead2.gif);
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+table {
+	border: 1px solid #00;
+	border-collapse: collapse;
+	margin: 1px;
+	text-align: left;
+}  
+tr, td {
+	border: 1px solid #00;
+}  
+.table_space {
+	margin: 1px;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+	text-align: left;
+}
+.table_PS {
+	margin: 1px;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+	color: #036;
+	text-align: left;
+}

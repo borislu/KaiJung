@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="language" content="zh-TW" />
+<!-- uncomment 'base' to view this page without external files
+<base href="http://jquery-border-layout.googlecode.com/svn/trunk/" />
+-->
+<script type="text/javascript" src="../js/jquery.js"></script>
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script>
+$(document).ready(function(){
+  
+  function displayVals() {
+  alert("gg");
+    var singleValues = $("#r1").val();
+    var multipleValues = $("#multiple").val() || [];
+    $("p").html("<b>Single:</b> " + 
+                singleValues +
+                " <b>Multiple:</b> " + 
+                multipleValues.join(", "));
+  }
+
+  $("input").change(displayVals);
+  displayVals();
+
+});
+</script>
+<style>
+p { color:red; margin:4px; }
+b { color:blue; }
+</style>
+</head>
+<body>
+
+  <p></p>
+  <input name="r1" id="r1" value="" size="5" maxlength="5" type="text" />
+  <select id="single">
+    <option>Single</option>
+    <option>Single2</option>
+  </select>
+  <select id="multiple" multiple="multiple">
+    <option selected="selected">Multiple</option>
+    <option>Multiple2</option>
+    <option selected="selected">Multiple3</option>
+  </select>
+</body>
+</html>
+

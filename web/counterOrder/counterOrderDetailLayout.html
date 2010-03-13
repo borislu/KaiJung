@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+	<!-- uncomment 'base' to view this page without external files
+	<base href="http://jquery-border-layout.googlecode.com/svn/trunk/" />
+	-->
+
+	<title>專櫃訂貨作業</title>
+
+	<!-- DEMO styles - specific to this page -->
+	<link rel="stylesheet" type="text/css" href="css/orderLayout.css" />
+	<!--[if lte IE 7]>
+		<style type="text/css"> body { font-size: 85%; } </style>
+	<![endif]-->
+
+	<!-- DEMO scripts - specific to this page -->
+	<script type="text/javascript" src="js/orderLayout.js"></script>
+
+	<!-- REQUIRED scripts for layout widget -->
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/jquery.layout.js"></script>
+
+	<!-- OPTIONAL ui.draggable is required to resize panes -->
+	<script type="text/javascript" src="../js/ui.core.js"></script>
+	<script type="text/javascript" src="../js/ui.draggable.js"></script>
+
+	<!-- OPTIONAL animation effects for opening/closing panes -->
+	<script type="text/javascript" src="../js/effects.core.js"></script>
+	<script type="text/javascript" src="../js/effects.slide.js"></script>
+	<script type="text/javascript" src="../js/effects.drop.js"></script>
+	<script type="text/javascript" src="../js/effects.scale.js"></script>
+
+	<!-- FUTURE REFERENCE - ACCESS TO EXTERNAL LIBRARIES
+	<script type="text/javascript" src="http://jquery-border-layout.googlecode.com/svn/trunk/jquery.layout.js"></script>
+	<script type="text/javascript" src="http://ui.jquery.com/js/jquery.js"></script>
+	<script type="text/javascript" src="http://ui.jquery.com/js/ui.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="http://dev.jquery.com/view/tags/ui/latest/ui/ui.core.js"></script>
+	<script type="text/javascript" src="http://dev.jquery.com/view/tags/ui/latest/ui/ui.draggable.js"></script>
+	<script type="text/javascript" src="http://dev.jquery.com/view/tags/ui/latest/ui/effects.core.js"></script>
+	<script type="text/javascript" src="http://dev.jquery.com/view/tags/ui/latest/ui/effects.slide.js"></script>
+	<script type="text/javascript" src="http://dev.jquery.com/view/tags/ui/latest/ui/effects.drop.js"></script>
+	<script type="text/javascript" src="http://dev.jquery.com/view/tags/ui/latest/ui/effects.scale.js"></script>
+	<link rel="stylesheet" type="text/css" href="http://dev.jquery.com/view/tags/ui/latest/themes/flora/flora.all.css" />
+	-->
+
+<script type="text/javascript">
+/*
+ * complex.html
+ *
+ * This is a demonstration page for the jQuery layout widget
+ *
+ *	NOTE: For best code readability, view this with a fixed-space font and tabs equal to 4-chars
+ */
+
+	var outerLayout, innerLayout;
+
+	/*
+	*#######################
+	*     ON PAGE LOAD
+	*#######################
+	*/
+	$(document).ready( function() {
+		// create the OUTER LAYOUT
+		outerLayout = $("body").layout( layoutSettings_Outer );
+
+		/*******************************
+		 ***  CUSTOM LAYOUT BUTTONS  ***
+		 *******************************
+		 *
+		 * Add SPANs to the east/east panes for customer "close" and "pin" buttons
+		 *
+		 * COULD have hard-coded span, div, button, image, or any element to use as a 'button'...
+		 * ... but instead am adding SPANs via script - THEN attaching the layout-events to them
+		 *
+		 * CSS will size and position the spans, as well as set the background-images
+		 */
+
+		// save selector strings to vars so we don't have to repeat it
+		// must prefix paneClass with "body > " to target ONLY the outerLayout panes
+		var eastSelector = "body > .ui-layout-east"; // outer-east pane
+
+		 // CREATE SPANs for pin-buttons - using a generic class as identifiers
+		$("<span></span>").addClass("pin-button").prependTo( eastSelector );
+
+		// BIND events to pin-buttons to make them functional
+		outerLayout.addPinBtn( eastSelector +" .pin-button", "east");
+
+		 // CREATE SPANs for close-buttons - using unique IDs as identifiers
+		$("<span></span>").attr("id", "east-closer" ).prependTo( eastSelector );
+
+		// BIND layout events to close-buttons to make them functional
+		outerLayout.addCloseBtn("#east-closer", "east");
+
+
+
+		/* Create the INNER LAYOUT - nested inside the 'center pane' of the outer layout
+		 * Inner Layout is create by createInnerLayout() function - on demand
+		 *
+			innerLayout = $("div.pane-center").layout( layoutSettings_Inner );
+		 *
+		 */
+		innerLayout = $("div.pane-center").layout( layoutSettings_Inner );
+
+		// DEMO HELPER: prevent hyperlinks from reloading page when a 'base.href' is set
+		$("a").each(function () {
+			var path = document.location.href;
+			if (path.substr(path.length-1)=="#") path = path.substr(0,path.length-1);
+			if (this.href.substr(this.href.length-1) == "#") this.href = path +"#";
+		});
+
+	});
+
+
+	/*
+	*#######################
+	* INNER LAYOUT SETTINGS
+	*#######################
+	*
+	* These settings are set in 'list format' - no nested data-structures
+	* Default settings are specified with just their name, like: fxName:"slide"
+	* Pane-specific settings are prefixed with the pane name + 2-underscores: north__fxName:"none"
+	*/
+	layoutSettings_Inner = {
+		applyDefaultStyles:				true // basic styling for testing & demo purposes
+	,	minSize:						20 // TESTING ONLY
+	,	spacing_closed:					14
+	,	north__spacing_closed:			8
+	,	south__spacing_closed:			8
+	,	north__togglerLength_closed:	-1 // = 100% - so cannot 'slide open'
+	,	south__togglerLength_closed:	-1
+	,	fxName:							"slide" // do not confuse with "slidable" option!
+	,	fxSpeed_open:					1000
+	,	fxSpeed_close:					2500
+	,	fxSettings_open:				{ easing: "easeInQuint" }
+	,	fxSettings_close:				{ easing: "easeOutQuint" }
+	,	north__fxName:					"none"
+	,	south__fxName:					"drop"
+	,	south__fxSpeed_open:			500
+	,	south__fxSpeed_close:			1000
+	,	initClosed:						true
+	,	center__minWidth:				200
+	,	center__minHeight:				200
+	};
+
+
+	/*
+	*#######################
+	* OUTER LAYOUT SETTINGS
+	*#######################
+	*
+	* This configuration illustrates how extensively the layout can be customized
+	* ALL SETTINGS ARE OPTIONAL - and there are more available than shown below
+	*
+	* These settings are set in 'sub-key format' - ALL data must be in a nested data-structures
+	* All default settings (applied to all panes) go inside the defaults:{} key
+	* Pane-specific settings go inside their keys: north:{}, south:{}, center:{}, etc
+	*/
+	var layoutSettings_Outer = {
+		name: "outerLayout" // NO FUNCTIONAL USE, but could be used by custom code to 'identify' a layout
+		// options.defaults apply to ALL PANES - but overridden by pane-specific settings
+	,	defaults: {
+			size:					"auto"
+		,	minSize:				50
+		,	paneClass:				"pane" 		// default = 'ui-layout-pane'
+		,	resizerClass:			"resizer"	// default = 'ui-layout-resizer'
+		,	togglerClass:			"toggler"	// default = 'ui-layout-toggler'
+		,	buttonClass:			"button"	// default = 'ui-layout-button'
+		,	contentSelector:		".content"	// inner div to auto-size so only it scrolls, not the entire pane!
+		,	contentIgnoreSelector:	"span"		// 'paneSelector' for content to 'ignore' when measuring room for content
+		,	togglerLength_open:	35			// WIDTH of toggler on north/south edges - HEIGHT on east/west edges
+		,	togglerLength_closed:	35			// "100%" OR -1 = full height
+		,	hideTogglerOnSlide:		true		// hide the toggler when pane is 'slid open'
+		,	togglerTip_open:		"關閉畫面"
+		,	togglerTip_closed:		"開啟畫面"
+		,	resizerTip:	        	"調整畫面大小"
+		//	effect defaults - overridden on some panes
+		,	fxName:					"slide"		// none, slide, drop, scale
+		,	fxSpeed_open:			750
+		,	fxSpeed_close:			1500
+		,	fxSettings_open:		{ easing: "easeInQuint" }
+		,	fxSettings_close:		{ easing: "easeOutQuint" }
+	}
+	,	east: {
+			paneSelector:			"#eastContent" 			// sample: use an ID to select pane instead of a class
+		,	onresize:				"innerLayout.resizeAll"	// resize INNER LAYOUT when center pane resizes
+		,	minWidth:				20
+		,	minHeight:				200
+		,	size:					400
+		,	spacing_closed:			21			// wider space when closed
+		,	togglerLength_closed:	21			// make toggler 'square' - 21x21
+		,	togglerAlign_closed:	"top"		// align to top of resizer
+		,	togglerLength_open:		0			// NONE - using custom togglers INSIDE east-pane
+		,	togglerTip_open:		"關閉右畫面"
+		,	togglerTip_closed:		"開啟右畫面"
+		,	resizerTip:		        "調整畫面大小"
+		,	slideTrigger_open:		"click" 	// default
+		,	initClosed:				false
+		//	add 'bounce' option to default 'slide' effect
+		,	fxSettings_open:		{ easing: "easeOutBounce" }
+		}
+	,	center: {
+			paneSelector:			"#mainContent" 			// sample: use an ID to select pane instead of a class
+		,	onresize:				"innerLayout.resizeAll"	// resize INNER LAYOUT when center pane resizes
+		,	minWidth:				20
+		,	minHeight:				200
+		}
+	};
+
+</script>
+<script type="text/javascript">
+  function changeMainFrame ( url, url2 ){  
+          var n = document.getElementById('manualFrame');
+          n.src = url;
+          n.contentWindow.location.href=url;
+          var s = document.getElementById('suggestFrame');
+          s.src = url2;
+          s.contentWindow.location.href=url2;
+  }
+</script>
+
+</head>
+<body>
+
+<div id="mainContent">
+
+        <iframe id="manualFrame" style="position: relative;" src="counterOrderDetail.html" longdesc="" 
+        frameborder="0" height="100%" scrolling="auto" width="100%">
+        </iframe>
+	<div class="ui-layout-south">
+                <iframe id="suggestFrame" style="position: relative;" src="" longdesc="" 
+                frameborder="0" height="100%" scrolling="auto" width="100%">
+                </iframe>
+        </div>
+	<!-- <div class="footer">自動定位頁尾</div> -->
+</div>
+
+<div id="eastContent" class="ui-layout-east">
+
+	<div class="header">專櫃訂貨作業</div>
+        <iframe style="position: relative;" src="counterOrderList.html" longdesc="" 
+        frameborder="0" height="93%" scrolling="auto" width="100%">
+        </iframe>
+</div>
+
+</body>
+</html> 

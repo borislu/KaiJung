@@ -1,0 +1,217 @@
+<html>
+<head>
+<title>專櫃訂貨</title>
+<link rel="stylesheet" type="text/css"
+	href="../extjs/resources/css/ext-all.css" />
+<script type="text/javascript" src="../extjs/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../extjs/ext-all.js"></script>
+<script type="text/javascript" src="../extjs/miframe.js"></script>
+
+<!--<script type="text/javascript" src="actions.js"></script>-->
+<link rel="stylesheet" type="text/css" href="menus.css" />
+<link rel="stylesheet" type="text/css" href="examples.css" />
+<style type="text/css">
+html,body {
+	font: normal 12px verdana;
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+}
+
+p {
+	margin: 5px;
+}
+
+.settings {
+	background-image: url(../shared/icons/fam/folder_wrench.png);
+}
+
+.nav {
+	background-image: url(../shared/icons/fam/folder_go.png);
+}
+</style>
+<script type="text/javascript">
+   var cboxes = new Array(); // 左邊的 checkbox 陣列
+   var comparators = new Array(); // filter
+   var conditions = new Array(); // filter
+   var select1th = 0; // 勾選的第一筆
+   var westElement = null;
+   var westFrame = null;
+   var westDoc = null;
+   var eastElement = null;
+   var eastFrame = null;
+   var eastDoc = null;
+   
+   function init(){
+         var viewport = new Ext.Viewport({
+              layout:'border',
+              items:[
+                  new Ext.BoxComponent({ // raw
+                      region:'north',
+                      el: 'north',
+                      height:2
+                  }),{
+                      region:'east',
+                      id:'east-panel',
+                      title:'訂貨清單',
+                      split:true,
+                      width: '50%',
+                      minSize: 10,
+                      //maxSize: 400,
+                      collapsible: true,
+                      margins:'0 0 0 5',
+                      //defaultSrc: '../xava/modules_listonly.jsp?application=KaiJung&module=OrderStoreListOnly',
+                      //layout:'accordion',
+                      layoutConfig:{
+                          animate:true
+                      },
+                      items: [{
+                          id: 'east-panel-item',
+                          contentEl: 'frameEast',
+                          border:false,
+                          iconCls:'nav'
+                      }],
+                      bbar:[{
+                          text:'列印',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'PDF',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'EXCEL',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'加入訂單',
+                          handler:function(){
+                                Ext.get('frameEast').dom.contentDocument.getElementById('append').click();
+                          }
+                      },{
+                          text:'移除建議',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      }]
+                  },{
+                      region:'center',
+                      id:'west-panel',
+                      title:'訂貨明細',
+                      width: 200,
+                      minSize: '50%',
+                      //maxSize: 400,
+                      //split:true,  // 沒有 split 的話就無法拖移
+                      //collapsible: true,
+                      margins:'0 0 0 0',
+                      //layout:'accordion',
+                      layoutConfig:{
+                          animate:true
+                      },
+                      items: [{
+                          id: 'west-panel-item',
+                          contentEl: 'frameWest',
+                          border:false,
+                          iconCls:'nav'
+                      }],
+                      bbar:[{
+                          text:'列印',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'PDF',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'EXCEL',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'自動訂貨',
+                          handler:function(){
+                                Ext.get('frameEast').dom.contentDocument.getElementById('append').click();
+                          }
+                      },{
+                          text:'送出訂單',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'搜尋',
+                          handler:function(){
+                                register ();
+                          }
+                      },{
+                          text:'儲存',
+                          handler:function(){
+                                Ext.get('frameWest').dom.contentDocument.getElementById('_eis_batchsave').click();
+                          }
+                      },{
+                          text:'刪除',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      },{
+                          text:'取消',
+                          handler:function(){
+                                linkFrom ();
+                          }
+                      }]
+                  }
+               ]
+          });
+   }   
+
+   initWestFrame = function() {
+       westElement = Ext.get('frameWest');
+       if( westElement != null ){
+           westFrame = westElement.dom;  // 取得更新後的 HTML Document
+           //westFrame.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreDetailOnly';
+           westDoc = westFrame.contentDocument || westFrame.contentWindow.document;
+       }
+   }
+   initEastFrame = function() {
+       eastElement = Ext.get('frameEast');
+       if( eastElement != null ){
+           eastFrame = eastElement.dom;  // 取得更新後的 HTML Document
+           //eastFrame.src = '../xava/modules_listonly.jsp?application=KaiJung&module=OrderStoreListOnly';
+           eastDoc = eastFrame.contentDocument || eastFrame.contentWindow.document;
+       }
+   }
+
+   Ext.onReady( function(){
+        init();     
+        //initWestFrame();
+        //initEastFrame();
+
+       //Ext.get('frameEast').dom.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreDetailOnly';
+       /* http://localhost:8080/KaiJung/xava/modules.jsp?application=KaiJung&module=OrderStoreListOnly*/
+       //javascript:openxava.executeAction('KaiJung', 'OrderStoreListOnly', '', false, 'List.viewDetail', 'row=0')
+   });
+       
+</script>
+<!--<input id="ox_KaiJung_OrderStoreListOnly__Mode___detailAndFirst" class="" type="button" value="首筆明細" onclick="openxava.executeAction("KaiJung", "OrderStoreListOnly", "", false, "Mode.detailAndFirst")" title="F8 - 明細模式"/>-->
+</head>
+<body>
+<script type="text/javascript" src="../examples.js"></script>
+<!-- EXAMPLES -->
+<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/modules_listonly.jsp?application=KaiJung&module=OrderStoreListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="west"><iframe id="frameWest" name="frameWest" src="../xava/modules.jsp?application=KaiJung&module=OrderStoreDetailOnly"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="north">
+<p></p>
+</div>
+<div id="center2"></div>
+<div id="center1"></div>
+<div id="props-panel"	style="width: 200px; height: 200px; overflow: hidden;"></div>
+
+</body>
+</html>
+

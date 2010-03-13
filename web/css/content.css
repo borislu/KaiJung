@@ -1,0 +1,262 @@
+@charset "utf-8";
+
+body {
+	font-size: 12px; //
+	font-weight: normal;
+	color: #036;
+	text-align: left;
+	vertical-align: middle;
+	margin: 1px;
+	height: 100%;
+	width: 100%;
+}
+
+input [type="text"] {
+	border: 0px solid #DDDDDD;
+}
+
+textarea {
+	border: 1px solid #DDDDDD;
+}
+
+input {
+	border: 1px solid #DDDDDD;
+	font-size: 12px;
+}
+
+select {
+	border: 1px solid #DDDDDD;
+}
+
+.style4 {
+	color: #666666
+}
+
+.content {
+	position: absolute;
+	top: 26px;
+	z-index: 0; //
+	height: 100%;
+	width: 100%;
+	margin-left: 5px;
+	min-width: 960px;
+	max-width: 990px; //
+	background-color: #E9F3FF;
+}
+
+.c1 {
+	float: left; //
+	height: 320px;
+	width: 310px;
+	margin: 0px, 0px, 0px, 10px; //
+	background: #99f;
+}
+
+.c11 {
+	float: left;
+	text-align: justify;
+	display: block;
+	width: 123px;
+	height: 200px;
+	margin-top: 4px;
+	margin-bottom: 4px; //
+	background: #ff9;
+}
+
+.c111 {
+	vertical-align: middle; //
+	margin-top: 4px; //
+	margin-bottom: 4px;
+	height: 24px;
+	width: 120px; //
+	background: #b1f;
+	background-image: url(../images/dot_line02.gif);
+	background-repeat: repeat-x;
+}
+
+.c12 {
+	float: right;
+	display: block;
+	width: 180px;
+	height: 200px;
+	margin-top: 4px;
+	margin-bottom: 4px; //
+	background: #aa1;
+}
+
+.c121 {
+	vertical-align: middle; //
+	margin-top: 4px; //
+	margin-bottom: 4px;
+	height: 24px; //
+	background: #b1f;
+}
+
+.c2 {
+	float: right;
+	padding: 2px;
+	width: 598px; //
+	background: #a1d29F;
+}
+
+.c21 { //
+	float: left; //
+	height: 50px;
+	width: 580px; //
+	background: #986599;
+}
+
+.c22 { //
+	float: left; //
+	height: 50px;
+	width: 580px; //
+	background: #986599;
+}
+
+.c23 {
+	width: 578px; //
+	background: none repeat scroll 0% 0% #91F2F3;
+}
+
+.c24 {
+	clear: both; //
+	float: left; //
+	height: 50px;
+	width: 580px; //
+	background: #986599;
+}
+
+.c211 {
+	float: left;
+	text-align: justify;
+	height: 24px;
+	width: 110px; //
+	background: #999;
+	background-image: url(../images/dot_line02.gif);
+	background-repeat: repeat-x;
+}
+
+.c231 {
+	text-align: justify;
+	height: 24px;
+	width: 110px; //
+	background: #999;
+	background-image: url(../images/dot_line02.gif);
+	background-repeat: repeat-x;
+}
+
+.c212 {
+	float: right;
+	width: 468px;
+	height: 24px; //
+	background: #97f;
+}
+
+.c232 {
+	float: right;
+	width: 468px;
+	height: 50px; //
+	background: #97f;
+}
+
+.c22 { //
+	float: left;
+	height: auto;
+	width: 578px; //
+	background: #11DDD2;
+}
+
+.c221 {
+	float: left;
+	text-align: justify; //
+	height: 500px;
+	width: 110px; //
+	background: #ff9999;
+	background-image: url(../images/dot_line02.gif);
+	background-repeat: repeat-x;
+}
+
+.c222 {
+	float: right;
+	width: 466px;
+}
+
+.c229 {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #CCCCCC;
+}
+
+.select1 {
+	float: left; //
+	height: 320px;
+	width: 410px;
+	margin: 0px, 0px, 0px, 10px; //
+	background: #99f;
+}
+
+.select12 {
+	float: right;
+	display: block;
+	width: 280px;
+	height: 200px;
+	margin-top: 4px;
+	margin-bottom: 4px; //
+	background: #aa1;
+}
+
+.numbers {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 12px;
+	text-align: right;
+	vertical-align: middle;
+	margin: 1px;
+}
+
+.text_number {
+	text-align: justify;
+	vertical-align: middle;
+}
+
+.max-collapse-west { //
+	float: right;
+	float: left !important;
+	margin-right: 10px;
+	overflow: hidden;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	margin-left: 2px;
+	background: transparent
+		url(../extjs/resources/images/default/panel/tool-sprites.gif)
+		no-repeat; //
+	margin-right: 3px;
+	margin-left: 0;
+	background-position: 0 -180px;
+}
+
+.max-collapse-west-over {
+	background-position: -15px -180px;
+}
+
+.iconEdit {
+	float: right;
+	margin-right: 10px;
+	overflow: hidden;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	margin-left: 2px;
+	background: transparent url(../icons/edit.gif) no-repeat;
+}
+
+.iconHelp { //
+	float: right;
+	margin-right: 10px;
+	overflow: hidden;
+	width: 15px;
+	height: 15px;
+	cursor: pointer;
+	margin-left: 2px;
+	background: transparent url(../icons/help.gif) no-repeat;
+}

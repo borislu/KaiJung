@@ -1,0 +1,26 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+
+<window id="win" title="To do list" width="640px" border="normal" apply="org.zkforge.todo.event.EventController">
+	<listbox id="box" multiple="true" rows="5" model="@{win$composer.allEvents, load-after='add.onClick, delete.onClick, update.onClick'}" 
+		selectedItem="@{win$composer.current}">
+		<listhead>
+			<listheader label="Item" />
+			<listheader label="Priority" width="50px" />
+			<listheader label="Date" width="90px" />
+		</listhead>		
+		<listitem self="@{each='event'}" value="@{event}">			
+			<listcell label="@{event.name}" />
+			<listcell label="@{event.priority}" />
+			<listcell label="@{event.date}" />
+		</listitem>
+	</listbox>
+	<groupbox>
+		<caption label="Event" />
+		Item: <textbox id="name" cols="25" value="@{win$composer.current.name}" />
+		Priority: <intbox id="priority" cols="1" value="@{win$composer.current.priority}" />
+		Date: <datebox id="date" cols="8" value="@{win$composer.current.date}" />
+		<button id="add" label="Add" width="36px" height="24px"/>
+		<button id="update" label="Update" width="46px" height="24px"/>
+		<button id="delete" label="Delete" width="46px" height="24px"/>
+	</groupbox>	
+</window>

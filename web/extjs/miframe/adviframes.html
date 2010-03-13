@@ -1,0 +1,108 @@
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Advanced ManagedIframePanel</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+
+    <!-- GC -->
+    <!-- LIBS -->
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <!-- ENDLIBS -->
+
+    <script type="text/javascript" src="ext-all.js"></script>
+    <script type="text/javascript" src="ext-basex.js"></script>
+    <!-- script type="text/javascript" src="miframe.js"></script -->
+
+    <!-- script type="text/javascript" src="adviframe.js"></script -->
+
+    <!-- Common Styles for the examples -->
+    <link rel="stylesheet" type="text/css" href="../examples.css" />
+
+    <style type="text/css">
+        .msg .x-box-mc {font-size:14px;}
+        #demo-balloon-div {position:absolute;left:35%;top:10px;width:200px;z-index:20000;}
+        #background {margin:5px;}
+        .list {list-style:square;width:500px;padding-left:26px;}
+        .list li{padding:2px;font-size:8pt;}
+         pre {   font-size:11px;}
+
+    </style>
+    <script type="text/javascript" >
+      //Permit Local file access for IE.
+      Ext.lib.Ajax.forceActiveX = (document.location.protocol == 'file:');
+
+      //Set to a friendlier version for Iframes
+      Ext.SSL_SECURE_URL= 'javascript:void(0)';
+
+      Ext.Loader = new Ext.ux.ModuleManager({disableCaching:true});
+      Ext.Loader.on({
+            'beforeload':function(manager, module, response){
+
+                //return false to prevent the script from being executed.
+                return module.extension == 'js';
+
+            },
+            'loadexception':function(manager, module, ex){
+
+               alert('Failed to Load Module '+module.fullName+' Error: ' +
+                (ex.error?ex.error.description||ex.error.message:ex));
+            }
+
+        });
+
+       Ext.require = Ext.Loader.load.createDelegate(Ext.Loader);
+
+       Ext.onReady(function(){
+
+          Ext.require('miframe', 'adviframe'); //now load MIFP and our demo script
+
+       });
+
+    </script>
+
+</head>
+<body>
+<script type="text/javascript" src="../examples.js"></script><!-- EXAMPLES -->
+
+<div id="header">
+<h1>Advanced ManagedIframePanel 1.05 Demo</h1>
+</div>
+<div id="background" class="x-hidden">
+<p>This example demonstrates some of the more advanced features of ux.ManagedIFrame[Panel].</p>
+<h3>Primary Demonstration Goals:</h3>
+<p>Load one or more iframe documents (with/without existing embedded script,style, or link tags) and apply the entire Ext framework to those documents,
+only retrieving the necessary script, and CSS sources file <b>once</b>, via the parent document.</p>
+<p>To accomplish this, one <b>important</b> modification to the Ext core library is required:
+<ul class="list"><li>A change to Ext.EventManager's <b>onDocumentReady</b> feature (specifically for IE) is included in this distribution. (Note: For IE, the deferred Script tag is no longer used as a 'domReady' detection mechanism, as this destroys a frame's document when Ext is injected into it.), and has been replaced with the now-popular (YUI,jQuery,mooTools) node.doScroll('left') check.</li>
+<li>The use of <a href="http://extjs.com/forum/showthread.php?p=102679#post102679" target="_ext">ext-basex.js</a>.  This is required for synchronous Ajax support, and provides...</li>
+<li>An Ajax-style resource-module that could retrieve any resource (.js, .css, or other resources in this case) and manage
+their successful retrieval/eval/storage.  <b>ux.ModuleManager</b> provides these services and is now built into the ext-basex module since it requires synchronous
+Ajax support and is included in this example distribution.  (Examine the source of this page.  The demo  uses ux.ModuleManager to load this demo script.</li>
+</ul>
+
+<h2>Some possible benefits</h2>
+<ul class="list">
+<li>Existing legacy forms may now be loaded into Iframes without modification and 'Ext'ized as necessary as they are migrated to the full framework over time.</li>
+<li>Multiple Ext.onReady(or not) code blocks are now supported and can can be dynamically loaded at any time (both in Iframes and in parent/main pages).
+<li>Coupling ux.ModuleManager with custom Ext builds, you can now use syntax like :<br />
+<p><pre>
+Ext.require('layouts','custom/grid');
+or
+MyApp.needs('dragdrop','charts');
+</pre> <br />and the resources are loaded on demand(if not already available) to significantly reduce initial page-load times.</li>
+</ul>
+<h2>Demonstration Notes</h2>
+<ul class="list">
+<li>In the 'Transformation' examples, ux.ModuleManager loads/caches the necessary stylesheets and other script files (once) from the neighboring <b>/examples/tabs</b> path for transforming the basic tabs example page (note that most/all of the script and style tags have been removed).</li>
+<li>The demo page may not <b>NOT LOOK EXACTLY THE SAME</b> as the original /examples/tabs page because of the attempt to adjust the relative CSS urls of ext-all.css. (in fact the 'via UpdateManager' example on Gecko will look strange because a frame not-loaded from a server has no site root to resolve relative CSS urls).</li>
+<li>With the help of <a href="http://extjs.com/forum/showthread.php?p=102679#post102679" target="_ext">ext-basex.js</a>, this example can be run without an HTTP server hosting it.</li>
+</ul>
+
+<h2>Source Files</h2>
+<p>The demonstration source file <a href="adviframe.js" target="_srcview">adviframe.js</a></p>
+<p>The injected transformation script: <a href="transform.js" target="_srcview">transform.js</a></p>
+<p>Revised EventManager.js source is viewable here: <a href="EventManager.js" target="_srcview">EventManager.js</a></p>
+</div>
+</body>
+</html>

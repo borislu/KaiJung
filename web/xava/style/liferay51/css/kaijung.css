@@ -1,0 +1,37 @@
+/* 此檔用來 override 預設的 everything_unpacked.css */
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+	font-size: 12px;
+}
+
+.portlet-title {
+	display: none;
+}
+
+input[type="text"], input[type="password"], input[type="file"],input[type="submit"], input[type="button"], input[type="reset"], select, textarea, .textarea {
+	background-image: url(../images/forms/input_shadow.png);
+	background-repeat: no-repeat;
+	border: 1px solid;
+	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
+	font: 1em Arial,Helvetica,Verdana,sans-serif;
+	padding: 2px 1px;
+}
+
+.portlet {
+	background: #fff;
+	//border: 1px solid #828F95;
+	//margin: 0 0 10px;
+	//padding: 3px;
+	text-align: left;
+}
+
+.portlet-topper {
+	background: #D3DADD;
+	border-bottom: 0px solid #AEB8BC;
+	padding-right: 40px;
+	position: relative;
+}
+

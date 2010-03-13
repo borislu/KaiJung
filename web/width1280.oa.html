@@ -1,0 +1,649 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<title>EIS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" type="text/css" href="./extjs/resources/css/ext-all.css"/>
+    <script type="text/javascript" src="./extjs/adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="./extjs/ext-all.js"></script>
+    <script language="javascript" src="layout.js"></script>
+    <style type="text/css">
+        .x-panel-body p {
+            margin: 10px;
+            font-size: 12px;
+        }
+    </style>
+
+<!--  Prototype Window Class Part -->
+<script type="text/javascript" src="./prototypeWindow/js/prototype.js"> </script> 
+<script type="text/javascript" src="./prototypeWindow/js/window.js"> </script>
+
+<link href="./prototypeWindow/themes/default.css" rel="stylesheet" type="text/css" >	 </link>
+<link href="./prototypeWindow/themes/alphacube.css" rel="stylesheet" type="text/css" >	 </link>
+<link href="./prototypeWindow/themes/alert.css" rel="stylesheet" type="text/css" >	 </link>
+<link href="./prototypeWindow/themes/alert_lite.css" rel="stylesheet" type="text/css" >	 </link>
+
+<link href="./prototypeWindow/themes/alphacube.css" rel="stylesheet" type="text/css" >	 </link>
+<link href="./prototypeWindow/themes/debug.css" rel="stylesheet" type="text/css" >	 </link>
+
+<link href="./css/content.css" rel="stylesheet" type="text/css" >	 </link>
+
+<!--  Doc Part-->
+<script type="text/javascript" src="./prototypeWindow/js/application.js"> </script>  	
+
+<style>
+     #myDialogId .myButtonClass {
+     padding:3px;
+     font-size:20px;
+     width:100px;
+     }
+     #myDialogId .ok_button {
+     color:#2F2;
+     }
+     #myDialogId .cancel_button {
+     color:#F88;
+     }
+</style>
+<link rel="stylesheet" href="menu/menu.css">
+
+<!-- menu script itself. you should not modify this file -->
+<script language="JavaScript" src="menu/menu.js"></script>
+<!-- items structure. menu hierarchy and links are stored there -->
+<script language="JavaScript" src="menu/menu_items.js"></script>
+<!-- files with geometry and styles structures -->
+<script language="JavaScript" src="menu/menu_tpl.js"></script>
+
+<!--  快捷選單開始 -->
+<link rel="stylesheet" href="./css/footer-panel.css">
+<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function(){
+
+	//Adjust panel height
+	$.fn.adjustPanel = function(){ 
+		$(this).find("ul, .subpanel").css({ 'height' : 'auto'}); //Reset subpanel and ul height
+		
+		var windowHeight = $(window).height(); //Get the height of the browser viewport
+		var panelsub = $(this).find(".subpanel").height(); //Get the height of subpanel	
+		var panelAdjust = windowHeight - 100; //Viewport height - 100px (Sets max height of subpanel)
+		var ulAdjust =  panelAdjust - 25; //Calculate ul size after adjusting sub-panel (27px is the height of the base panel)
+		
+		if ( panelsub >= panelAdjust ) {	 //If subpanel is taller than max height...
+			$(this).find(".subpanel").css({ 'height' : panelAdjust }); //Adjust subpanel to max height
+			$(this).find("ul").css({ 'height' : ulAdjust}); //Adjust subpanel ul to new size
+		}
+		else if ( panelsub < panelAdjust ) { //If subpanel is smaller than max height...
+			$(this).find("ul").css({ 'height' : 'auto'}); //Set subpanel ul to auto (default size)
+		}
+	};
+	
+	//Execute function on load
+	$("#chatpanel").adjustPanel(); //Run the adjustPanel function on #chatpanel
+	$("#alertpanel").adjustPanel(); //Run the adjustPanel function on #alertpanel
+	
+	//Each time the viewport is adjusted/resized, execute the function
+	$(window).resize(function () { 
+		$("#chatpanel").adjustPanel();
+		$("#alertpanel").adjustPanel();
+	});
+	
+	//Click event on Chat Panel + Alert Panel	
+	$("#chatpanel a:first, #alertpanel a:first").click(function() { //If clicked on the first link of #chatpanel and #alertpanel...
+		if($(this).next(".subpanel").is(':visible')){ //If subpanel is already active...
+			$(this).next(".subpanel").hide(); //Hide active subpanel
+			$("#footpanel li a").removeClass('active'); //Remove active class on the subpanel trigger
+		}
+		else { //if subpanel is not active...
+			$(".subpanel").hide(); //Hide all subpanels
+			$(this).next(".subpanel").toggle(); //Toggle the subpanel to make active
+			$("#footpanel li a").removeClass('active'); //Remove active class on all subpanel trigger
+			$(this).toggleClass('active'); //Toggle the active class on the subpanel trigger
+		}
+		return false; //Prevent browser jump to link anchor
+	});
+	
+	//Click event outside of subpanel
+	$(document).click(function() { //Click anywhere and...
+		$(".subpanel").hide(); //hide subpanel
+		$("#footpanel li a").removeClass('active'); //remove active class on subpanel trigger
+	});
+	$('.subpanel ul').click(function(e) { 
+		e.stopPropagation(); //Prevents the subpanel ul from closing on click
+	});
+	
+	//Delete icons on Alert Panel
+	$("#alertpanel li").hover(function() {
+		$(this).find("a.delete").css({'visibility': 'visible'}); //Show delete icon on hover
+	},function() {
+		$(this).find("a.delete").css({'visibility': 'hidden'}); //Hide delete icon on hover out
+	});
+});
+</script>
+<!--  快捷選單結束 -->
+
+	
+</head>
+
+<div>
+
+<body scroll="no">
+<div id="menubar"></div><div id="logo"></div>
+        <script language="JavaScript">
+	        <!--//
+	        // Note where menu initialization block is located in HTML document.
+	        // Don't try to position menu locating menu initialization block in
+	        // some table cell or other HTML element. Always put it before </body>
+
+	        // each menu gets two parameters (see demo files)
+	        // 1. items structure
+	        // 2. geometry structure
+
+	        new menu (MENU_ITEMS, MENU_TPL);
+	        // make sure files containing definitions for these variables are linked to the document
+	        // if you got some javascript error like "MENU_POS is not defined", then you've made syntax
+	        // error in menu_tpl.js file or that file isn't linked properly.
+	
+	        // also take a look at stylesheets loaded in header in order to set styles
+	        //-->
+        </script>
+        
+        <div class="listing" style="display:none" id="codeHide">
+          <xmp id="message" class="listing">
+                var win = new Window({className: "alphacube", title: "待辦訊息", 
+                      top:27, left:-13, width:1270, height:450,
+                      url: "message/message.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="dailyMakeup" class="listing">
+                var win = new Window({className: "alphacube", title: "日業績補登維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "http://localhost:8980/KaiJung/xava/module.jsp?application=KaiJung&module=SalesDaily", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="dailyAdd" class="listing">
+                var win = new Window({className: "alphacube", title: "日業績補登", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/dailyMakeup.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="dailySearch" class="listing">
+                var win = new Window({className: "alphacube", title: "日業績查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/dailySearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesMonthlySumList" class="listing">
+                var win = new Window({className: "alphacube", title: "月業績總表清單", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesMonthlySumList.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesMonthlyAdd" class="listing">
+                var win = new Window({className: "alphacube", title: "月業績新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesMonthlyAdd.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesMonthlySearch" class="listing">
+                var win = new Window({className: "alphacube", title: "月業績查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesMonthlySearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesAnnualSumList" class="listing">
+                var win = new Window({className: "alphacube", title: "年業績總表清單", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesAnnualSumList.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesAnnualAdd" class="listing">
+                var win = new Window({className: "alphacube", title: "年業績新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesAnnualAdd.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesAnnualSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "年業績查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesAnnualSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="goalAdd" class="listing">
+                var win = new Window({className: "alphacube", title: "業績目標新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/goalAdd.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="goalSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "業績目標查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/goalSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesBasicAnalysis" class="listing">
+                var win = new Window({className: "alphacube", title: "業績基本分析", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesBasicAnalysis.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="benchmark" class="listing">
+                var win = new Window({className: "alphacube", title: "指標維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "http://localhost:8980/KaiJung/xava/module.jsp?application=KaiJung&module=Benchmark", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="benchmarkAdd" class="listing">
+                var win = new Window({className: "alphacube", title: "指標新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/benchmarkAdd.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="benchmarkSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "指標查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/benchmarkSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="dailySalesSum" class="listing">
+                var win = new Window({className: "alphacube", title: "業績彙整表", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/dailySalesSum.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesActivityList" class="listing">
+                var win = new Window({className: "alphacube", title: "業務活動維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "http://localhost:8980/KaiJung/xava/module.jsp?application=KaiJung&module=SalesActivity", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesActivityAdd" class="listing">
+                var win = new Window({className: "alphacube", title: "業務活動新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesActivityAdd.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="salesActivitySearch" class="listing">
+                var win = new Window({className: "alphacube", title: "業務活動查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "sales/salesActivitySearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>  
+          
+
+                
+          <xmp id="counterOrderAdd" class="listing">
+              Ext.onReady(function(){
+                  
+                      // the center
+//                      var centerPanel = new Ext.Panel({
+  //                        region: 'center'//,
+    //                  });
+
+                      var westPanel = new Ext.Panel({
+                          region:'center',
+                          id:'west-panel',
+                          split:true,
+                          width: 640,
+                          minSize: 10,
+                          //maxSize: 400,
+                          collapsible: true,
+                          margins:'0 0 0 5',
+                          layout:'border',
+                          items:[{
+                              title: '訂貨',
+                              region: 'center',
+                              split: true,
+                              width: 500,
+                              collapsible: true,
+                              margins:'0 0 0 0',
+                              cmargins:'0 0 0 0',
+                              defaults:{autoScroll:true},
+                              html: '<iframe id="frameEast" name="frameEast" src="http://localhost:8080/ZhiPin/xava/module.jsp?application=ZhiPin&module=SmsListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                              buttons: [{
+                                  text: '自動訂貨'
+                              },{
+                                  text: '清除'
+                              },{
+                                  text: '加入訂貨單'
+                              }]
+                          },{
+                              title: '建議訂貨',
+                              region: 'south',
+                              split: true,
+                              width: 500,
+                              collapsible: true,
+                              margins:'0 0 0 0',
+                              cmargins:'0 0 0 0',
+                              defaults:{autoScroll:true},
+                              html: '<iframe id="frameWest" name="frameEast" src="counterOrder/counterOrderAddAuto.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                              buttons: [{
+                                  text: '加入訂貨單'
+                              },{
+                                  text: '回復預設值'
+                              }]
+                          }]
+                      });
+                      // Panel for the east
+                      var eastPanel = new Ext.Panel({
+                          id: 'toolbar3',
+                          title: '訂貨明細',
+                          region: 'east',
+                          split: true,
+                          width: 587,
+                          collapsible: true,
+                          margins:'0 0 0 0',
+                          cmargins:'0 0 0 0',
+                          defaults:{autoScroll:true},
+                          //html: '<iframe id="frameEast" name="frameEast" src="./xava/module.jsp?application=KaiJung&module=CounterOrder" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>'
+                          html: '<iframe id="frameEast" name="frameEast" src="http://localhost:8080/ZhiPin/xava/module.jsp?application=ZhiPin&module=Sms" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                          buttons: [{
+                              text: '列印'
+                          },{
+                              text: 'Excel'
+                          },{
+                              text: 'PDF'
+                          },{
+                              text: '修改'
+                          },{
+                              text: '刪除'
+                          },{
+                              text: '訂單送出'
+                          }]
+                      });
+
+                      var win = new Ext.Window({
+                          title: '訂貨作業',
+                          closable:true,
+                          width:1260,
+                          height:480,
+                          //border:false,
+                          plain:true,
+                          layout: 'border',
+                          items: [westPanel, eastPanel]
+                      });
+
+                      win.show(this);
+                      
+                      
+                      
+                      var toolbar = Ext.query( "#toolbar3 div" );
+                      
+                      // 移除 Extjs 內建的標題(右視窗標題列)
+                      var title = Ext.query( "#toolbar3 div span" ); //title[0].setAttribute('class', '.altHeader' );
+                      toolbar[0].removeChild( title[0] );
+                      
+                      // 建立自訂的標題(右視窗標題列)
+                      var titleSpan = document.createElement('span');
+                      titleSpan.setAttribute('id', 'newTitle3' );
+//                      titleSpan.setAttribute('class', 'title' );
+                      var titleName = document.createTextNode( "訂單明細" );
+
+                      // 建立左邊的最大化按鈕(右視窗標題列)
+                      var leftMax = document.createElement('div'); //alert( "113 toolbar: "+ toolbar[0] + ", leftMax: " + leftMax );
+                      leftMax.setAttribute('id', 'maxEastBtn' );
+                      leftMax.setAttribute('class', 'max-collapse-west' );
+
+                      // 建立右邊的「編輯」按鈕(右視窗標題列)
+                      var edit = document.createElement('div');
+                      edit.setAttribute('id', 'editBtn' );
+                      edit.setAttribute('class', 'iconEdit' );
+
+                      // 建立右邊的「說明」按鈕(右視窗標題列)
+                      var help = document.createElement('div');
+                      help.setAttribute('id', 'helpBtn' );
+                      help.setAttribute('class', 'iconHelp' );
+
+                      toolbar[0].appendChild( leftMax );
+                      toolbar[0].appendChild( titleSpan );
+                      titleSpan.appendChild( titleName );
+                      //toolbar[0].appendChild( edit );
+                      //toolbar[0].appendChild( help );
+                      
+                      //win.show(this);
+              });
+          </xmp>        
+          <xmp id="counterOrderSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "專櫃訂貨作業", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/counterOrderSearchLayout.html", showEffectOptions: {duration:1.5}})
+                win.show(); 
+          </xmp>        
+          <xmp id="counterOrderList" class="listing">
+                var win = new Window({className: "alphacube", title: "專櫃訂貨作業", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/counterOrderDetailLayout.html", showEffectOptions: {duration:1.5}})
+                win.show(); 
+          </xmp>        
+          <xmp id="counterOrderUpdate" class="listing">
+                var win = new Window({className: "alphacube", title: "專櫃訂貨作業", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/counterOrderUpdateLayout.html", showEffectOptions: {duration:1.5}})
+                win.show(); 
+          </xmp>        
+          <xmp id="counterOrderDelete" class="listing">
+                var win = new Window({className: "alphacube", title: "專櫃訂貨作業", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/counterOrderDetailLayout.html", showEffectOptions: {duration:1.5}})
+                win.show(); 
+          </xmp>      
+            
+            
+          <xmp id="receiveList" class="listing">
+                var win = new Window({className: "alphacube", title: "撥入單維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/receive1.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="receive1" class="listing">
+                var win = new Window({className: "alphacube", title: "撥入單核對", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/receive1.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="customerizing" class="listing">
+                var win = new Window({className: "alphacube", title: "修改單維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/customerizing.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="pickFrame" class="listing">
+                var win = new Window({className: "alphacube", title: "揀貨單", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/pickFrame.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="pickSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "揀貨單查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/pickSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="sendFrame" class="listing">
+                var win = new Window({className: "alphacube", title: "撥出單維護", 
+                      top:10, left:60, width:1270, height:500, 
+                      url: "counterOrder/sendFrame.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="sendSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "撥出單查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/sendSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="transportation" class="listing">
+                var win = new Window({className: "alphacube", title: "做貨單", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "http://localhost:8980/KaiJung/xava/module.jsp?application=KaiJung&module=CounterOrder", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="transferFrame" class="listing">
+                var win = new Window({className: "alphacube", title: "調退貨維護", 
+                      top:10, left:60, width:1120, height:450, 
+                      url: "counterOrder/transferFrame.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="transferSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "調退貨查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/transferSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="makeupFrame" class="listing">
+                var win = new Window({className: "alphacube", title: "補貨單維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/makeupFrame.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>
+          <xmp id="makeup1" class="listing">
+                var win = new Window({className: "alphacube", title: "補貨單新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/makeup1.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>
+          <xmp id="makeupSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "補貨單查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/makeupSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>
+          <xmp id="wareFrame" class="listing">
+                var win = new Window({className: "alphacube", title: "庫位調整維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/wareFrame.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="wareAdjust" class="listing">
+                var win = new Window({className: "alphacube", title: "庫位調整新增", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/wareAdjust.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="wareAdjustSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "庫位調整查詢", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/wareAdjustSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <!--        
+          <xmp id="transportation" class="listing">
+                var win = new Window({className: "alphacube", title: "倉庫基本資料", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "http://localhost:8080/KaiJung/xava/module.jsp?application=KaiJung&module=Transportation", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp> 
+          -->        
+          <xmp id="orderDifference" class="listing">
+                var win = new Window({className: "alphacube", title: "訂貨差異分析", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "counterOrder/orderDifference.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="oss" class="listing">
+                var win = new Window({className: "alphacube", title: "進銷存單", 
+                      top:20, left:10, width:1200, height:450, 
+                      url: "counterOrder/ossOrderList.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="customer" class="listing">
+                var win = new Window({className: "alphacube", title: "客戶基本資料維護", 
+                      top:27, left:-13, width:1270, height:450, 
+                      url: "http://localhost:8980/KaiJung/xava/module.jsp?application=KaiJung&module=Customer", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="customerSearch" class="listing">
+                var win = new Window({className: "alphacube", title: "客戶基本資料查詢", 
+                      top:27, left:-13, width:1270, height:400,
+                      url: "customer/customerSearch.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+          <xmp id="employee" class="listing">
+                var win = new Window({className: "alphacube", title: "客戶基本資料查詢", 
+                      top:45, left:-14, width:1270, height:450,
+                      url: "layout/layout.html", showEffectOptions: {duration:1.5}})
+                win.show();                                            
+          </xmp>        
+        </div>
+
+<div class="clear"> </div>
+<a href='#' onclick='Application.evalCode("message", true)'><img src="./welcome.jpg" border='0' /></a>
+<div class="content"></div>
+<iframe id="frameEast" name="frameEast" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>
+<br>
+
+<div id="all">
+
+	<div id="copyright">&copy; 2009 <a href="http://Javascript-Array.com/">凱鈞實業股份有限公司</div>
+	<br/><br/><br/>
+</div>
+
+<!--  快捷選單開始 -->
+<div id="footpanel">
+	<ul id="mainpanel">    	
+        <li><a href="#" class="home">快捷選單 <small>回首頁</small></a></li>
+        <li><a href="http://www.designbombs.com" class="profile">View Profile <small>揀貨單</small></a></li>
+        <li><a href="http://www.designbombs.com" class="editprofile">Edit Profile <small>撥出單</small></a></li>
+        <li><a href="http://www.designbombs.com" class="contacts">Contacts <small>客戶</small></a></li>
+        <li><a href="http://www.designbombs.com" class="messages">Messages (10) <small>商品</small></a></li>
+        <li><a href="http://www.designbombs.com" class="playlist">Play List <small>本櫃業績</small></a></li>
+        <li><a href="http://www.designbombs.com" class="videos">Videos <small>鄰櫃業績</small></a></li>
+        <li id="alertpanel">
+        	<a href="#" class="alerts">Alerts</a>
+            <div class="subpanel">
+            <h3><span> &ndash; </span>Notifications</h3>
+            <ul>
+            	<li class="view"><a href="#">View All</a></li>
+            	<li><a href="#" class="delete">X</a><p><a href="#">Antehabeo</a> abico quod duis odio tation luctus eu ad <a href="#">lobortis facilisis</a>.</p></li>
+                <li><a href="#" class="delete">X</a><p><a href="#">Et voco </a> Duis vel quis at metuo obruo, turpis quadrum nostrud <a href="#">lobortis facilisis</a>.</p></li>
+                <li><a href="#" class="delete">X</a><p><a href="#">Tego</a> nulla eum probo metuo nullus indoles os consequat commoveo os<a href="#">lobortis facilisis</a>.</p></li>
+                <li><a href="#" class="delete">X</a><p><a href="#">Antehabeo</a> abico quod duis odio tation luctus eu ad <a href="#">lobortis facilisis</a>.</p></li>
+                <li><a href="#" class="delete">X</a><p><a href="#">Nonummy</a> nulla eum probo metuo nullus indoles os consequat commoveo <a href="#">lobortis facilisis</a>.</p></li>
+                <li><a href="#" class="delete">X</a><p><a href="#">Tego</a> minim autem aptent et jumentum metuo uxor nibh euismod si <a href="#">lobortis facilisis</a>.</p></li>
+                <li><a href="#" class="delete">X</a><p><a href="#">Antehabeo</a> abico quod duis odio tation luctus eu ad <a href="#">lobortis facilisis</a>.</p></li>
+            </ul>
+            </div>
+        </li>
+        <li id="chatpanel">
+        	<a href="#" class="chat">待辦事項 (<strong>18</strong>) </a>
+            <div class="subpanel">
+            <h3><span> &ndash; </span>Friends Online</h3>
+            <ul>
+            	<li><span>Family Members</span></li>
+            	<li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><span>Other Friends</span></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+				<li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+                <li><a href="#"><img src="icons/chat-thumb.png" alt="" /> Your Friend</a></li>
+            </ul>
+            </div>
+        </li>
+	</ul>
+</div>
+<!--  快捷選單結束 -->
+
+</body>
+</html>

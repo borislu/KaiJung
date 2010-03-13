@@ -1,0 +1,28 @@
+<html>
+<head>
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#hide").click(function(){
+    $("#tail").hide();
+  })
+  $("#show").click(function(){
+    $("#tail").show();
+  })
+})
+</script>
+</head>
+<body>
+
+<div align="center" style="margin: 0px auto 0 auto;"> 
+	<input type="checkbox">庫位尺寸及數量 
+	<input type="checkbox" id="hide">庫位尺寸及安全數量 
+	<input type="checkbox" id="show">庫架尺寸及數量 
+</div>
+<div align="center" style="margin: 0px auto 0 auto; width:1346px;">
+	<span style="float:left;"><IMG src="wareAdjust.jpg" align="center" border="0"></span>
+	<span style="float:right;" id="tail"><IMG src="wareAdjust2.jpg" align="center" border="0"></span>
+</div>
+
+</body>
+</html>

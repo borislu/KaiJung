@@ -1,0 +1,38 @@
+<table border="1">
+  <tbody>
+    <tr>
+      <td>查詢條件</td>
+      <td>確認查詢</td>
+    </tr>
+    <tr>
+        <form id="form1" name="form1" action="">
+	<td>
+		訂貨單出單期間
+		<INPUT type="text" value="" size='10'>
+		至
+		<INPUT type="text" value="" size='10'>
+	</td>
+	<td>
+	        <INPUT type="button" value="查詢" style="background:88F" onclick="javascript: location.href='counterOrderList.html'">
+	        <INPUT type="reset" value="清除" style="background:88F">
+	</td>
+	</form>
+    </tr>
+    <tr>
+        <form id="form2" name="form2" action="">
+	<td>
+		訂貨單狀態查詢
+		<SELECT name="Status">
+		<option value="1">全部</option>
+		<option value="2">已出貨</option>
+		<option value="3">未出貨</option>
+		</SELECT>
+	</td>
+	<td>    <INPUT type="button" value="查詢" style="background:88F" onclick="javascript: location.href='counterOrderList.html'">
+	        <INPUT type="reset" value="清除" style="background:88F">
+	</td>
+	</form>
+    </tr>
+  </tbody>
+</table>
+

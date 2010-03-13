@@ -1,0 +1,572 @@
+<html>
+<head>
+<title>專櫃訂貨</title>
+<link rel="stylesheet" type="text/css" href="../extjs/resources/css/ext-all.css" />
+<script type="text/javascript" src="../extjs/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../extjs/ext-all.js"></script>
+<!--<script type="text/javascript" src="actions.js"></script>-->
+<link rel="stylesheet" type="text/css" href="../extjs/progress/progress-bar.css" /> 
+<style type="text/css">
+    html, body {
+        font: normal 12px verdana;
+        margin: 0;
+        padding: 0;
+        border: 0 none;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    p {
+        margin: 5px;
+    }
+    
+    .settings {
+        background-image: url(../shared/icons/fam/folder_wrench.png);
+    }
+    
+    .nav {
+        background-image: url(../shared/icons/fam/folder_go.png);
+    }
+</style>
+<script type="text/javascript">
+var pageNo = 0; // 頁碼
+var cboxes = new Array(); // 左邊 checkbox 的二維陣列 ( 頁數，索引值 )
+var comparators = new Array(); // filter
+var conditions = new Array(); // filter
+var select1th = 0; // 勾選的第一筆
+var westElement = null;
+var westFrame = null;
+var westDoc = null;
+var eastElement = null;
+var eastFrame = null;
+var eastDoc = null;
+var hiddElement = null;
+var hiddFrame = null;
+var hiddDoc = null;
+var pno = 1;
+
+function initCbox ( showNo ){
+	   // 二維陣列
+    cboxes [ pageNo ] = new Array();
+}
+
+function initExt(){
+				// Extjs initialization
+    var viewport = new Ext.Viewport({
+        layout: 'border',
+        items: [new Ext.BoxComponent({ // raw
+            region: 'north',
+            el: 'north',
+            //split:true,  // 沒有 split 的話就無法拖移
+            //collapsible: true,
+            height: 0
+        }), {
+            region: 'east',
+            id: 'east-panel',
+            title: '建議訂貨',
+            split: true,
+            width: '50%',
+            minSize: 10,
+            //maxSize: 400,
+            collapsible: true,
+            margins: '0 0 0 5',
+            //layout:'accordion',
+            layoutConfig: {
+                animate: true
+            },
+            items: [{
+                id: 'east-panel-item',
+                contentEl: 'frameEast',
+                border: false,
+                iconCls: 'nav'
+            }]
+        }, {
+            region: 'center',
+            id: 'west-panel',
+            title: '專櫃訂貨',
+            width: 200,
+            minSize: 10,
+            //maxSize: 400,
+            //split:true,  // 沒有 split 的話就無法拖移
+            //collapsible: true,
+            margins: '0 0 0 0',
+            //layout:'accordion',
+            layoutConfig: {
+                animate: true
+            },
+            items: [{
+                id: 'west-panel-item',
+                contentEl: 'frameWest',
+                border: false,
+                iconCls: 'nav'
+            }],
+            bbar: [{
+                text: '顯示明細',
+                handler: function(){
+                    syncCheck();
+                }
+            }]
+        }]
+    });
+}
+
+initWestFrame = function(){
+    westElement = Ext.get('frameWest');
+    if (westElement != null) {
+        westFrame = westElement.dom; // 取得更新後的 HTML Document
+        westFrame.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreJSP';
+        westDoc = westFrame.contentDocument || westFrame.contentWindow.document;
+    }
+}
+initEastFrame = function(){
+    eastElement = Ext.get('frameEast');
+    if (eastElement != null) {
+        eastFrame = eastElement.dom; // 取得更新後的 HTML Document
+        eastFrame.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreListOnly';
+        eastDoc = eastFrame.contentDocument || eastFrame.contentWindow.document;
+    }
+}
+initHiddFrame = function(){
+    hiddElement = Ext.get('hidden1');
+    if (hiddElement != null) {
+        hiddFrame = hiddElement.dom; // 取得更新後的 HTML Document
+        hiddFrame.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreJSP';
+        hiddFrame.src = "javascript: function exe14(){  try{ if(document.getElementById('ox_KaiJung_OrderStoreJSP__Mode___list') != null) { openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'Mode.list');}else if( document.getElementById('ox_KaiJung_OrderStoreJSP__Mode___detailAndFirst') != null ){} else{ setTimeout( 'exe14()', 100 ); } }catch(e){ setTimeout( 'exe14()', 100 );} } exe14();"; } //alert(document.getElementById('ox_KaiJung_OrderStoreJSP__Mode___list')+' , '+ document.getElementById('ox_KaiJung_OrderStoreJSP__Mode___detailAndFirst'));
+        hiddDoc = hiddFrame.contentDocument || hiddFrame.contentWindow.document;
+}
+
+function viewDetail ( j ){
+    //alert( "viewDetail: j: "+ j );
+    Ext.get('hidden1').dom.src = "javascript: function exe2(){ try{ openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'List.viewDetail', 'row="+ j +"'); }catch(e){ alert(e); setTimeout( 'parent.viewDetail("+ j +")', 10 );} } exe2();";
+}
+
+//function alwaysList (){
+//    Ext.get('hidden1').dom.src = "javascript: function exe13(){ try{ openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'Mode.list'); }catch(e){ alert(e); setTimeout( 'exe13()', 100 );} } exe13();";
+//}
+
+function list2Detail(){ // 1.清單 -> 2.過濾 -> 3.明細
+    // 1.清單
+    hidF = Ext.get('hidden1').dom;
+    hidDoc = hidF.contentDocument || hidF.contentWindow.document; // 取得更新後的 HTML Document
+    var inputs = hidDoc.getElementsByTagName('input');
+    var inpSize = inputs.length;
+    //var debug = "input size="+ inpSize + ", "; // Debug
+    
+    var cIndex = cboxes [pageNo] .length; // cboxes: 左邊勾選的 checkbox 
+    for (i = (inpSize - 1); i > -1; i--) { // 迴圈倒數，讓迴圈的最後一筆就是資料的第一筆
+        //debug += " , "+ inputs[i].type ; // Debug
+        if (inputs[i].type == 'checkbox' && (('' + inputs[i].name).search('xava_selected') != -1) && (('' + inputs[i].name).search('xava_selected_all') == -1)) { // &&  ( (''+ inputs[i].name).search( '__xava_selected') != -1 ) 
+            cIndex--;
+            //debug += " , "+ cboxes [cIndex]; //Debug
+            if (cboxes [pageNo] [cIndex] == "1") {
+																inputs[i].checked = true;
+                select1th = cIndex; //勾選的第一筆記錄索引
+            }else{
+																inputs[i].checked = false;
+            }
+        }
+    }//inputSize End
+				
+    //debug += " , cIndex: "+ cIndex + ", cboxes.length: " + cboxes [pageNo] .length ; // Debug
+    //alert( debug ); // Debug
+    //alert( "select1th: "+ select1th + ", cboxes.length: "+ cboxes [pageNo] .length ); // Debug
+				
+    // 2.明細
+    if (cIndex == cboxes [pageNo] .length) { // 表示畫面尚未載入完成
+        //hidF.src = "javascript: function exe9(){ try{ openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'Mode.list'); }catch(e){ alert(e); setTimeout( 'parent.list2Detail()', 10 );} } exe9();";
+        Ext.get('hidden1').dom.src = "javascript: function exe12(){ try{ openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'Mode.list'); }catch(e){ alert(e); setTimeout( 'parent.list2Detail()', 10 );} } exe12();";
+    }
+    else {
+					   if( select1th < 0 ){
+									   select1th = 0;
+								}
+        //顯示勾選的第一筆記錄
+        viewDetail( select1th );
+								
+        // 3.同步
+        Ext.get('frameEast').dom.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreListOnly';
+        
+        // 4.回清單預備
+//                    Ext.get('hidden1').dom.src = "javascript: function exe13(){ try{ if(Ext.get('ox_KaiJung_OrderStoreJSP__Mode___list') != null) { openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'Mode.list');}else if( Ext.get('ox_KaiJung_OrderStoreJSP__Mode___detailAndFirst') != null ){} else{ setTimeout( 'exe13()', 100 ); } }catch(e){ setTimeout( 'exe13()', 100 );} } exe13();";
+    }
+}
+
+function syncCheck(){ // 先記錄勾選的 checkbox, filter conditions, (然後啟動右邊 frame 的對應連結) 
+    eastDoc = Ext.get('frameEast').dom.contentDocument || Ext.get('frameEast').dom.contentWindow.document; // 取得更新後的 HTML Document 
+				cboxes [ pageNo ] = null;
+    initCbox(); // 初始化 checkbox 陣列
+   
+    var inputs = westDoc.getElementsByTagName('input');
+    var inpSize = inputs.length;
+    //var debug = "input size="+ inpSize + ", "; // Debug
+    j = 0; // 第一個 checkbox 是全選
+    
+    //alert( " inpSize: " + inpSize ); // Debug
+    for (i = 0; i < inpSize; i++) {
+        //debug += " "+ i + ". " + inputs[i] + ", inputs name = "+ (inputs[i].name).search( 'conditionValue' ) + " , "; // Debug
+        if (inputs[i].type == 'checkbox' && (('' + inputs[i].name).search('xava_selected') != -1) && (('' + inputs[i].name).search('xava_selected_all') == -1)) {
+            //debug += "     "+ i + ". " + inputs[i].name + " , "+ inputs[i].checked ; // Debug
+            if (inputs[i].checked == true) {
+                cboxes [pageNo] [j] = "1"; // 勾選的checkbox物件，多筆明細用
+            }
+            else {
+                cboxes [pageNo] [j] = "0"; // 未勾選的checkbox物件，多筆明細用
+            }
+            j++; // checkbox
+        }
+        if ((inputs[i].name).search('conditionValue') != -1) { // ox_KaiJung_OrderStoreListOnly__conditionValue___0
+            var r = ('' + inputs[i].name).match(/[\d\.]+/g); // 取出索引數字
+            conditions[r[0]] = inputs[i].value;
+        }
+    }//inputSize End
+    //alert( debug ); // Debug 列印左視窗的欄位
+    // 過濾運算元
+    var selects = westDoc.getElementsByTagName('select');
+    var selSize = selects.length;
+    for (i = 0; i < selSize; i++) {
+        if ((selects[i].name).search('conditionComparator') != -1) { // ox_KaiJung_OrderStoreListOnly__conditionComparator___0
+            var r = ('' + selects[i].name).match(/[\d\.]+/g);
+            comparators[r[0]] = selects[i].value;
+        }
+    }
+    
+    list2Detail(); // 清單、過濾、明細
+}
+
+function registerSave(){ // 右邊的存檔按鈕 要加入呼叫左邊重載畫面的指令
+    westDoc = Ext.get('frameWest').dom.contentDocument || Ext.get('frameWest').dom.contentWindow.document; // 取得更新後的 HTML Document
+    try {
+        var el = westDoc.getElementById('ox_KaiJung_OrderStoreJSP__CRUD___save');
+        if (el != null) {
+            if (el.addEventListener) {
+                el.addEventListener('click', initWestFrame, false);
+            }
+            else 
+                if (el.attachEvent) { // ie
+                    el.attachEvent('onclick', initWestFrame);
+                }
+        }
+        else {
+            setTimeout('registerSave()', 1000);
+        }
+    } 
+    catch (e) {
+        setTimeout('registerSave()', 50);
+    }
+}
+
+function syncPage(){
+    alert( event );
+    // 在背景執行: 先換到清單，按下換頁，然後回明細
+    var hiddenDoc = Ext.get('hidden1').dom.contentDocument || Ext.get('hidden1').dom.contentWindow.document; // 取得更新後的 HTML Document
+    //alert( 'syncPage: hiddenDoc: '+ hiddenDoc );
+    try {
+        syncCheck();
+        Ext.get('hidden1').dom.src = "javascript:openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'Mode.list')";
+        list2Detail();
+        syncPage2();
+    } 
+    catch (e) {
+        alert('syncPage: error: ' + e);
+        setTimeout('syncPage()', 100);
+    }
+}
+
+function syncPage2(){
+    // 在背景執行: 先換到清單，按下換頁，然後回明細
+    //alert( 'syncPage2' );
+    var hiddenDoc = Ext.get('hidden1').dom.contentDocument || Ext.get('hidden1').dom.contentWindow.document; // 取得更新後的 HTML Document
+    try {
+        Ext.get('hidden1').dom.src = "javascript:openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'List.goPage', 'page=" + pno + "')";
+    } 
+    catch (e) {
+        setTimeout('syncPage2()', 100);
+    }
+}
+
+function registerPageLoad(){ // 左邊的換頁按鈕 要讓右邊同步換頁 先用隱藏 iframe 換頁，使 Openxava 的 application 換頁，這樣明細也會跟著換頁
+    westDoc = Ext.get('frameWest').dom.contentDocument || Ext.get('frameWest').dom.contentWindow.document; // 取得更新後的 HTML Document
+    try {
+        var elA = westDoc.getElementsByTagName('a');
+        var lengthA = elA.length;
+        if (lengthA < 1) { // 畫面未載入
+            setTimeout('registerPageLoad()', 50);
+        }
+        else { // 畫面載入完成
+            //var debug = ''+ lengthA ;
+            for (i = 0; i < lengthA; i++) { // 頁數沒有 id 只能這樣找
+                //debug += ( ', '+ i +' elA: '+ elA[i].href );
+                if (('' + elA[i].href).search('List.goPage') != -1) {
+                    //debug += ( ', '+ i +' '+ elA[i].href );
+                    if (elA[i].addEventListener) {
+                        //debug += ( ', '+ i +' '+ elA[i].href );
+                        elA[i].addEventListener('click', syncPage, false); // 在背景執行: 先換到清單，按下換頁，然後回明細
+                    }
+                    else 
+                        if (elA[i].attachEvent) { // ie
+                            elA[i].attachEvent('onclick', syncPage);
+                        }
+                }
+            }
+            //alert( 'debug: '+ debug );
+        }
+    } 
+    catch (e) {
+        setTimeout('registerPageLoad()', 50);
+    }
+}
+
+function newWestFrame(){
+    westFrame.src = "javascript: function exe8(){ try{ openxava.executeAction('KaiJung', 'OrderStoreJSP', '', false, 'CRUD.new'); }catch(e){ setTimeout( 'parent.newWestFrame()', 10 );} } exe8(); ";
+}
+
+Ext.onReady(function(){
+    initExt();
+    initHiddFrame();
+    initWestFrame();
+    initEastFrame();
+    
+    var pbar1 = new Ext.ProgressBar({
+        text:'Initializing...1',
+        id:'pbar1'
+    });
+    Ext.fly('p1text').update('Working');
+    if (!pbar1.rendered){
+        pbar1.render('p1');
+    }else{
+        pbar1.text = 'Initializing...2';
+        pbar1.show();
+    }
+    Runner.run( pbar1, 10, function(){
+        pbar1.reset(true);
+        Ext.fly('p1text').update('Done.').show();
+    });
+    
+    newWestFrame();
+    registerSave();
+    registerPageLoad();
+				initCbox( 10 ); // 每頁顯示列數
+    //Ext.get('frameWest').dom.src = '../xava/modules.jsp?application=KaiJung&module=OrderStoreJSP';
+    /* http://localhost:8080/KaiJung/xava/modules.jsp?application=KaiJung&module=OrderStoreListOnly*/
+});
+var Runner = function(){
+    var f = function( v, pbar, count, cb ){
+        return function(){
+            if(v > count){
+                cb();
+            }else{
+                var i = v/count;
+                pbar.updateProgress( i, Math.round(100*i)+'% completed...');
+                //pbar.updateProgress( i, 'Loading item ' + v + ' of '+ count +'...');
+            }
+       };
+    };
+    return {
+        run : function( pbar, count, cb ){
+            var ms = 3000/count;
+            for(var i = 1; i < (count+2); i++){
+               setTimeout( f ( i, pbar, count, cb ), i*ms );
+            }
+        }
+    }
+}();
+</script>
+<!--<input id="ox_KaiJung_OrderStoreListOnly__Mode___detailAndFirst" class="" type="button" value="首筆明細" onclick="openxava.executeAction("KaiJung", "OrderStoreListOnly", "", false, "Mode.detailAndFirst")" title="F8 - 明細模式"/>-->
+
+<link href="../css/table.css" rel="stylesheet" type="text/css" />
+<link href="../css/content.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery.form.js"></script>
+<script type="text/javascript" src="../js/tables.js"></script>
+
+<script type="text/javascript"> 
+    $(document).ready(function() { 
+    // wait for the DOM to be loaded 
+        // 非 ox 產生時用的送出和檢核 
+        $('#myForm').ajaxForm(function() { 
+            alert("Thank you for your comment!"); 
+        }); 
+    }); 
+</script> 
+<style type="text/css">
+<!--
+#content1 { width: 700px; }
+#table1 {  float: left; width: 700px; }
+#table2 { float: left; top: 100px; height: 100px; width: 700px; }
+#column1 { float: left;}
+#column2 { float: left;}
+#column3 { float: left;}
+-->
+</style>
+</head>
+<body>
+    <div class="status" id="p1text"></div> 
+    <div id="p1" style="position:fixed;top:180px;left:300px;width:300px;"></div>
+
+    <div id="east">
+        <iframe id="frameEast" name="frameEast" frameborder="0" height="100%" scrolling="auto" width="100%">
+        </iframe>
+    </div>
+    <div id="west">
+        <iframe id="frameWest" name="frameWest" frameborder="0" height="100%" scrolling="auto" width="100%">
+        
+            <div id="content1">
+                <div id="table1">
+                    <div id="column1">
+                        <div>訂單編號 <xava:editor property="readCode"/></div>
+                        <div>訂貨時間 <xava:editor property="createTime"/></div>
+                        <div>訂貨專櫃 <xava:descriptionsList reference="warehouse"/></div>
+                        <div>訂貨人員 <xava:descriptionsList reference="employee"/></div>
+                    </div>
+                    <div id="column2">
+                        <div>揀貨單編號 <xava:editor property="pickerId"/></div>
+                        <div>揀貨時間 <xava:editor property="pickerTime"/></div>
+                        <div>揀貨人員 <xava:editor property="pickerBy"/></div>
+                    </div>
+                    <div id="column3">
+                        <div>撥出單編號 <xava:editor property="senderId"/></div>
+                        <div>撥出時間 <xava:editor property="senderTime"/></div>
+                        <div>撥出人員 <xava:editor property="senderBy"/></div>
+                    </div>
+                </div>
+                <div id="table2">
+                    <form id="myForm" action="comment.php" method="post"> 
+                        <table border="0" cellpadding="0" cellspacing="0" width="734">
+                          <tbody><tr><td><div align="center">
+                          <table id="mainTable" align="center" border="1" bordercolor="#cccccc" cellpadding="0" cellspacing="0" width="765">
+                            <tbody><tr>
+                              <td rowspan="1" class="tableHead2" width="6"><!--全選-->
+                                <input name="selectall" id="selectall" type="checkbox" />
+                              </td>
+                              <td rowspan="1" class="tableHead2" width="32" nowrap="nowrap">項次</td>
+                              <td rowspan="1" class="tableHead2" width="104">貨號</td>
+                              <td rowspan="1" class="tableHead2" width="40">顏色</td>
+                              <td rowspan="1" colspan="1" class="tableHead3">
+                                    <div align="center">65/SML<br />
+                        024<br />
+                                    </div>
+                        </td><td rowspan="1" colspan="1" class="tableHead3">
+                                    <div align="center">70/MDM<br />
+                        026<br />
+                                    </div>
+                                    </td>
+                                    <td rowspan="1" colspan="1" class="tableHead3">
+                                    <div align="center">75/LRG<br />
+                        028<br />
+                                    </div>
+                                    </td>
+                                    <td rowspan="1" colspan="1" class="tableHead3">
+                                    <div align="center">80/ELG<br />
+                        030<br />
+                                    </div>
+                                    </td>
+                                    <td colspan="1" rowspan="1" class="tableHead3">
+                                    <div align="center">85/QLG<br />
+                        032<br />
+                                    </div>
+                                    </td>
+
+                              <td rowspan="1" class="tableHead2" width="56">小計</td>
+                              <td rowspan="1" class="tableHead2" width="56">修改單號</td>
+                              <td rowspan="1" class="tableHead2">備註</td>
+                            </tr>
+                            <tr>
+                              
+                              
+                            </tr>
+                            <tr>
+                              <td><label>
+                                
+                                      </label><div align="center">
+                                        <input name="checkbox" id="checkbox" type="checkbox" />
+                                        </div>
+                                    </td>
+                              <td><div align="center">1</div></td>
+                              <td ><div align="center"><input name="r1" id="r1" value="" size="12" maxlength="12" type="text" /></div></td>
+                              <td ><div align="center"><input name="r2" id="r2" value="" size="3" maxlength="3" type="text" /></div></td>
+                              <td ><div align="center"><input name="r3" id="r3" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r4" id="r4" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r5" id="r5" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r6" id="r6" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r7" id="r7" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r8" id="r8" value="" size="6" maxlength="5" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r9" id="r9" value="" size="5" maxlength="5" type="text" /></div></td>
+                              <td ><div align="center"><input name="r10" id="r10" value="" size="28" maxlength="40" type="text" /></div></td>
+                            </tr>
+                            <tr>
+                              <td>
+                                
+                                    <div align="center">
+                                      <input name="checkbox2" id="checkbox2" type="checkbox" />
+                                      </div></td>
+                              <td><div align="center">2</div></td>
+                              <td ><div align="center"><input name="r1" id="r1" value="" size="12" maxlength="12" type="text" /></div></td>
+                              <td ><div align="center"><input name="r2" id="r2" value="" size="3" maxlength="3" type="text" /></div></td>
+                              <td ><div align="center"><input name="r3" id="r3" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r4" id="r4" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r5" id="r5" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r6" id="r6" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r7" id="r7" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r8" id="r8" value="" size="6" maxlength="5" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r9" id="r9" value="" size="5" maxlength="5" type="text" /></div></td>
+                              <td ><div align="center"><input name="r10" id="r10" value="" size="28" maxlength="40" type="text" /></div></td>
+                            </tr>
+                            <tr>
+                              <td >
+                                
+                                    <div align="center">
+                                      <input name="checkbox3" id="checkbox3" type="checkbox" />
+                                      </div></td>
+                              <td ><div align="center">3</div></td>
+                              <td ><div align="center"><input name="r1" id="r1" value="" size="12" maxlength="12" type="text" /></div></td>
+                              <td ><div align="center"><input name="r2" id="r2" value="" size="3" maxlength="3" type="text" /></div></td>
+                              <td ><div align="center"><input name="r3" id="r3" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r4" id="r4" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r5" id="r5" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r6" id="r6" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r7" id="r7" value="" size="4" maxlength="4" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r8" id="r8" value="" size="6" maxlength="5" class="numbers" type="text" /></div></td>
+                              <td ><div align="center"><input name="r9" id="r9" value="" size="5" maxlength="5" type="text" /></div></td>
+                              <td ><div align="center"><input name="r10" id="r10" value="" size="28" maxlength="40" type="text" /></div></td>
+                            </tr>
+
+                            <tr>
+                              <td rowspan="1" colspan="4" class="tableHead2">合計</td><td colspan="1" style="vertical-align: top;">
+                                    </td>
+                                    <td colspan="1" style="vertical-align: top;">
+                                    </td>
+                                    <td colspan="1" style="vertical-align: top;">
+                                    </td>
+                                    <td colspan="1" style="vertical-align: top;">
+                                    </td>
+                                    <td style="vertical-align: top;">
+                                    </td>
+
+                              <td align="center">&nbsp;</td>
+                              <td colspan="2" class="tableHead2">&nbsp;</td>
+                            </tr>
+                            <tr>
+                              <td colspan="4" class="tableHead2" valign="middle">備註</td>
+                              <td colspan="8" class="tableHead2" valign="middle">
+                                <textarea cols="76" rows="1" name="remark">&nbsp;</textarea>
+                              </td>
+                              </tr>
+                          </tbody></table>
+                        </div></td>
+                          </tr>
+                        </tbody></table>            
+                    </form>
+                </div>
+            </div>
+        </iframe>
+    </div>
+    <div id="north">
+        <p>
+            <iframe id="hidden1" name="hidden1">
+            </iframe>
+        </p>
+    </div>
+    <div id="props-panel" style="width:200px;height:200px;overflow:hidden;">
+    </div>
+</body>
+</html>

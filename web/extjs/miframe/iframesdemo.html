@@ -1,0 +1,284 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>IframePanels for ExtJs 2.0</title>
+<link rel="stylesheet" type="text/css" href="../resources/css/ext-all.css" />
+
+    <!-- GC -->
+    <!-- LIBS -->
+    <script type="text/javascript" src="../adapter/ext/ext-base.js"></script>
+ <!-- ENDLIBS -->
+
+    <script type="text/javascript" src="../ext-all.js"></script>
+
+     <script type="text/javascript" src="../portal/Portal.js"></script>
+     <script type="text/javascript" src="../portal/PortalColumn.js"></script>
+     <script type="text/javascript" src="../portal/Portlet.js"></script>
+    <script type="text/javascript" src="miframe.js"></script>
+    <link rel="stylesheet" type="text/css" href="../portal/portal.css" />
+
+
+    <script type="text/javascript">
+
+
+    Ext.BLANK_IMAGE_URL = '../resources/images/default/s.gif';
+
+    Ext.onReady(function(){
+        Ext.QuickTips.init();
+        Ext.QuickTips.getQuickTip().interceptTitles = true;
+        Ext.QuickTips.enable();
+
+        // create some portlet tools using built in Ext tool ids
+       var tools = [{
+               id:'gear',
+               handler: function(e, target, panel){
+                   panel.setSrc();
+               }
+           },{
+               id:'close',
+               handler: function(e, target, panel){
+                   panel.ownerCt.remove(panel, true);
+               }
+        }];
+       var viewport = new Ext.Viewport({
+              layout:'border',
+              items:[{
+                  region:'west',
+                  id:'west-panel',
+                  title:'West',
+                  split:true,
+                  width: 200,
+                  minSize: 175,
+                  maxSize: 400,
+                  collapsible: true,
+                  animCollapse  :Ext.isIE,
+                  margins       :'35 0 5 5',
+                  cmargins      :'35 5 5 5',
+                  layout        :'accordion',
+                  defaultType   :'iframepanel',
+                  layoutConfig  :{
+                      //animate:  Ext.isIE
+                  },
+                  defaults      :{
+                        loadMask:false,
+                        border:false
+                   },
+                  items : [{
+                      html: Ext.example.shortBogusMarkup,
+                      title:'Navigation'
+                     },{
+                      title:'Settings',
+                      html: Ext.example.shortBogusMarkup
+                      }]
+              },
+              {
+                  xtype     :'portal',
+                  hideMode  :!Ext.isIE?'nosize':'display',
+                  region    :'center',
+                  margins   :'35 5 5 0',
+                  defaults:{
+                        hideMode:!Ext.isIE?'nosize':'display'
+                  },
+                  title:'ManagedIframe Portlets',
+                  items:[{
+                      columnWidth:.5,
+                      style:{padding:'10px 0 10px 10px'},
+                      defaultType:'iframeportlet',
+
+                      defaults:{
+                          height:300
+                         ,loadMask:false
+                         ,tools: tools
+                        },
+                      items:[{
+                           title:'Ext Forums'
+                          ,defaultSrc :  'http://extjs.com/forum/index.php'
+
+
+                      },{
+                          title: 'Google',
+                          defaultSrc :  'http://www.google.com'
+
+                      }]
+                  },{
+                      columnWidth   :.5,
+                      style         :{padding:'10px'},
+                      defaultType   :'iframeportlet',
+                      defaults      :{
+                             height:400
+                            ,loadMask:{msg:'Loading Printable Bogus Markup...'}
+                            ,border:true
+                            ,tools: tools
+                        },
+                      items:    [{
+                          title: 'Iframe Portlet',
+                          html: 'Notice the way all browsers (except IE) reset the iframe when its DOM parent changes [boo].'
+                      },{
+                          title: 'Iframe Portlet 2',
+                          html: Ext.example.shortBogusMarkup
+                      }]
+                  }]
+              }]
+        });
+       var toggle = false;
+       var comeHome = function(){ Ext.getCmp('sites').activeTab.setSrc();},
+           printPanel = function(){
+               try{
+                  Ext.getCmp('sites').activeTab.iframe.print();
+              }catch(ex){Ext.Msg.alert('Sorry','Print Failure!<br />'+ex);}
+           },
+           _urlDelim = '\/',
+           getLocationAbsolute = function(){
+               var d= _urlDelim = location.href.indexOf('\/') != -1 ? '\/':'\\';
+               var u=location.href.split(d);
+               u.pop(); //this page
+               return u.join(d);
+           },
+           getSiteRoot = function(){
+            var url = getLocationAbsolute().split(_urlDelim );
+            url.pop();
+                    return url.join(_urlDelim);
+           };
+
+
+       win = new Ext.Window({
+            title: 'WebBrowser Fun',
+            id:'browserfun',
+            layout:'fit',
+            minimizable: false,
+            maximizable: true,
+            width:600,
+            height: 500,
+            plain: false,
+            items:{
+              xtype:'tabpanel',
+              id:'sites',
+              defaultType: 'iframepanel',
+              defaults:{
+                closable:true,
+                loadMask:{msg:'Loading Site...'},
+                autoShow:true,
+
+                tbar : [{ text:'Return',handler: comeHome},
+                        '-',
+                        {text: 'Print',handler: printPanel},
+                        '-',
+                        {
+                        split:true,
+                        text:'Drop Down Menu',
+                        iconCls: 'preview-bottom',
+                        handler: null,
+                        menu:{
+                            id:'reading-menu',
+                            cls:'reading-menu',
+                            width:200,
+                            listeners:{        //mask all frames while menu is visible.
+                                beforeshow : Ext.ux.ManagedIFrame.Manager.showDragMask,
+                                hide       : Ext.ux.ManagedIFrame.Manager.hideDragMask,
+                                scope      : Ext.ux.ManagedIFrame.Manager
+
+                            },
+                            items: [{
+                                text:'Bottom',
+                                checked:true,
+                                group:'rpgroup',
+                                scope:this,
+                                iconCls:'preview-bottom'
+                            },{
+                                text:'Right',
+                                checked:false,
+                                group:'rpgroup',
+                                scope:this,
+                                iconCls:'preview-right'
+                            },{
+                                text:'Hidden',
+                                checked:false,
+                                group:'rpgroup',
+                                scope:this,
+                                iconCls:'preview-hide'
+                            }]
+                        }
+                    }
+                  ],
+                listeners:{
+                       activate:function(panel){
+                           ///panel.getFrame().removeShim();
+                        }
+                }
+              },      //   prevent frames from bleeding thru overLayed tabs
+              listeners:{
+                      beforetabchange:function(tabPanel,newTab,prevTab){
+                          //if(prevTab)prevTab.getFrame().applyShim();
+                        }
+                     },
+              items: [{
+                     id: 'google'
+                    ,title:'Google'
+                    ,defaultSrc : function(){return 'http://www.google.com';}
+                       }, {
+                     id: 'ajaxian'
+                    ,title:'Ajaxian'
+                    ,defaultSrc :  'http://www.ajaxian.com'
+
+                       }, {
+                     id: 'extjs'
+                    ,title:'Ext Forums'
+                    ,defaultSrc :  'http://extjs.com/forum/showthread.php?t=16590'
+                       },{
+                     id: 'bogus'
+                    ,title:'Bogus Markup'
+                    ,loadMask:{msg:'Loading Printable Bogus Markup...'}
+                    //,frameStyle : {overflow:'scroll'}
+                    //,frameConfig:{scrolling: 'yes', style:{overflow:'scroll'}}
+                    ,html: '<h1>This Iframe should be printable.</h1>'+Ext.example.bogusMarkup
+
+                     ,tbar:[{
+                        text: 'Print',
+                        handler: printPanel
+                     },'-',{
+                        text: 'Switch', //<-- Added this .reset sample
+                        handler: function(){
+                          var i;
+                          if(i=Ext.getCmp('sites').activeTab){
+                              toggle = !toggle;
+                              if (toggle){
+                                i.setSrc('http://www.google.com', true);
+                              }else{
+                                i.getFrame().reset(null, function(){
+                                    i.getFrame().update('<h1>This Iframe should be printable.</h1>'+Ext.example.bogusMarkup);
+
+                                });
+
+                              }
+                            }
+                         }
+                      }]
+                 }
+              ]
+            }
+         });
+         win.show(Ext.getBody());
+
+         Ext.EventManager.on(window, "beforeunload", function(){
+
+           Ext.destroy(viewport, win);
+
+         },window,{single:true});
+
+
+    });
+
+    </script>
+
+    <!-- Common Styles for the examples -->
+    <link rel="stylesheet" type="text/css" href="../examples.css" />
+
+
+</head>
+<body>
+<script type="text/javascript" src="../examples.js"></script><!-- EXAMPLES -->
+<h1>Ext.ux.ManagedIframePanel</h1>
+
+</body>
+</html>

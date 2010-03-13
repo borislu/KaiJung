@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+	<title>客戶基本資料維護</title>
+        <script type="text/javascript">
+          function changeMainFrame (){  
+              parent.changeMainFrame( "counterOrderAdd.html" ,"counterOrderAdd2.html" );  
+          }
+        </script>
+        
+</head>
+<body>
+<div>
+<input type="button" value="新增" onclick="location.href='counterOrderDetail.html'; changeMainFrame();">
+<input type="button" value="查詢" onclick="javascript: location.href='counterOrderSearch.html'">
+<input type="button" value="明細" onclick="javascript: location.href='counterOrderDetail.html'">
+<input type="button" value="修改">
+<input type="button" value="刪除">
+<input type="button" value="列印" onclick="javascript: location.href='counterOrderConfirm.html'">
+<input type="button" value="Excel">
+<input type="button" value="PDF">
+</div>
+
+<div align="center" style="margin: 0px auto 0 auto;">
+<IMG src="counterOrderList.jpg" align="center" border="0">
+</div>
+
+</body>
+</html>

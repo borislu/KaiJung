@@ -1,0 +1,19 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE controllers SYSTEM "dtds/controllers.dtd">
+
+<controllers>
+
+	<controller name="DefaultListActionsForCollections">
+	</controller>
+	<controller name="HideFilter">
+		<action name="filterHide" by-default="never"
+			class="com.kaijung.actions.FilterHide"
+			hidden="true"
+			mode="list"
+			image="images/filter.gif">
+            <set property="hide" value="true" />
+		</action>															
+	</controller>	
+	
+</controllers>

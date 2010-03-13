@@ -1,0 +1,277 @@
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Frame Messaging with ManagedIframePanel</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/ext-all.css" />
+
+
+    <script type="text/javascript" src="../../adapter/ext/ext-base.js"></script>
+    <script type="text/javascript" src="ext-all.js"></script>
+    <script type="text/javascript" src="ext-basex.js"></script>
+    <script type="text/javascript" src="miframe.js"></script>
+
+    <!-- Common Styles for the examples -->
+    <link rel="stylesheet" type="text/css" href="../examples.css" />
+
+    <style type="text/css">
+        #background {margin:5px;}
+    </style>
+    <script type="text/javascript" >
+      //Permit Local file access for IE.
+    Ext.lib.Ajax.forceActiveX = (document.location.protocol == 'file:');
+      //Set to a friendlier version for Iframes
+    Ext.SSL_SECURE_URL= 'javascript:void(0)';
+
+    var MM = new Ext.ux.ModuleManager({
+         cacheResponses  : true // internally cache everything
+        ,noExecute       : true // Do not want anything eval'ed, just cached for later use.
+        });
+
+    var App = {
+
+        init    : function(){
+
+            //This site sits in the examples/miframe path, so adjust modulePath to gather the basics
+            //relative to the standard Ext distribution
+            MM.modulePath = '../../';
+
+            //.js is assumed, but you can load anything
+            this.requires(['resources/css/ext-all.css'
+                         ,'adapter/ext/ext-base'
+                         ,'examples/miframe/ext-all'
+                         ,'examples/miframe/ext-basex' ]
+                         ,{callback:function(success){
+                             if(success){
+                                 Ext.get('background').dom.innerHTML += '<b>(Ext successfully module-cached...)</b>';
+                             }
+                            }
+                          }
+                         );
+
+        }
+
+        ,ModuleManager : MM  //exposed for FireBug Browsing
+
+        ,requires      : MM.load.createDelegate(MM)  //Give App a dynamic script loader
+
+         /*
+         Ext'ize the frame, inject CSS rules from gathered style-sheets, and
+         eval the collected code modules into the frame's window context.
+         */
+         ,loadExtInto : function(iframe){
+
+             if(!iframe.domWritable()){alert('Not writable');return;}
+
+             var iwin = iframe.getWindow();
+
+             var MM=this.ModuleManager;
+
+             forEach(MM.modules,function(module,name){
+
+                if(module.extension == 'css'){
+
+                   //All css is injected into document's head section
+                   /* For an IFrame we have to adjust the relative url's in the CSS Rules specifically for ext-all.css */
+                  MM.styleAdjust = (name == 'ext-all.css'?
+                      {pattern:/url\(\s*\.\.\//ig, replacement:'url(../../resources/'}:null);
+                  MM.applyStyle(module,null,iwin);
+
+
+                } else {
+
+                    iframe.execScript(module.content);
+
+                }
+
+             },this);
+
+             iframe.execScript("Ext.lib.Ajax.forceActiveX = (document.location.protocol == 'file:')");
+             //dom is already in-place so we tell (the revised) EventManger "it's so."
+             iframe.execScript("Ext.isReady=true");
+
+          }
+
+         //drag Handler for frame1 (dragMaster)
+       , setDraggable :function(el){
+             el = Ext.get(el);
+
+             if(el){
+
+                 dd = Ext.apply(new Ext.dd.DD(el),{
+
+                     startDrag:function(x,y){
+                         if(this.isTarget)
+                            sendMessage( [x,y],'startdrag');
+                    },
+
+                     endDrag:function(e){
+
+                        if(this.isTarget)
+                            sendMessage( el.getXY() ,'enddrag');
+
+                     },
+                     onDrag : function(e){
+
+                       if(this.isTarget){
+                           this.alignElWithMouse(el, e.getPageX(), e.getPageY());
+                           sendMessage( el.getXY() ,'drag');
+                       }
+
+                     }
+
+                 });
+
+             }
+
+       }
+
+      //listeners for frame2 (dragSlave)
+      ,slaveTracker : function(elName){
+
+          Ext.apply(this,
+             {
+              el     : Ext.get(elName)
+             ,drag   :function(message){
+                    this.el.setXY(message.data);
+                }
+             ,startDrag :  function(message){
+                    this.el.update('Tracking..');
+                }
+             ,endDrag   :  function(message){
+
+                    this.el.update('Waiting for you..').setXY(message.data);
+                    sendMessage(message.data, 'dropped'); //send back the drop coords.
+                }
+             ,destroy  :  function(){
+
+                    unhostmessage (this.drag);
+                    unhostmessage (this.startDrag);
+                    unhostmessage (this.endDrag);
+
+                }
+
+           });
+           //bind incoming messages (from dragMaster); just the tags we want to hear.
+           onhostmessage (this.drag, this, false, 'drag' );
+           onhostmessage (this.startDrag, this, false, 'startdrag' );
+           onhostmessage (this.endDrag, this, false, 'enddrag' );
+
+        }
+      };
+      var relayMessage = function(source,message){
+          panel2.sendMessage(message);
+        };
+
+      Ext.onReady(function(){
+
+          App.init();
+          panel1 = new Ext.ux.ManagedIframePanel({
+            frameConfig :{autoCreate: {id:'frame1'}
+                         ,disableMessaging:false
+                        }
+            ,id         : 'framePanel1'
+            ,renderTo   : Ext.getBody()
+            ,collapsible : true
+            ,plain      : true
+            ,title      : 'Frame1 (DragMaster)'
+            ,html       :{tag:'div'
+                             ,style:{width:'100px',height:'50px',border:'solid','background-color':'blue',color:'white'}
+                             ,id:'dragMaster'
+                             ,html:'Drag Me!<br /><span id="coords" >&nbsp;</span>'
+                        }
+            ,floating   : true
+            ,y          :230
+            ,x          :50
+            ,width      :400
+            ,height     :300
+            ,listeners  :{
+                           domready:function(frame){
+
+                              App.loadExtInto(frame); //apply Ext from moduleCache
+
+                              //load our drag handler
+                              frame.loadFunction({name:'setDraggable',fn:App.setDraggable},true);
+                              frame.execScript("setDraggable('dragMaster')"); //enable drag on DIV
+
+                               },
+
+                           //Relay the (tagged) message received from Frame1 to Frame2
+                          "message:drag"        : relayMessage,
+                          "message:startdrag"   : relayMessage,
+                          "message:enddrag"     : relayMessage
+                       }
+            });
+            panel1.show();
+
+          panel2 = new Ext.ux.ManagedIframePanel({
+            frameConfig :{autoCreate: {id:'frame2'}
+                         ,disableMessaging:false
+                        }
+            ,id         :'framePanel2'
+            ,renderTo   : Ext.getBody()
+            ,plain      :true
+            ,title      : 'Frame2 (DragSlave)'
+            ,html       :{tag:'div'
+                             ,style:{width:'100px',height:'50px',border:'solid','background-color':'red',color:'white'}
+                             ,id:'dragSlave'
+                             ,html:'Ready.'
+                          }
+            ,collapsible : true
+            ,floating   :true
+            ,y          :230
+            ,x          :500
+            ,width      :400
+            ,height     :300
+            ,listeners  :{
+                            domready  :  function(frame){
+                                App.loadExtInto(frame);   //apply Ext from moduleCache
+
+                                //load our slaves' message handler
+                                frame.loadFunction({name:'slaveTracker',fn:App.slaveTracker} ,true);
+
+                                //bind to messaging interface and listen
+                                frame.execScript("slave = new slaveTracker('dragSlave')");
+                           },
+                           //here we listen for a specific message tag 'dropped' from Frame2
+                           "message:dropped"  :  function(frame, message){
+                                //frame2 drop coordinates message
+                                //find the <span> in the frame's dragMaster DIV
+                                panel1.coords || (panel1.coords = panel1.getFrameWindow().Ext.get('coords'));
+
+                                if(panel1.coords){
+                                    panel1.coords.update('Drop: '+message.data);
+                                }
+                            }
+                      }
+            });
+            panel2.show();
+
+
+     //Cleanup the frames (important for IE)
+       Ext.EventManager.on(window,   "beforeunload",  function(){
+
+                panel1.destroy();
+                panel2.getFrame().execScript("slave.destroy()");
+                panel2.destroy();
+
+        } ,window,{single:true});
+     });
+</script>
+
+</head>
+<body style="overflow:hidden;">
+
+<div id="header">
+<h1>Cross-Frame Messaging with ManagedIframePanel</h1>
+</div>
+<div id="background" >
+<p>This example demonstrates frame messaging features of ux.ManagedIFrame[Panel].</p>
+
+<p>Drag Frame1 'dragMaster' div around insides its frame, and the current position is sent to Frame2 for
+updating the position of its 'dragSlave' DIV to match.</p>
+Notes:  Both frames have Ext.* library files applied from a ux.ModuleManager cache, and requires the new EventManager patch (for IE) described
+<a href="http://extjs.com/forum/showthread.php?p=120384#post120384" target="_ext">here.</a>  If you do not see the blue and red draggable divs in each frame (on IE), you likely have not applied the new EventManager code properly to the modified ext-all.js.
+</div>
+</body>
+</html>

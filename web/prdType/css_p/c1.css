@@ -1,0 +1,30 @@
+@charset "utf-8";
+.c1 {
+	float: left;
+}
+.ps {
+	color: #036;
+	font-size: 12px;
+	margin: 1px;
+	font-weight: normal;
+}
+.btn {
+	font-size: 12px;
+	text-align: right;
+	vertical-align: middle;
+	margin-top: 1px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	margin-left: 274px;
+	color: #036;
+}
+
+
+.text {
+	font-size: 12px;
+	font-weight: normal;
+	color: #036;
+	text-align: left;
+	vertical-align: middle;
+	margin: 1px;
+}

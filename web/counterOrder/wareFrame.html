@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html style="overflow: hidden; height: 100%;" xmlns="http://www.w3.org/1999/xhtml"><head>
+
+
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="language" content="en">
+
+	<title>庫位調整作業</title>
+
+	<!-- Basic layout styles -->
+	<link rel="stylesheet" type="text/css" href="iframes_many_files/layout-default.css">
+
+	<style type="text/css">
+
+	body {
+		color:			#FFF;
+		background:		#66C;	/* color page so it can be seen */
+	}
+
+	.ui-layout-north ,
+	.ui-layout-south ,
+	.ui-layout-west ,
+	.ui-layout-east {
+	/*	NOTE: hiding an iframe may cause JS errors if the iframe page autoruns a script, so...
+		onopen: loadIframePage() == loads the *real* iframe page from "longdesc" attribute at 1st open */
+		display:	none;
+		overflow:	hidden;
+	}
+	iframe {
+		padding:	0 !important; /* iframes should not have padding */
+		overflow:	auto !important;
+	}
+
+	/* color panes so they can be seen */
+	.ui-layout-pane {
+		color:			#000;
+		background:		#EEE;
+	}
+	/* masks are usually transparent - make them visible (must 'override' default) */
+	.ui-layout-mask {
+		background:	#C00 !important;
+		opacity:	.20 !important;
+		filter:		alpha(opacity=20) !important;
+	}
+
+	.ui-layout-south {
+		padding:	0;		/* south pane is an iframe-container, so remove padding */
+	}
+	.ui-layout-west {
+		padding:	0;		/* west pane has a scrolling content-div, so remove padding */
+		}
+		.ui-layout-west .ui-layout-content { /* 清單 IFRAME */
+			border-top:		1px solid #BBB;
+			border-bottom:	1px solid #BBB;
+		}
+		.ui-layout-west .header ,
+		.ui-layout-west .footer ,
+		.ui-layout-west p {
+			background:		#EEE;
+			font-weight:	bold;
+			text-align:		center;
+			padding:		5px 10px;
+		}
+		.ui-layout-west .footer {
+			color:			#FFF;
+			background:		#777;
+		}
+		.ui-layout-west p { /* 2nd Footer: "Toggle South" */
+			background:		#F9F9F9;
+			border:			4px outset #FFF;
+			margin:			7px;
+		}
+
+	</style>
+
+	<!-- REQUIRED scripts for layout widget -->
+	<script type="text/javascript" src="iframes_many_files/jquery-1.js"></script>
+	<script type="text/javascript" src="iframes_many_files/jquery-ui-1.js"></script>
+	<script type="text/javascript" src="iframes_many_files/jquery.js"></script>
+	<script type="text/javascript" src="iframes_many_files/debug.js"></script>
+
+	<script type="text/javascript">
+	/*
+	 *	NOTE: For best code readability, view this with a fixed-space font and tabs equal to 4-chars
+	 */
+
+	function loadIframePage (pane, $Pane) {
+		if (!$Pane) $Pane = $('.ui-layout-'+ pane);
+		var $Iframe = $Pane.attr('tagName')=='IFRAME' ? $Pane : $Pane.find('IFRAME:first');
+		if (!$Iframe.length) return; // no iframe
+		var
+			src  = $Iframe.attr('src')
+		,	page = $Iframe.attr('longdesc')
+		;
+		if (page && src != page) $Iframe.attr('src',page);
+	}
+
+	var myLayout;
+
+	$(document).ready( function() {
+		myLayout = $("body").layout({
+			minSize:			1
+		,	north__size:		.75
+		,	south__size:		.25
+		,	west__size:			'60%'
+		,	east__size:			'10%'
+		,	center__minHeight:	1
+		,	center__minWidth:	'1%'
+		,	spacing_closed:		16
+		,	initClosed:			true
+		,	onopen_end:			loadIframePage // same callback for ALL borderPanes
+		,	east__resizeWhileDragging: true	// slow with a page full of iframes!
+		/*
+		,	west__initClosed:	false
+		*/
+		});
+		//loadIframePage('west');
+	});
+
+</script>
+
+</head><body style="border: medium none ; margin: 0px; padding: 0px; overflow: hidden; position: relative; height: 100%;">
+
+<h3>Loading...</h3>
+
+<!-- IFRAME as layout-pane -->
+<iframe style="margin: 0px; position: absolute; z-index: 1; top: 0px; bottom: auto; left: 0px; right: 0px; width: 1277px; display: none; visibility: visible; height: 418px;" class="ui-layout-north ui-layout-pane ui-layout-pane-north" src="iframes_many_files/a_005.html" longdesc="http://newslookup.com" frameborder="0" scrolling="auto"></iframe>
+
+<!-- IFRAME as layout-pane -->
+<iframe style="margin: 0px; position: absolute; z-index: 1; left: 16px; right: 16px; top: 16px; bottom: 16px; height: 533px; width: 1245px; visibility: visible; display: block;" class="ui-layout-center ui-layout-pane ui-layout-pane-center ui-layout-pane-hover ui-layout-pane-center-hover ui-layout-pane-open-hover ui-layout-pane-center-open-hover" src="counterList.html" frameborder="0" scrolling="auto"></iframe>
+
+<div style="margin: 0px; position: absolute; z-index: 1; top: auto; bottom: 0px; left: 0px; right: 0px; width: auto; display: none; visibility: visible; height: 136px;" class="ui-layout-south ui-layout-pane ui-layout-pane-south">
+	<!-- IFRAME 'filling' a layout-pane -->
+	<iframe src="transferList.html" longdesc="" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>
+</div>
+
+<div style="margin: 0px; position: absolute; z-index: 1; left: 0px; right: auto; top: 16px; bottom: 16px; height: 533px; display: none; visibility: visible; width: 507px;" class="ui-layout-west ui-layout-pane ui-layout-pane-west">
+	<div class="header">庫位調整清單</div>
+	<!-- IFRAME as a 'content-div' with header and 2-footer -->
+	<iframe style="position: relative;" class="ui-layout-content" src="wareAdjust.html" longdesc="" frameborder="0" height="100" scrolling="auto" width="100%"></iframe>
+	<p><a href="#" onclick="myLayout.toggle('south')"></a></p>
+	<div class="footer" align="center"></div>
+</div>
+
+<!-- IFRAME as layout-pane -->
+<iframe style="margin: 0px; position: absolute; z-index: 1; left: auto; right: 0px; top: 16px; bottom: 16px; height: 533px; display: none; visibility: visible; width: 504px;" class="ui-layout-east ui-layout-pane ui-layout-pane-east" src="iframes_many_files/a_005.html" longdesc="http://duckduckgo.com" frameborder="0" scrolling="auto"></iframe>
+
+<div class="ui-layout-resizer ui-layout-resizer-north ui-layout-resizer-closed ui-layout-resizer-north-closed" id="" style="margin: 0px; padding: 0px; overflow: hidden; cursor: pointer; position: absolute; font-size: 1px; text-align: left; z-index: 2; top: 0px; width: 1279px; height: 16px; left: 0px;" title="Slide Open"><div title="Open" class="ui-layout-toggler ui-layout-toggler-north ui-layout-toggler-closed ui-layout-toggler-north-closed" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; text-align: center; font-size: 1px; cursor: pointer; z-index: 1; width: 48px; height: 16px; left: 614px; top: 0px;" id=""></div></div><div class="ui-layout-resizer ui-layout-resizer-south ui-layout-resizer-closed ui-layout-resizer-south-closed" id="" style="margin: 0px; padding: 0px; overflow: hidden; cursor: pointer; position: absolute; font-size: 1px; text-align: left; z-index: 2; bottom: 0px; width: 1279px; height: 16px; left: 0px;" title="Slide Open"><div title="Open" class="ui-layout-toggler ui-layout-toggler-south ui-layout-toggler-closed ui-layout-toggler-south-closed" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; text-align: center; font-size: 1px; cursor: pointer; z-index: 1; width: 48px; height: 16px; left: 614px; top: 0px;" id=""></div></div><div class="ui-layout-resizer ui-layout-resizer-west ui-layout-resizer-closed ui-layout-resizer-west-closed" id="" style="margin: 0px; padding: 0px; overflow: hidden; cursor: pointer; position: absolute; font-size: 1px; text-align: left; z-index: 2; left: 0px; height: 535px; width: 16px; top: 16px;" title="Slide Open"><div title="Open" class="ui-layout-toggler ui-layout-toggler-west ui-layout-toggler-closed ui-layout-toggler-west-closed" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; text-align: center; font-size: 1px; cursor: pointer; z-index: 1; height: 48px; width: 16px; top: 242px; left: 0px;" id=""></div></div><div class="ui-layout-resizer ui-layout-resizer-east ui-layout-resizer-closed ui-layout-resizer-east-closed" id="" style="margin: 0px; padding: 0px; overflow: hidden; cursor: pointer; position: absolute; font-size: 1px; text-align: left; z-index: 2; right: 0px; height: 535px; width: 16px; top: 16px;" title="Slide Open"><div title="Open" class="ui-layout-toggler ui-layout-toggler-east ui-layout-toggler-closed ui-layout-toggler-east-closed" style="margin: 0px; padding: 0px; overflow: hidden; position: absolute; text-align: center; font-size: 1px; cursor: pointer; z-index: 1; height: 48px; width: 16px; top: 242px; left: 0px;" id=""></div></div></body></html>

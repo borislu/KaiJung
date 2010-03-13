@@ -1,0 +1,81 @@
+.tableHead {
+	text-align: center;
+	BACKGROUND-IMAGE: url(../images/tableHead.gif);
+	font-size: 12px;
+	//font-family: "Times New Roman", Times, serif;
+	margin-right: 2px;
+	margin-bottom: 2px;
+	color: #003366;
+}
+.tableHead2 {
+	text-align: center;
+	BACKGROUND-IMAGE: url(../images/tableHead2.gif);
+}
+.tableHead3 {
+	text-align: left;
+	BACKGROUND-IMAGE: url(../images/tableHead3.gif);
+	padding: 0px;
+	border: 0px;
+	//margin: 2px;
+	font-family: "Times New Roman", Times, serif;
+}
+.tableHead4 {
+	text-align: right;
+	BACKGROUND-IMAGE: url(../images/tableHead2.gif);
+}
+
+/*
+table {
+	border: 1px solid #00;
+	border-collapse: collapse;
+	//margin: 2px;
+}  
+tr, td {  
+    border: 1px solid #00;  
+}  
+*/
+.addRow {
+}
+
+.reasonR {
+	border: 0px solid;
+	width: 60px;
+	text-align: center;
+}
+
+.stockR {
+	border: 0px solid;
+	width: 40px;
+	text-align: right;
+}
+
+.salesR {
+	border: 0px solid;
+	width: 40px;
+	text-align: right;
+}
+
+.articlenoR {
+	border: 0px solid;
+	width: 70px;
+	text-align: center;
+}
+
+.colorR {
+	border: 0px solid;
+	width: 40px;
+	text-align: center;
+}
+
+.orderSize {
+	width: 30px;
+	text-align: right;
+}
+
+.memo01 {
+	width: 190px;
+	text-align: left;
+}
+
+
+

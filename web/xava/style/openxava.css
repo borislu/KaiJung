@@ -1,0 +1,201 @@
+/* 
+The styles used in OpenXava are the specified ones in JSR-168 and WSRP.
+The styles in this file are only for the aspects not included in 
+JSR-168 and WSRP and needed by OpenXava.
+*/
+
+.liferay4-selected-row td {
+	background: #BFC2E4;
+}
+
+.selected-row td {
+	background: #ffc !important;
+}
+
+.button-bar {
+	background: #dddddd;
+	padding: 0 0 0 0;
+}
+
+TABLE.list {	
+	background: white;
+}
+
+TH.list {
+	background: #FFCC00;
+	font-weight: normal; 
+}
+
+.list-odd {
+	font-weight: normal; 
+	background: #eeeeee;
+}
+
+.list-pair {
+	font-weight: normal;
+	background: #cccccc; 
+}
+
+.list-odd-selected {
+	font-weight: bold;
+	color: #3366ff;
+	background: #eeeeee;
+}
+
+.list-pair-selected {
+	font-weight: bold;
+	color: #3366ff;
+	background: #cccccc;
+}
+
+.websphere-list-selected {
+	font-weight: bold;
+}
+
+.liferay-list-selected {
+	font-weight: bold;
+}
+
+
+.highlight {
+	font-weight: bold;
+	color: #3366ff;	
+}
+
+TR.list-subheader {
+	font-weight: normal;
+	background: #dddddd;	 
+}
+
+.list-info {
+	font-weight: bold;
+}
+
+
+TABLE.frame {
+	border-collapse: collapse;
+	border-color: #dddddd;
+	border-style: solid;
+	border-width: 1px;
+}
+
+TR.frame {
+	background: #dddddd;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+TD.frame {
+	padding: 5 5 5 5;
+}
+
+.small-label {
+	font-size: 8pt;
+}
+
+.errors {
+	color: #ff0000; 
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+.messages {
+	color: #3366ff;
+	font-weight: bold;
+	font-size: 10pt;
+}
+
+.processing {
+	font-weight: normal; 
+	background: #eeeeee;
+}
+
+
+.jetspeed2-list-info, TR.jetspeed2-list-info, TD.jetspeed2-list-info {
+	font-size: x-small;
+}
+
+.jetspeed2-list-order-by A:link {
+	color: white;	
+	text-decoration: underline;
+}
+
+
+
+.websphere-list-title {
+	font-weight: bold;	
+}
+
+
+TD.mode {
+	font-weight: bold;	
+}
+
+TD.jetspeed2-mode {
+	font-size: x-small;
+}
+
+TD.list-title {
+	font-weight: bold;
+	text-align: center;
+}
+
+.PTitleContent {
+	color: black;
+}
+
+.section {
+	border-collapse: collapse;
+	padding: 0 0 0 0;
+	margin: 0 0 0 0;
+}
+
+.activeSection {
+	border-top-color: #FFCC00;
+	border-left-color: #dddddd;
+	border-right-color: #dddddd;
+	border-bottom-color: #dddddd;
+
+	border-style: solid;
+
+	border-top-width: 2px;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+}
+
+.TabMidle .TabMiddleLow {
+	background-color: #FFCC00;
+}
+
+.websphere-frame-title-label {
+    font-weight: normal;    
+}
+
+.liferay-xava-frame-core {
+	border: 1px solid #CCCCCC;
+	border-top: 0px;
+	padding: 2px;
+}
+
+.liferay-xava-cell-wrapper {
+	border: 1px solid #CCCCCC;
+}
+
+.liferay-xava-editor-wrapper {
+	padding-right: 4px;
+	padding-bottom: 4px;
+}
+	
+.liferay-xava-label {
+	padding-right: 4px;
+}
+
+.editor, .portlet-form-input-field {
+	color: #000000;	   	
+}
+
+.wpsTableHead {
+	border-left-width: 1px;
+	border-left-style: solid;
+}
