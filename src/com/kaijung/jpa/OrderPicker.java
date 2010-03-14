@@ -15,6 +15,12 @@ import java.util.Date;
  * 
  */
 @Entity
+@Views( {
+	@View(name = "HeadOnly", members = ""//"order [ readCode; createTime; warehouse; employee ]"
+			+ "picker [ oid; createTime; createBy ]"
+			+ "sender [ senderId; senderTime; senderBy ]")
+})
+@Tab(name = "Latest", defaultOrder = "${oid} desc")
 public class OrderPicker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -59,6 +65,24 @@ public class OrderPicker implements Serializable {
 
     public OrderPicker() {
     }
+
+	@DisplaySize(18)
+	@Transient
+	public String getSenderId() { // calculated property 無資料庫對應
+		return "";
+	}
+
+	@DisplaySize(11)
+	@Transient
+	public String getSenderTime() { // calculated property 無資料庫對應
+		return "";
+	}
+
+	@DisplaySize(10)
+	@Transient
+	public String getSenderBy() { // calculated property 無資料庫對應
+		return "";
+	}
 
 	public int getOid() {
 		return this.oid;

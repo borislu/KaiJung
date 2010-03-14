@@ -100,7 +100,7 @@ openxava.refreshPage = function(result) {
     $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(function() {
         //alert( $(this).attr('href') + ' , ' + $(this).attr('href').substring(96) );
         index = $(this).attr('href').substring(96);
-        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row="+ index }
+        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'List.viewDetail', 'row="+ index }
 					);
 }
 

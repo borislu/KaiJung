@@ -162,11 +162,83 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
         var win = desktop.getWindow('bogus' + src.windowId);
         if (!win) {
             win = desktop.createWindow({
-                id: 'w02005',
+                id: 'w020105',
                 title: src.text,
                 width: 998,
                 height: 480,
                 html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/orderLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020402: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020402',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/pickerLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020403: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020403',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/pickerLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020404: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020404',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/pickerLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020405: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020405',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/pickerLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
                 iconCls: 'bogus',
                 shim: false,
                 animCollapse: false,
@@ -384,37 +456,181 @@ MyDesktop.BogusMenuModule2 = Ext.extend(MyDesktop.BogusModule, {
                     iconCls: 'bogus',
                     handler: this.createWindow0202,
                     scope: this,
-                    windowId: '0202'
+                    windowId: '0202',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020202,
+                              scope: this,
+                              windowId: '020202'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020203,
+                              scope: this,
+                              windowId: '020203'
+                                   }, {
+                              text: '修改',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020204,
+                              scope: this,
+                              windowId: '020204'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020205,
+                              scope: this,
+                              windowId: '020205'
+                                   }]
+                           }
                 }, {
                     text: '修改單維護',
                     iconCls: 'bogus',
                     handler: this.createWindow0203,
                     scope: this,
-                    windowId: '0203'
+                    windowId: '0203',
+                    menu: { 
+                          items: [{
+                              text: '新增',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020301,
+                              scope: this,
+                              windowId: '020301'
+                                   }, {
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020302,
+                              scope: this,
+                              windowId: '020302'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020303,
+                              scope: this,
+                              windowId: '020303'
+                                   }, {
+                              text: '修改',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020304,
+                              scope: this,
+                              windowId: '020304'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020305,
+                              scope: this,
+                              windowId: '020305'
+                                   }]
+                           }
                 }, {
                     text: '揀貨單維護',
                     iconCls: 'bogus',
                     handler: this.createWindow0204,
                     scope: this,
-                    windowId: '0204'
+                    windowId: '0204',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020402,
+                              scope: this,
+                              windowId: 'w020402'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020403,
+                              scope: this,
+                              windowId: 'w020403'
+                                   }, {
+                              text: '修改',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020404,
+                              scope: this,
+                              windowId: 'w020404'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020405,
+                              scope: this,
+                              windowId: 'w020405'
+                                   }]
+                           }
                 }, {
                     text: '撥出單維護',
                     iconCls: 'bogus',
                     handler: this.createWindow0205,
                     scope: this,
-                    windowId: '0205'
+                    windowId: '0205',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020502,
+                              scope: this,
+                              windowId: '020502'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020503,
+                              scope: this,
+                              windowId: '020503'
+                                   }, {
+                              text: '修改',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020504,
+                              scope: this,
+                              windowId: '020504'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020505,
+                              scope: this,
+                              windowId: '020505'
+                                   }]
+                           }
                 }, {
                     text: '訂貨差異分析',
                     iconCls: 'bogus',
                     handler: this.createWindow0206,
                     scope: this,
-                    windowId: '0206'
+                    windowId: '0206',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020602,
+                              scope: this,
+                              windowId: '020602'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020603,
+                              scope: this,
+                              windowId: '020603'
+                                   }]
+                           }
                 }, {
                     text: '進銷存單',
                     iconCls: 'bogus',
                     handler: this.createWindow0207,
                     scope: this,
-                    windowId: '0207'
+                    windowId: '0207',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020702,
+                              scope: this,
+                              windowId: '020702'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020703,
+                              scope: this,
+                              windowId: '020703'
+                                   }]
+                           }
                 }]
             }
         }

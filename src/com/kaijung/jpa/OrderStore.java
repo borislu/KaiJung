@@ -25,7 +25,10 @@ import java.util.*;
 		@View(name = "HeadOnly", members = "order [ readCode; createTime; warehouse; employee ]"
 				+ "picker [ pickerId; pickerTime; pickerBy ]"
 				+ "sender [ senderId; senderTime; senderBy ]"),
-		@View(name = "DetailOnly", members = "order [ readCode; createTime; warehouse; employee ] ") 
+		@View(name = "DetailOnly", members = "order [ readCode; createTime; warehouse; employee ]"
+			+ "picker [ pickerId; pickerTime; pickerBy ]"
+			+ "sender [ senderId; senderTime; senderBy ]"
+			+ "details"),
 })
 @Tab(name = "Latest", defaultOrder = "${oid} desc")
 public class OrderStore implements Serializable {
@@ -53,8 +56,8 @@ public class OrderStore implements Serializable {
 	private Date modifyTime;
 
 	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
-			@PropertyValue(name = "dateCode", value = "100224") // Required,
-			, @PropertyValue(name = "docType", value = "A") // Required,
+			@PropertyValue(name = "dateCode", value = "100315") // Required,
+			, @PropertyValue(name = "docType", value = "A") // Required, 由基本檔取出
 			, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
 			, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
 																				// 記錄流水號的表格

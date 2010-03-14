@@ -114,9 +114,7 @@ function setAll(){
 		$(this)[0].value=totalSum;
 	});
 	$("#sumTotal")[0].value = sum;
-	
 }
-
 </script>
 <style type="text/css">
 				<!--
@@ -131,7 +129,7 @@ function setAll(){
 
 <jsp:include page="../xava/module_include.jsp" flush="true"> 
     <jsp:param name="application" value="KaiJung" /> 
-    <jsp:param name="module" value="OrderStoreDetailOnly" /> 
+    <jsp:param name="module" value="OrderStoreHead" /> 
 </jsp:include> 
 
 <div id="lineTable">
@@ -273,3 +271,16 @@ function setAll(){
 </z:page>
 </body>
 </html>
+<script type="text/javascript">
+function newCss() {
+    $('#ox_KaiJung_OrderStoreHead__view').css('width','800px');
+    //alert('width: '+ $('#ox_KaiJung_OrderPickerHead__view').css('width'	));
+    if( $('#ox_KaiJung_OrderStoreHead__view').css('width'	) == '800px' ){
+        return;
+    }
+    setTimeout( 'newCss()', 500 );
+}
+newCss();
+</script>
+
+
