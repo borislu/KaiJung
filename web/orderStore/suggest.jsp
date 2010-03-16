@@ -22,7 +22,7 @@
 								memos = new Array(size);
 */
 								parent.frames["frameWest"].batchAdd( // 以欄的方式將記錄寫入陣列，然後傳到顯示的 iframe
-												$('input[name="articleno"]'), $('input[name="color"]'), $('input[name="size24"]'), $('input[name="size26"]'), $('input[name="size28"]'), 
+												$('input[name="barcode"]'), $('input[name="articleno"]'), $('input[name="price"]'), $('input[name="color"]'), $('input[name="size24"]'), $('input[name="size26"]'), $('input[name="size28"]'), 
 												$('input[name="size30"]'), $('input[name="size32"]'), $('input[name="memo"]') 
 								); //呼叫 new.jsp 的 batchAdd()
 				}
@@ -96,6 +96,8 @@
       <td style="text-align: center;"><input id="size32_1" name="size32" maxlength="3" value="9" class="orderSize"/>/115</td>
       <td style="text-align: center;"><input id="memo1" name="memo" class="memo01" /></td>
       <td style="text-align: center;"><input id="chk1" name="chks" type="checkbox" checked /></td>
+      <td style="text-align: center;"><input id="barcode1" name="barcode" value="BC-754" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="price1" name="price" value="1,000" readonly class="barcodeR" style="visibility:hidden;"></td>
     </tr>
     <tr id="tr2" class="datarow">
       <td style="text-align: center;"><div align="center">2</div></td>
@@ -111,6 +113,8 @@
       <td style="text-align: center;"><input id="size32_2" name="size32" maxlength="3" value="15" class="orderSize"/>/115</td>
       <td style="text-align: center;"><input id="memo2" name="memo" class="memo01" /></td>
       <td style="text-align: center;"><input id="chk2" name="chks" type="checkbox" checked /></td>
+      <td style="text-align: center;"><input id="barcode2" name="barcode" value="AB-425" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="price2" name="price" value="450" readonly class="barcodeR" style="visibility:hidden;"></td>
     </tr>
     <tr>
       <td style="text-align: center;"><div align="center">3</div></td>
