@@ -16,7 +16,9 @@ import org.openxava.jpa.*;
 import com.kaijung.jpa.*;
 import common.*;
 
-
+/*
+ * author Boris@de-lian.com 
+ */
 public class OrderStoreDDAO {
 	private static Logger logger = Logger.getLogger(OrderStoreDDAO.class);
 
@@ -40,7 +42,7 @@ public class OrderStoreDDAO {
 //			// get connection
 //			conn = DriverManager.getConnection(url, user, pwd);
 //			stmt = conn.createStatement();
-//			ResultSet rs = stmt.executeQuery("select * from event");
+//			ResultSet rs = stmt.executeQuery("select * from OrderStoreD");
 //
 //			// fetch all events from database
 //			OrderStoreD evt;

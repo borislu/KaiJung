@@ -11,21 +11,31 @@
 <script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery.form.js"></script>
 <script type="text/javascript"> 
-				function batchOrder(){
-								//alert( $('.datarow').length );
+function batchOrder(){
+//alert( $('.datarow').length );
 /*
-								size = $('.datarow').length;
-								articlenos = new Array(size);
-								colors = new Array(size);
-								sizes = new Array(size);
-								modifyids = new Array(size);
-								memos = new Array(size);
+	size = $('.datarow').length;
+	articlenos = new Array(size);
+	colors = new Array(size);
+	sizes = new Array(size);
+	modifyids = new Array(size);
+	memos = new Array(size);
 */
-								parent.frames["frameWest"].batchAdd( // 以欄的方式將記錄寫入陣列，然後傳到顯示的 iframe
-												$('input[name="barcode"]'), $('input[name="articleno"]'), $('input[name="price"]'), $('input[name="color"]'), $('input[name="size24"]'), $('input[name="size26"]'), $('input[name="size28"]'), 
-												$('input[name="size30"]'), $('input[name="size32"]'), $('input[name="memo"]') 
-								); //呼叫 new.jsp 的 batchAdd()
-				}
+	var barcode 	= $('input[name="barcode"]');
+	var articleno 	= $('input[name="articleno"]');
+	var price 		= $('input[name="price"]');
+	var color 		= $('input[name="color"]');
+	var size24 		= $('input[name="size24"]');
+	var size26 		= $('input[name="size26"]');
+	var size28 		= $('input[name="size28"]');
+	var size30 		= $('input[name="size30"]');
+	var size32 		= $('input[name="size32"]');
+	var memo 		= $('input[name="memo"]');
+	
+	
+	parent.frames["frameWest"].batchAdd( // 以欄的方式將記錄寫入陣列，然後傳到顯示的 iframe
+	barcode, articleno, price, color, size24, size26, size28, size30, size32, memo); //呼叫 new.jsp 的 batchAdd()
+}
 </script> 
 <style type="text/css">
 <!--

@@ -29,8 +29,9 @@ function addtr( tableid, barcode, articleno, price, color, size24, size26, size2
     index = parseInt(index, 10);
     index++;
 
-    $("<tr id = 'row"+ index +"'><td><div align='center'><input name='checkbox' id='checkbox' type='checkbox' /></div></td><td><div align='center'>"+ index +"</div></td><td><div align='center'><input name='barcode"+index+"' id='barcode"+index+"' value='"+ barcode +"' size='13' maxlength='15' type='text' /></div></td><td><div align='center'><input name='articleno"+index+"' id='articleno"+index+"' value='"+ articleno +"' size='10' maxlength='13' type='text' /></div></td><td><div align='center'><input name='price"+index+"' id='price"+index+"' value='"+ price +"' size='5' maxlength='6' type='text' /></div></td><td><div align='center'><input name='color"+index+"' id='color"+index+"' value='"+ color +"' size='3' maxlength='3' type='text' /></div></td><td><div align='center' class='r1All'><input name='r1"+index+"' id='r1"+index+"' value='"+ size24 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r2All'><input name='r2"+index+"' id='r2"+index+"' value='"+ size26 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r3All'><input name='r3"+index+"' id='r3"+index+"' value='"+ size28 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r4All'><input name='r4"+index+"' id='r4"+index+"' value='"+ size30 +"' size='3' maxlength='3'class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r5All'><input name='r5"+index+"' id='r5"+index+"' value='"+ size32 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='total'><input name='r6"+index+"' id='r6"+index+"' value='0' size='6' maxlength='6' class='numbers' type='text' readOnly/></div></td><td><div align='center'><input name='modifyid"+index+"' id='modifyid"+index+"' value='' size='6' maxlength='6'type='text' /></div></td><td><div align='center'><input type='checkbox' name='isCustOrder"+index+"' id='isCustOrder"+index+"' value='checkbox'/></div></td><td><div align='center'><input name='memo"+index+"' id='memo"+index+"' value='"+ memo +"' size='28' maxlength='40' type='text' /></div></td><td><a href='javascript:void(0)' onclick='javascript:deltr(\"row"+ index +"\")' id='del"+ index +"'><img border='0' alt='刪除一列' src='../icons/cancel.png' class='addRow'></a></td></tr>").insertAfter($("#"+ tableid +">tbody>tr:eq(0)"));
+    $("<tr id = 'row"+ index +"'><td><div align='center'><input name='checkbox' id='checkbox' type='checkbox' /></div></td><td><div align='center'>"+ index +"</div></td><td><div align='center'><input name='barcode"+index+"' id='barcode"+index+"' value='"+ barcode +"' size='13' maxlength='15' type='text' /></div></td><td><div align='center'><input name='articleno"+index+"' id='articleno"+index+"' value='"+ articleno +"' size='10' maxlength='13' type='text' /></div></td><td><div align='center'><input name='price"+index+"' id='price"+index+"' value='"+ price +"' size='5' maxlength='6' type='text' /></div></td><td><div align='center'><input name='color"+index+"' id='color"+index+"' value='"+ color +"' size='3' maxlength='3' type='text' /></div></td><td><div align='center' class='r1All'><input name='r1_"+index+"' id='r1_"+index+"' value='"+ size24 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r2All'><input name='r2_"+index+"' id='r2_"+index+"' value='"+ size26 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r3All'><input name='r3_"+index+"' id='r3_"+index+"' value='"+ size28 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r4All'><input name='r4_"+index+"' id='r4_"+index+"' value='"+ size30 +"' size='3' maxlength='3'class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r5All'><input name='r5_"+index+"' id='r5_"+index+"' value='"+ size32 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='total'><input name='r6"+index+"' id='r6"+index+"' value='0' size='6' maxlength='6' class='numbers' type='text' readOnly/></div></td><td><div align='center'><input name='modifyid"+index+"' id='modifyid"+index+"' value='' size='6' maxlength='6'type='text' /></div></td><td><div align='center'><input type='checkbox' name='isCustOrder"+index+"' id='isCustOrder"+index+"' value='checkbox'/></div></td><td><div align='center'><input name='memo"+index+"' id='memo"+index+"' value='"+ memo +"' size='28' maxlength='40' type='text' /></div></td><td><a href='javascript:void(0)' onclick='javascript:deltr(\"row"+ index +"\")' id='del"+ index +"'><img border='0' alt='刪除一列' src='../icons/cancel.png' class='addRow'></a></td></tr>").insertAfter($("#"+ tableid +">tbody>tr:eq(0)"));
     //    $('#'+ tableid ).append(str);
+
     return index;
 }
 
@@ -58,9 +59,6 @@ function setAll(){
 	$(".r1All :text").each(function(i){
 		var k = $(this)[0].value;
 		if(k != ""){
-//test
-
-//end test	
 			r1SumTotal += parseInt(k);
 			total[0][i] = parseInt(k);
 		}else{
@@ -122,6 +120,9 @@ function setAll(){
 		$(this)[0].value=totalSum;
 	});
 	$("#sumTotal")[0].value = sum;
+//test
+
+//end test
 }
 </script>
 <style type="text/css">
@@ -230,31 +231,31 @@ function setAll(){
                 </div>
             </td>
             <td>
-                <div align="center" class="r1All"><input name="r1" id="r1" value="" size="3" maxlength="3" class="numbers" type="text" onChange="setAll();"/></div>
+                <div align="center" class="r1All"><input name="r1" id="r1_1" value="" size="3" maxlength="3" class="rowAll1" type="text" onChange="setAll();"/></div>
             </td>
             <td>
-                <div align="center" class="r2All"><input name="r2" id="r2" value="" size="3" maxlength="3" class="numbers" type="text" onChange="setAll();"/></div>
+                <div align="center" class="r2All"><input name="r2" id="r2_1" value="" size="3" maxlength="3" class="rowAll1" type="text" onChange="setAll();"/></div>
             </td>
             <td>
-                <div align="center" class="r3All"><input name="r3" id="r3" value="" size="3" maxlength="3" class="numbers" type="text" onChange="setAll();"/></div>
+                <div align="center" class="r3All"><input name="r3" id="r3_1" value="" size="3" maxlength="3" class="rowAll1" type="text" onChange="setAll();"/></div>
             </td>
             <td>
-                <div align="center" class="r4All"><input name="r4" id="r4" value="" size="3" maxlength="4" class="numbers" type="text" onChange="setAll();"/></div>
+                <div align="center" class="r4All"><input name="r4" id="r4_1" value="" size="3" maxlength="4" class="rowAll1" type="text" onChange="setAll();"/></div>
             </td>
             <td>
-                <div align="center" class="r5All"><input name="r5" id="r5" value="" size="3" maxlength="4" class="numbers" type="text" onChange="setAll();"/></div>
+                <div align="center" class="r5All"><input name="r5" id="r5_1" value="" size="3" maxlength="4" class="rowAll1" type="text" onChange="setAll();"/></div>
             </td>
             <td>
-                <div align="center" class='total'><input name="r6" id="r6" value="0" size="6" maxlength="6" class="numbers" type="text" readOnly/></div><!-- 每行的小計 -->
+                <div align="center" class='total'><input name="r6" id="r6" value="0" size="6" maxlength="6" class="rowAll1" type="text" readOnly/></div><!-- 每行的小計 -->
             </td>
             <td>
-                <div align="center"><input name="modifyid1" id="modifyid1" value="" size="6" maxlength="6" type="text" /></div><!-- 修改單號 -->
+                <div align="center"><input name="modifyid1" id="modifyid1" value="" size="6" maxlength="6" class="rowAll1" type="text" /></div><!-- 修改單號 -->
             </td>
             <td>
-            	<div align="center"><input type="checkbox" name="isCustOrder1" id="isCustOrder1" value="checkbox"/></div>
+            	<div align="center"><input type="checkbox" name="isCustOrder1" id="isCustOrder1" class="rowAll1" value="checkbox"/></div>
             </td>
             <td>
-                <div align="center"><input name="memo1" id="memo1" value="" size="28" maxlength="40" type="text" /></div><!-- 備註 -->
+                <div align="center"><input name="memo1" id="memo1" value="" size="28" maxlength="40" class="rowAll1" type="text" /></div><!-- 備註 -->
             </td>
             <td><a href="javascript:void(0)" id="edit_del1"><img border="0" alt="刪除一列" src="../icons/cancel.png" class="addRow"></a></td>
         </tr>
@@ -287,7 +288,7 @@ function setAll(){
       </tbody>
    </table>
    <input type="button" id="allInsert" value="SAVE" onClick="submitOSD();" style="visibility:hidden;" />
-   <input type="button" id="saveHead" value="saveHead" onclick="location.href=javascript:openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save')" style="visibility:hidden;"/>
+   <input type="button" id="saveHead" value="saveHead" onclick="javascript:openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save')" style="visibility:hidden;"/>
    </div>
    </td>
   </tr>
