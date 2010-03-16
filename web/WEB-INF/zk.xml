@@ -6,9 +6,9 @@
 	Description:
 		
 	History:
-		Sun Mar 26 16:29:07     2006, Created by tomyeh
+		Tue Mar 16 06:35:07     2010, Created by Boris
 
-Copyright (C) 2006 Potix Corporation. All Rights Reserved.
+Copyright (C) 2010 KaiJung Corporation. All Rights Reserved.
 -->
 
 <zk>
@@ -23,7 +23,6 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 	<language-config>
 		<addon-uri>/WEB-INF/lang-addon.xml</addon-uri>
 	</language-config>
-	-->
 	<language-mapping>
 		<language-name>xml</language-name>
 		<extension>zxml</extension>
@@ -31,6 +30,7 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 	 <client-config>
 	  <debug-js>true</debug-js>
 	 </client-config>
+	-->
 	<!-- Turn on if you prefer to use the native (Servlet) thread
 	to process the events, instead of forking the event processing thread
 	<system-config>
@@ -79,23 +79,24 @@ Copyright (C) 2006 Potix Corporation. All Rights Reserved.
 		<timeout-uri>/timeout.zul</timeout-uri>
 		<!-- An empty URL can cause the browser to reload the same URL -->
 	</device-config>
-
+	<!-- 
 	<device-config>
 		<device-type>mil</device-type>
 		<timeout-uri>/timeout.mil</timeout-uri>
 		<!-- An empty URL can cause the browser to reload the same URL -->
 	</device-config>
-
+ -->
 	<!-- Optional -->
 
 	<listener>
 		<description>[Optional] Mointor the statistic</description>
 		<listener-class>org.zkoss.zk.ui.util.Statistic</listener-class>
 	</listener>
-
+	<!-- 
 	<desktop-config>
 		<id-to-uuid-prefix>_eis_</id-to-uuid-prefix>
 	</desktop-config>
+ -->
 	<!-- Configure additional theme URIs
 	<desktop-config>
 		<theme-uri>/a.css</theme-uri>
