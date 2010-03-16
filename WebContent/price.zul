@@ -1,0 +1,29 @@
+<?page id="pricePage" title="" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<zk>
+	<window id="main2" apply="PriceController">
+		<grid id="history" model="@{main2$PriceController.prices}" >
+			<columns menupopup="auto">
+				<column label="Date" />
+				<column label="Open" />
+				<column label="High" />
+				<column label="Low" />
+				<column label="Close" />
+				<column label="Volumn" />
+			</columns>
+			<rows>
+				<row self="@{each='price'}">
+					<label value="@{price.date}"/>
+					<label value="@{price.open}"/>
+					<label value="@{price.high}"/>
+					<label value="@{price.low}"/>
+					<label value="@{price.close}"/>
+					<label value="@{price.volumn}"/>
+				</row>
+			</rows>
+		</grid>
+
+		<chart id="line" width="500" height="250" type="line"
+			fgAlpha="128" model="@{main2$PriceController.cateModel}"/>
+	</window>
+</zk>

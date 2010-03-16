@@ -1,0 +1,26 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<zk><label value="You are using: ${desktop.webApp.version}"/>
+	<borderlayout id="main" apply="StockController">
+		<west title="ZK Finance" size="250px" flex="true"
+			splittable="true" minsize="210" maxsize="500" collapsible="true">
+			<panel>
+				<toolbar>
+					<label value="Search:" />
+					<textbox id="searchBox" ctrlKeys="#down#up"
+						focus="true" sclass="demo-search-inp" />
+				</toolbar>
+				<panelchildren>
+					<listbox id="itemList" model="@{main$composer.stocks}"
+						fixedLayout="true" vflex="true">											
+						<listitem self="@{each='stock'}" value="@{stock}">
+							<listcell label="@{stock.name}" />
+						</listitem>
+					</listbox>
+				</panelchildren>
+			</panel>
+		</west>
+		<center>
+			<include id="detail"/>
+		</center>
+	</borderlayout>
+</zk>

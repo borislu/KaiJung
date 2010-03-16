@@ -1,0 +1,26 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<zk><label value="You are using: ${desktop.webApp.version}"/>
+	<borderlayout id="main" apply="com.kaijung.zk.controller.PickListController">
+		<center>
+			<include id="detail"/>
+		</center>
+		<east title="揀貨作業" size="250px" flex="true"
+			splittable="true" minsize="210" maxsize="500" collapsible="true">
+			<panel>
+				<toolbar>
+					<label value="Search:" />
+					<textbox id="searchBox" ctrlKeys="#down#up"
+						focus="true" sclass="demo-search-inp" />
+				</toolbar>
+				<panelchildren>
+					<listbox id="itemList" model="@{main$composer.pickList}"
+						fixedLayout="true" vflex="true">											
+						<listitem self="@{each='picker'}" value="@{picker}">
+							<listcell label="@{picker.createBy}" />
+						</listitem>
+					</listbox>
+				</panelchildren>
+			</panel>
+		</east>
+	</borderlayout>
+</zk>
