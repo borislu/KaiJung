@@ -13,17 +13,9 @@
     <create creator="new" javascript="Tab">
       <param name="class" value="org.openxava.web.dwr.Tab"/>
     </create>
-   
+    
     <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
     <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
-    
-        	<create creator="new" javascript="Hello">
-      <param name="class" value="test.Hello" />
-    </create>
-    
-	<create creator="new" javascript="OrderStoreNewD">
-      <param name="class" value="com.kaijung.dao.OrderStoreNewD" />
-    </create>
         
   </allow>
   

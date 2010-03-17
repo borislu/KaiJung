@@ -2,12 +2,10 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.persistence.Entity;
 
-import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
-import java.util.Date;
+import java.util.*;
 
 
 /**
@@ -24,20 +22,29 @@ import java.util.Date;
 public class OrderPicker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Hidden @Column(length = 32)
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Id @Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="picker.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
+
+	@OneToMany(mappedBy="orderPicker", cascade=CascadeType.REMOVE) //@AsEmbedded
+	private Collection<OrderPickerD> details ;// = new ArrayList<OrderStoreD>(); 
 
 	private int createBy;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
 	private int modifyBy;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
+
+	private String readCode;
 
 	private String remark;
 
@@ -61,28 +68,10 @@ public class OrderPicker implements Serializable {
 
 	private String reserve9;
 
-	private int status;
+	private String status;
 
-    public OrderPicker() {
+   public OrderPicker() {
     }
-
-	@DisplaySize(18)
-	@Transient
-	public String getSenderId() { // calculated property 無資料庫對應
-		return "";
-	}
-
-	@DisplaySize(11)
-	@Transient
-	public String getSenderTime() { // calculated property 無資料庫對應
-		return "";
-	}
-
-	@DisplaySize(10)
-	@Transient
-	public String getSenderBy() { // calculated property 無資料庫對應
-		return "";
-	}
 
 	public int getOid() {
 		return this.oid;
@@ -122,6 +111,14 @@ public class OrderPicker implements Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	public String getReadCode() {
+		return this.readCode;
+	}
+
+	public void setReadCode(String readCode) {
+		this.readCode = readCode;
 	}
 
 	public String getRemark() {
@@ -212,12 +209,20 @@ public class OrderPicker implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Collection<OrderPickerD> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Collection<OrderPickerD> details) {
+		this.details = details;
 	}
 
 }

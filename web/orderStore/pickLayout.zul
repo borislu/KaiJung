@@ -1,24 +1,43 @@
 <?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
-<zk><label value="You are using: ${desktop.webApp.version}"/>
+<zk> <!-- <label value="You are using: ${desktop.webApp.version}"/> -->
 	<borderlayout id="main" apply="com.kaijung.zk.controller.PickListController">
+
 		<center>
 			<include id="detail"/>
 		</center>
-		<east title="揀貨作業" size="250px" flex="true"
-			splittable="true" minsize="210" maxsize="500" collapsible="true">
+
+		<east title="揀貨清單" size="600px" flex="true"
+			splittable="true" minsize="210" collapsible="true">
 			<panel>
-				<toolbar>
-					<label value="Search:" />
-					<textbox id="searchBox" ctrlKeys="#down#up"
-						focus="true" sclass="demo-search-inp" />
-				</toolbar>
 				<panelchildren>
-					<listbox id="itemList" model="@{main$composer.pickList}"
-						fixedLayout="true" vflex="true">											
-						<listitem self="@{each='picker'}" value="@{picker}">
-							<listcell label="@{picker.createBy}" />
+
+				<listbox id="itemList" model="@{main$composer.pickList}" fixedLayout="true" vflex="true">											
+						<listhead sizable="true">                                                                                                
+									<listheader width="60px" label="訂貨單號" sort="auto" />                                                                  
+									<listheader width="60px" label="訂貨日期" sort="auto" />                                                                  
+									<listheader width="60px" label="訂貨專櫃" sort="auto" />                                                                  
+									<listheader width="60px" label="訂貨人員" sort="auto" />                                                                  
+									<listheader width="60px" label="揀貨單號" sort="auto" />                                                                  
+									<listheader width="60px" label="商品數" sort="auto" />                                                                  
+									<listheader width="60px" label="揀貨日期" sort="auto" />                                                                  
+									<listheader width="60px" label="揀貨人員" sort="auto" />                                                                             
+									<listheader width="60px" label="揀貨狀態" sort="auto" />                                                              
+									<listheader width="160px" label="備註" sort="auto" />                                                                   
+						</listhead>
+						<listitem self="@{each='orderPicker'}" value="@{orderPicker}">
+									<listcell label="@{orderPicker.createBy}" />
+									<listcell label="@{orderPicker.createTime}" />
+									<listcell label="@{orderPicker.createBy}" />
+									<listcell label="@{orderPicker.createTime}" />
+									<listcell label="@{orderPicker.createBy}" />
+									<listcell label="@{orderPicker.createTime}" />
+									<listcell label="@{orderPicker.createBy}" />
+									<listcell label="@{orderPicker.createTime}" />
+									<listcell label="@{orderPicker.createBy}" />
+									<listcell label="@{orderPicker.createTime}" />
 						</listitem>
 					</listbox>
+
 				</panelchildren>
 			</panel>
 		</east>

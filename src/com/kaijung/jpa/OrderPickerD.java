@@ -3,6 +3,8 @@ package com.kaijung.jpa;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 
 /**
  * The persistent class for the OrderPickerD database table.
@@ -12,41 +14,49 @@ import javax.persistence.*;
 public class OrderPickerD implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id @Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="pickerD.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	private int orderPicker_oid;
-
-	private int productId;
+//	private int orderPicker_oid;
+	@ManyToOne 
+	@JoinColumn(name="orderPicker_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private OrderPicker orderPicker;
+	
+	private int itemid;
 
 	private int quantity;
 
 	private String remark;
-
+	@Hidden
 	private String reserve1;
-
+	@Hidden
 	private String reserve10;
-
+	@Hidden
 	private String reserve2;
-
+	@Hidden
 	private String reserve3;
-
+	@Hidden
 	private String reserve4;
-
+	@Hidden
 	private String reserve5;
-
+	@Hidden
 	private String reserve6;
-
+	@Hidden
 	private String reserve7;
-
+	@Hidden
 	private String reserve8;
-
+	@Hidden
 	private String reserve9;
 
-	private int status;
+	private String status;
 
-    public OrderPickerD() {
+   public OrderPickerD() {
     }
 
 	public int getOid() {
@@ -57,20 +67,12 @@ public class OrderPickerD implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getOrderPicker_oid() {
-		return this.orderPicker_oid;
+	public int getItemid() {
+		return this.itemid;
 	}
 
-	public void setOrderPicker_oid(int orderPicker_oid) {
-		this.orderPicker_oid = orderPicker_oid;
-	}
-
-	public int getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setItemid(int itemid) {
+		this.itemid = itemid;
 	}
 
 	public int getQuantity() {
@@ -169,12 +171,20 @@ public class OrderPickerD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
-		return this.status;
+	public OrderPicker getOrderPicker() {
+		return orderPicker;
 	}
 
-	public void setStatus(int status) {
+	public void setOrderPicker(OrderPicker orderPicker) {
+		this.orderPicker = orderPicker;
+	}
+
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 
 }

@@ -73,9 +73,9 @@ public class OrderStoreD implements Serializable {
 	@Hidden
 	private String reserve9;
 	@ReadOnly
-	private int status;
+	private String status;
 
-    public OrderStoreD () {
+   public OrderStoreD () {
     }
     public OrderStoreD( String oid, boolean iscustOrder, int quantity ) {
     	setOid( oid );
@@ -211,11 +211,11 @@ public class OrderStoreD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

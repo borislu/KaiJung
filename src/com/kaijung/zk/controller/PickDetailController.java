@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zkoss.zk.ui.*;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.InputEvent;
@@ -13,35 +14,27 @@ import com.kaijung.dao.*;
 import com.kaijung.jpa.*;
 
 /**
- * @author Boris@de-lian.com
+ * @author Boris.lds@gmail.com
  * 
  */
+@SuppressWarnings("serial")
 public class PickDetailController extends GenericForwardComposer {	
 	private OrderPickerDDAO dao = new OrderPickerDDAO();
 	private CategoryModel cateModel;			
-	private List items;
+	private List<OrderPickerD> items;
  
 	public PickDetailController() {
 		init();
 	}
  
 	public void init() {
-		//get stock id
-//		int id = Integer.parseInt((String) Executions.getCurrent().getParameter("id"));		
-//		Stock stock = dao.getStock(id);
-//		items = stock.getPriceItems();		
-//		//create category model for chart
-//		cateModel = new SimpleCategoryModel();
-//		for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-//			Price price = (Price) iterator.next();
-//			cateModel.setValue(stock.getName(), price.getDate(), price.getClose());
-//		}
+		//get Picker id
+		int id = Integer.parseInt((String) Executions.getCurrent().getParameter("id"));		
+		OrderPicker stock = dao.getPicker(id);
+//		items = (List<OrderPickerD>) stock.getDetails();	
 	}
-	public List getPrices(){
+	public List<OrderPickerD> getPickDList(){
 		return items;
 	}
-	public CategoryModel getCateModel() {
-		return cateModel;
-	}	
 
 }
