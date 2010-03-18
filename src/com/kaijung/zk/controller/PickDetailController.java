@@ -12,6 +12,7 @@ import org.zkoss.zul.*;
 
 import com.kaijung.dao.*;
 import com.kaijung.jpa.*;
+import common.*;
 
 /**
  * @author Boris.lds@gmail.com
@@ -19,9 +20,9 @@ import com.kaijung.jpa.*;
  */
 @SuppressWarnings("serial")
 public class PickDetailController extends GenericForwardComposer {	
-	private OrderPickerDDAO dao = new OrderPickerDDAO();
-	private CategoryModel cateModel;			
-	private List<OrderPickerD> items;
+	private static Logger logger = Logger.getLogger(PickDetailController.class);
+	private OrderPickerDAO pDao = new OrderPickerDAO();
+	private List<OrderPickerD> pickDList;
  
 	public PickDetailController() {
 		init();
@@ -29,12 +30,24 @@ public class PickDetailController extends GenericForwardComposer {
  
 	public void init() {
 		//get Picker id
-		int id = Integer.parseInt((String) Executions.getCurrent().getParameter("id"));		
-		OrderPicker stock = dao.getPicker(id);
-//		items = (List<OrderPickerD>) stock.getDetails();	
+		logger.debug("PickDetailController.init: id: "+ Executions.getCurrent().getParameter("id"));
+		int id;
+		try{
+			id = Integer.parseInt((String) Executions.getCurrent().getParameter("id"));
+		}catch(Exception e){
+			id = 0;
+			logger.debug("PickDetailController.init: " + e );
+		}
+		pickDList = pDao.getPickerDList(id);
+		
+		logger.debug("PickDetailController.init: pickDList.size: "+ pickDList.size() );
+//		for ( int i=0; i<pickDList.size(); i++) {
+//			OrderPickerD pickerD = pickDList.get(i);
+//			logger.debug("PickDetailController.init: pickDList: "+ pickerD.getItemid() );
+//		}
 	}
 	public List<OrderPickerD> getPickDList(){
-		return items;
+		return pickDList;
 	}
 
 }

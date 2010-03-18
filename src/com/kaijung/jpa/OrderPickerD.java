@@ -23,7 +23,9 @@ public class OrderPickerD implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-//	private int orderPicker_oid;
+	@Column(insertable=false, updatable=false)
+	private int orderPicker_oid;
+	
 	@ManyToOne 
 	@JoinColumn(name="orderPicker_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderPicker orderPicker;
@@ -185,6 +187,14 @@ public class OrderPickerD implements Serializable {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public int getOrderPicker_oid() {
+		return orderPicker_oid;
+	}
+
+	public void setOrderPicker_oid(int orderPickerOid) {
+		orderPicker_oid = orderPickerOid;
 	}
 
 }

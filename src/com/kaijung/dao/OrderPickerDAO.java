@@ -18,12 +18,12 @@ import com.kaijung.jpa.*;
 import common.*;
 
 /*
- * author Boris@de-lian.com 
+ * author Boris.lds@gmail.com 
  */
 public class OrderPickerDAO {
 	private static Logger logger = Logger.getLogger(OrderPickerDAO.class);
 
-	private List pickList ;
+	private List<OrderPicker> pickList ;
 	
 //	private String url = "jdbc:mysql://localhost:3306/KaiJung?useUnicode=true&amp;characterEncoding=utf8";//	private String url = "jdbc:hsqldb:file:/hsqldb/event";
 //	private String user = "ldstw";
@@ -38,6 +38,7 @@ public class OrderPickerDAO {
 		selectAll();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void selectAll(){
 		EntityManagerFactory f =
 			Persistence.createEntityManagerFactory("default");//You need an EntityManagerFactory to create a manager
@@ -50,12 +51,11 @@ public class OrderPickerDAO {
 		.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public List<OrderPicker> findAll(){
+		logger.debug("OrderPickerDAO.findAll pickList: "+ pickList);
 		return pickList; 
 	}
 
-	@SuppressWarnings("unchecked")
 	public OrderPicker getPicker(int id) {
 		for (Iterator<OrderPicker> iterator = pickList.iterator(); iterator.hasNext();) {
 			OrderPicker st = (OrderPicker) iterator.next();
@@ -65,6 +65,11 @@ public class OrderPickerDAO {
 		return new OrderPicker();
 	}
 
+	public List<OrderPickerD> getPickerDList( int oid ){
+		OrderPickerDDAO dDao = new OrderPickerDDAO();
+		return dDao.findAll(oid);
+	}
+	
 //	public boolean delete(OrderStoreD beanD){
 //		Connection conn = null;
 //		Statement stmt = null;

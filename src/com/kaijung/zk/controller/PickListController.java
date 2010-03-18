@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.zkoss.zk.ui.*;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.Events;
 import org.zkoss.zk.ui.event.InputEvent;
@@ -15,20 +16,29 @@ import org.zkoss.zul.Textbox;
 import com.kaijung.dao.*;
 import com.kaijung.jpa.*;
 
+import common.*;
+
 /**
  * @author Boris
  * 
  */
 public class PickListController extends GenericForwardComposer {	
-	Textbox searchBox;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(PickListController.class);
+//	Textbox searchBox;
 	Listbox itemList;
 	Include detail;
 	OrderPickerDAO dao = new OrderPickerDAO();
 	private static String DETAIL_URL = "pickDetail.zul";
-	
-	public void onCreate$main(){		
-		itemList.setSelectedIndex(0);		
-		Events.postEvent(new Event(Events.ON_SELECT, itemList));
+//	private List<OrderPicker> pickList;
+
+	public void onCreate$main(){
+		logger.debug("PickListController.onCreate$main: itemList: "+ itemList);
+		itemList.setSelectedIndex(0); //若沒有值的話會造成畫面錯誤
+		Events.postEvent(new Event(Events.ON_SELECT, itemList)); //承上，選擇第一筆作為預設值(呼叫onSelect$itemList)
 	}
 	
 	public void onSelect$itemList(){

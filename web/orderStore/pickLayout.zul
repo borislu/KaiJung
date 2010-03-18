@@ -11,7 +11,7 @@
 			<panel>
 				<panelchildren>
 
-				<listbox id="itemList" model="@{main$composer.pickList}" fixedLayout="true" vflex="true">											
+				<listbox id="itemList" model="@{main$composer.pickList}" fixedLayout="true" vflex="true"><!--  -->											
 						<listhead sizable="true">                                                                                                
 									<listheader width="60px" label="訂貨單號" sort="auto" />                                                                  
 									<listheader width="60px" label="訂貨日期" sort="auto" />                                                                  

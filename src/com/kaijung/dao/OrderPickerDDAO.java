@@ -14,56 +14,86 @@ import org.apache.commons.logging.*;
 import org.apache.commons.logging.impl.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
+import org.zkoss.zk.ui.*;
+
 import com.kaijung.jpa.*;
 import common.*;
 
 /*
  * author Boris@de-lian.com 
  */
+@SuppressWarnings("unchecked")
 public class OrderPickerDDAO {
-	private static Logger logger = Logger.getLogger(OrderPickerDAO.class);
+	private static Logger logger = Logger.getLogger(OrderPickerDDAO.class);
 
-	private List pickList ;
-	
-//	private String url = "jdbc:mysql://localhost:3306/KaiJung?useUnicode=true&amp;characterEncoding=utf8";//	private String url = "jdbc:hsqldb:file:/hsqldb/event";
-//	private String user = "ldstw";
-//	private String pwd = "ldstw";
+	private List pickDList;
 
 	public OrderPickerDDAO() {
-//		try {
-//			Class.forName("com.mysql.jdbc.Driver");
-//		} catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		}
-		selectAll();
 	}
 
-	private void selectAll(){
+	public List<OrderPickerD> findAll( int orderPicker_oid ){
 		EntityManagerFactory f =
 			Persistence.createEntityManagerFactory("default");//You need an EntityManagerFactory to create a manager
 		EntityManager manager = f.createEntityManager(); //You create the manager
 		manager.getTransaction().begin(); //You have to start a transaction		
 
-		pickList = XPersistence.getManager()
-		.createQuery(
-		"from OrderPicker)") //JPQL query
-		.getResultList();
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<OrderPicker> findAll(){
-		return pickList; 
+		Query query = XPersistence.getManager()
+//		.createQuery("from OrderPickerD)"); //JPQL query
+//		.createQuery("from OrderPickerD as d where d.orderPicker_oid = :orderPicker_oid )"); //JPQL query
+//		query.setParameter("orderPicker_oid", orderPicker_oid);
+		.createNativeQuery("select * from OrderPickerD where orderPicker_oid = '"+ orderPicker_oid +"'");
+
+		logger.debug("OrderPickerDDAO.findAll query: "+ query);
+
+		pickDList = query.getResultList();
+		
+//		OrderPickerD opd = new OrderPickerD();
+//		opd.setItemid(85);
+//		pickDList.add(opd);
+//		opd.setItemid(86);
+//		pickDList.add(opd);
+
+		logger.debug("OrderPickerDDAO.findAll pickDList: "+ pickDList);
+		for( int i=0; i<pickDList.size(); i++ ){
+			OrderPickerD opd = new OrderPickerD();
+//			logger.debug( pickDList.get(i) );
+//			logger.debug( "OrderPickerDDAO.findAll query: "+ (Object[])pickDList.get(i) ) ;
+			try{
+				logger.debug( "OrderPickerDDAO.findAll query: i: "+ i + ", " + (Object[])pickDList.get(i) ) ;
+				Object[] strArr = (Object[])pickDList.get(i);
+//				opd.setOid ( Integer.parseInt( ""+ strArr[0] ) );
+//				opd.setItemid( Integer.parseInt( (String)strArr[1] ) );
+//				opd.setQuantity( Integer.parseInt( (String)strArr[2] ) );
+				opd.setStatus( (String)strArr[3] );
+				opd.setRemark( (String)strArr[4] );
+				opd.setReserve1( (String)strArr[5] );
+				opd.setReserve2( (String)strArr[6] );
+				opd.setReserve3( (String)strArr[7] );
+				opd.setReserve4( (String)strArr[8] );
+				opd.setReserve5( (String)strArr[9] );
+				opd.setReserve6( (String)strArr[10] );
+				opd.setReserve7( (String)strArr[11] );
+				opd.setReserve8( (String)strArr[12] );
+				opd.setReserve9( (String)strArr[13] );
+				opd.setReserve10( (String)strArr[14] );
+//				opd.setOrderPicker_oid( Integer.parseInt( (String)strArr[15] ) );
+				
+				pickDList.set( i , opd );
+			}catch( Exception e ){
+				logger.error( "OrderPickerDDAO.findAll query: "+ e ) ;
+			}
+		}
+		return pickDList; 
 	}
 
-	@SuppressWarnings("unchecked")
-	public OrderPicker getPicker(int id) {
-		for (Iterator<OrderPicker> iterator = pickList.iterator(); iterator.hasNext();) {
-			OrderPicker st = (OrderPicker) iterator.next();
-			if (st.getOid() == id)
-				return st;		
-		}
-		return new OrderPicker();
-	}
+//	public OrderPickerD getPickerD(int id) {
+//		for (Iterator<OrderPickerD> iterator = pickDList.iterator(); iterator.hasNext();) {
+//			OrderPickerD st = (OrderPickerD) iterator.next();
+//			if (st.getOid() == id)
+//				return st;		
+//		}
+//		return new OrderPickerD();
+//	}
 
 //	public boolean delete(OrderStoreD beanD){
 //		Connection conn = null;
