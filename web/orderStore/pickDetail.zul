@@ -1,0 +1,85 @@
+<?page id="pricePage" title="" contentType="text/html;charset=UTF-8"?>
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit"?>
+<zk>
+<window id="main2"><!--  apply="com.kaijung.zk.controller.PickDetailController" -->
+	<zscript><![CDATA[
+		import com.kaijung.jpa.*;
+		import com.kaijung.zk.controller.*;
+		
+		List opds = new PickDetailController().getPickDList();
+		
+//		OrderPicker opd1 = new OrderPicker();
+//		opd1.setOid(66);
+//		List opds = new ArrayList();
+//		opds.add( opd1 );
+
+	]]>
+	</zscript>
+ 
+
+<grid id="history" model="@{opds}"><!--  model="@{main2$com.kaijung.zk.controller.PickDetailController.pickDList}" -->
+    <columns menupopup="auto">
+        <column label=""/>
+        <column label="#"/>
+        <column label="貨號" align="center"/>
+        <column label="單價" align="center"/>
+        <column label="顏色" align="center"/>
+        <column label="24" align="center"/>
+        <column label="26" align="center"/>
+        <column label="28" align="center"/>
+        <column label="30" align="center"/>
+        <column label="32" align="center"/>
+        <column label="小計" align="center"/>
+        <column label="金額" align="center"/>
+        <column label="客訂" align="center"/>
+        <column label="修改單號" align="center"/>
+        <column label="備註" align="center"/>
+        <column label="倉庫" align="center"/>
+        <column label="貨架" align="center"/>
+        <column label="行" align="center"/>
+        <column label="列" align="center"/>
+        <column label="24" align="center"/>
+        <column label="26" align="center"/>
+        <column label="28" align="center"/>
+        <column label="30" align="center"/>
+        <column label="32" align="center"/>
+        <column label="小計" align="center"/>
+        <column label="金額" align="center"/>
+        <column label="說明" align="center"/>
+        <column label="狀態" align="center"/>
+    </columns>
+    <rows>
+        <row self="@{each='opd'}"><!--  -->
+            <checkbox/>
+            <textbox width="35px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" value="1" rows="1"/>
+            <textbox width="50px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" value="@{opd.oid}" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+            <textbox width="50px" rows="1"/>
+        </row>
+    </rows>
+</grid>
+</window>
+</zk>

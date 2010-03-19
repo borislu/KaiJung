@@ -55,7 +55,7 @@ public class Warehouse implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
 
-    @DisplaySize(28)
+   //@DisplaySize(28)
 	private String name;
 
     @DisplaySize(20)

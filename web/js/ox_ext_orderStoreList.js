@@ -99,8 +99,8 @@ openxava.refreshPage = function(result) {
       */
     $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(function() {
         //alert( $(this).attr('href') + ' , ' + $(this).attr('href').substring(102) );
-        index = $(this).attr('href').substring(102);
-        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row="+ index }
+        rowIndex = $(this).attr('href').substring(102);
+        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row="+ rowIndex }
 					);
 }
 

@@ -2,8 +2,13 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 
+import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
+
+import com.kaijung.calculators.*;
 
 import java.util.*;
 
@@ -14,11 +19,14 @@ import java.util.*;
  */
 @Entity
 @Views( {
-	@View(name = "HeadOnly", members = ""//"order [ readCode; createTime; warehouse; employee ]"
-			+ "picker [ oid; createTime; createBy ]"
-			+ "sender [ senderId; senderTime; senderBy ]")
+	@View(name = "DetailOnly", members = "order [ readCode; orderId; orderTime; orderBy ]"
+		+ "picker [ readCode; createTime; picker ]"
+		+ "sender [ senderId; senderTime; senderBy ] details"
+	)
 })
-@Tab(name = "Latest", defaultOrder = "${oid} desc")
+@Tab(name = "Latest", defaultOrder = "${oid} desc",
+	properties="orderId, orderTime, orderBy, readCode, createTime, status, remark" //
+)
 public class OrderPicker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,51 +34,104 @@ public class OrderPicker implements Serializable {
 	@TableGenerator(
 	    name="SequenceGenerator", table="SequenceGen", 
 	    pkColumnName="oid", valueColumnName="value", 
-	    pkColumnValue="picker.oid", initialValue=1, allocationSize=1
+	    pkColumnValue="orderPicker.oid", initialValue=1, allocationSize=1
 	)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
-
+	
+	@OneToMany
+	private Collection<OrderPickSend> orderStores;
+	
 	@OneToMany(mappedBy="orderPicker", cascade=CascadeType.REMOVE) //@AsEmbedded
+	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
+	+"sum, amount, isCustOrder, modifyId, remark, item.stock.shelf, 24,26,28,30,32," // 此2個 remark 不同，前者要從修改單的記錄取出
+	+"sum2, amount2, remark, status"
+	)
 	private Collection<OrderPickerD> details ;// = new ArrayList<OrderStoreD>(); 
 
-	private int createBy;
+//	private int createBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee picker; // 揀貨人員
 
-   @Temporal( TemporalType.TIMESTAMP)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int modifyBy;
+//	private int modifyBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee modifier; // 修改人員
 
-   @Temporal( TemporalType.TIMESTAMP)
+    @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
 
+	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
+		@PropertyValue(name = "dateCode", value = "100315") // Required,
+		, @PropertyValue(name = "docType", value = "B") // Required, 由基本檔取出
+		, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
+		, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
+																			// 記錄流水號的表格
+	})
+	@ReadOnly
+	@DisplaySize(20)
 	private String readCode;
 
 	private String remark;
-
+	@Hidden
 	private String reserve1;
-
+	@Hidden
 	private String reserve10;
-
+	@Hidden
 	private String reserve2;
-
+	@Hidden
 	private String reserve3;
-
+	@Hidden
 	private String reserve4;
-
+	@Hidden
 	private String reserve5;
-
+	@Hidden
 	private String reserve6;
-
+	@Hidden
 	private String reserve7;
-
+	@Hidden
 	private String reserve8;
-
+	@Hidden
 	private String reserve9;
 
 	private String status;
 
-   public OrderPicker() {
+//	public void addOrder(OrderStore orderStore, boolean teamLead) {
+//	    OrderPickSend association = new OrderPickSend();
+//	    association.setOrderStore(orderStore);
+//	    association.setOrderPicker(this);
+//	    association.setOrderSN(orderStore.getOid());
+//	    association.setPickId(this.getOid());
+//
+//	    orderStore.add(association);
+//	}
+
+	@DisplaySize(18)
+	@Transient
+	public String getOrderId() { // calculated property 無資料庫對應
+		return "";
+	}
+
+	@DisplaySize(11) @Transient
+	public String getOrderTime() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(10) @Transient
+	public String getOrderBy() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(18) @Transient
+	public String getSenderId() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(11) @Transient
+	public String getSenderTime() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(10) @Transient
+	public String getSenderBy() { return ""; } // calculated property 無資料庫對應
+	
+	public OrderPicker() {
     }
 
 	public int getOid() {
@@ -81,28 +142,12 @@ public class OrderPicker implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(int createBy) {
-		this.createBy = createBy;
-	}
-
 	public Date getCreateTime() {
 		return this.createTime;
 	}
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getModifyBy() {
-		return this.modifyBy;
-	}
-
-	public void setModifyBy(int modifyBy) {
-		this.modifyBy = modifyBy;
 	}
 
 	public Date getModifyTime() {
@@ -217,12 +262,34 @@ public class OrderPicker implements Serializable {
 		this.status = status;
 	}
 
+    public Collection<OrderPickSend> getOrderStores() { return orderStores; }
+    
+	public void setOrderStores(Collection<OrderPickSend> orderStores) {
+		this.orderStores = orderStores;
+	}
+
 	public Collection<OrderPickerD> getDetails() {
 		return details;
 	}
 
 	public void setDetails(Collection<OrderPickerD> details) {
 		this.details = details;
+	}
+
+	public Employee getPicker() {
+		return picker;
+	}
+
+	public void setPicker(Employee picker) {
+		this.picker = picker;
+	}
+
+	public Employee getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(Employee modifier) {
+		this.modifier = modifier;
 	}
 
 }

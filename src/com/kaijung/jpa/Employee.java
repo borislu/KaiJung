@@ -39,6 +39,7 @@ public class Employee implements Serializable {
 
 	private String memo;
 
+	//@DisplaySize(20)
 	private String name;
 
 	@Hidden

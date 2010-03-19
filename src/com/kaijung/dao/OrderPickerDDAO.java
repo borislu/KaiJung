@@ -66,16 +66,16 @@ public class OrderPickerDDAO {
 //				opd.setQuantity( Integer.parseInt( (String)strArr[2] ) );
 				opd.setStatus( (String)strArr[3] );
 				opd.setRemark( (String)strArr[4] );
-				opd.setReserve1( (String)strArr[5] );
-				opd.setReserve2( (String)strArr[6] );
-				opd.setReserve3( (String)strArr[7] );
-				opd.setReserve4( (String)strArr[8] );
-				opd.setReserve5( (String)strArr[9] );
-				opd.setReserve6( (String)strArr[10] );
-				opd.setReserve7( (String)strArr[11] );
-				opd.setReserve8( (String)strArr[12] );
-				opd.setReserve9( (String)strArr[13] );
-				opd.setReserve10( (String)strArr[14] );
+//				opd.setReserve1( (String)strArr[5] );
+//				opd.setReserve2( (String)strArr[6] );
+//				opd.setReserve3( (String)strArr[7] );
+//				opd.setReserve4( (String)strArr[8] );
+//				opd.setReserve5( (String)strArr[9] );
+//				opd.setReserve6( (String)strArr[10] );
+//				opd.setReserve7( (String)strArr[11] );
+//				opd.setReserve8( (String)strArr[12] );
+//				opd.setReserve9( (String)strArr[13] );
+//				opd.setReserve10( (String)strArr[14] );
 //				opd.setOrderPicker_oid( Integer.parseInt( (String)strArr[15] ) );
 				
 				pickDList.set( i , opd );

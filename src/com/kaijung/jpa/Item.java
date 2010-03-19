@@ -14,11 +14,6 @@ import java.util.Date;
  * 
  */
 @Entity
-@Views({
-	@View(members=
-	    "item [ name, status; enname; barcode, brandid; ]"
-	)
-})
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -31,25 +26,9 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	private String acce1;
-
-	private String acce2;
-
-	private String acce3;
-
-	private byte allowdisc;
-
-	@DisplaySize(20)
 	private String articleno;
 
-	private byte asksno;
-
-	@DisplaySize(15)
 	private String barcode;
-
-	private byte blockpurchase;
-
-	private byte blocksales;
 
 	private int brandid;
 
@@ -61,14 +40,6 @@ public class Item implements Serializable {
 
 	private BigDecimal costcurrent;
 
-	private byte costmethod;
-
-	private BigDecimal costpur;
-
-	private BigDecimal coststd;
-
-	private BigDecimal costuse;
-
 	private int countryid;
 
 	private int createBy;
@@ -76,28 +47,18 @@ public class Item implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private String curtype;
-
-	private String discgroup;
-
     @Temporal( TemporalType.TIMESTAMP)
 	private Date edate;
 
 	private String enname;
 
-	private int incid;
-
-	private byte issample;
-
-	private int itcid;
+	private String issample;
 
 	private String itemgroup;
 
 	private String itemno;
 
 	private String itemstatus;
-
-	private int ittid;
 
 	private String memo;
 
@@ -110,11 +71,9 @@ public class Item implements Serializable {
 
 	private String name;
 
-	private byte negativesales;
+	private String nonstock;
 
-	private byte nonstock;
-
-	private byte openprice;
+	private String openprice;
 
 	private int pack;
 
@@ -123,57 +82,30 @@ public class Item implements Serializable {
 
 	private int packvolume;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date paend;
-
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date pastart;
-
-	private String pc;
-
-	private int pntaward;
-
-	private int pntredeem;
-
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date prend;
+	private float price;
 
 	private String pricegroup;
 
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date prstart;
-
-	private float recorderlvl;
-
-	private float recorderqty;
-
-	private String rel1;
-
-	private String rel2;
-
-	private String rel3;
-
 	private String remark;
 
-	@Hidden
 	private String reserve1;
-	@Hidden
+
 	private String reserve10;
-	@Hidden
+
 	private String reserve2;
-	@Hidden
+
 	private String reserve3;
-	@Hidden
+
 	private String reserve4;
-	@Hidden
+
 	private String reserve5;
-	@Hidden
+
 	private String reserve6;
-	@Hidden
+
 	private String reserve7;
-	@Hidden
+
 	private String reserve8;
-	@Hidden
+
 	private String reserve9;
 
 	private int salestypeid;
@@ -181,15 +113,14 @@ public class Item implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date sdate;
 
-	private String sect;
-
 	private String shortdesc;
 
 	private int sizeid;
 
-	private byte staffdisc;
-
-	private int status;
+//	private int stockid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "shelf")
+	@JoinColumn(name = "stockid", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Stock stock;
 
 	private int stocktype;
 
@@ -204,15 +135,11 @@ public class Item implements Serializable {
 
 	private int unitid;
 
-	private int varcount;
-
 	private String vatgroup;
 
 	private String vendor;
 
 	private String vendoritemno;
-
-	private byte vipdisc;
 
     public Item() {
     }
@@ -225,52 +152,12 @@ public class Item implements Serializable {
 		this.oid = oid;
 	}
 
-	public String getAcce1() {
-		return this.acce1;
-	}
-
-	public void setAcce1(String acce1) {
-		this.acce1 = acce1;
-	}
-
-	public String getAcce2() {
-		return this.acce2;
-	}
-
-	public void setAcce2(String acce2) {
-		this.acce2 = acce2;
-	}
-
-	public String getAcce3() {
-		return this.acce3;
-	}
-
-	public void setAcce3(String acce3) {
-		this.acce3 = acce3;
-	}
-
-	public byte getAllowdisc() {
-		return this.allowdisc;
-	}
-
-	public void setAllowdisc(byte allowdisc) {
-		this.allowdisc = allowdisc;
-	}
-
 	public String getArticleno() {
 		return this.articleno;
 	}
 
 	public void setArticleno(String articleno) {
 		this.articleno = articleno;
-	}
-
-	public byte getAsksno() {
-		return this.asksno;
-	}
-
-	public void setAsksno(byte asksno) {
-		this.asksno = asksno;
 	}
 
 	public String getBarcode() {
@@ -281,22 +168,6 @@ public class Item implements Serializable {
 		this.barcode = barcode;
 	}
 
-	public byte getBlockpurchase() {
-		return this.blockpurchase;
-	}
-
-	public void setBlockpurchase(byte blockpurchase) {
-		this.blockpurchase = blockpurchase;
-	}
-
-	public byte getBlocksales() {
-		return this.blocksales;
-	}
-
-	public void setBlocksales(byte blocksales) {
-		this.blocksales = blocksales;
-	}
-
 	public int getBrandid() {
 		return this.brandid;
 	}
@@ -305,52 +176,12 @@ public class Item implements Serializable {
 		this.brandid = brandid;
 	}
 
-	public ItemColor getColor() {
-		return color;
-	}
-
-	public void setColor(ItemColor color) {
-		this.color = color;
-	}
-
 	public BigDecimal getCostcurrent() {
 		return this.costcurrent;
 	}
 
 	public void setCostcurrent(BigDecimal costcurrent) {
 		this.costcurrent = costcurrent;
-	}
-
-	public byte getCostmethod() {
-		return this.costmethod;
-	}
-
-	public void setCostmethod(byte costmethod) {
-		this.costmethod = costmethod;
-	}
-
-	public BigDecimal getCostpur() {
-		return this.costpur;
-	}
-
-	public void setCostpur(BigDecimal costpur) {
-		this.costpur = costpur;
-	}
-
-	public BigDecimal getCoststd() {
-		return this.coststd;
-	}
-
-	public void setCoststd(BigDecimal coststd) {
-		this.coststd = coststd;
-	}
-
-	public BigDecimal getCostuse() {
-		return this.costuse;
-	}
-
-	public void setCostuse(BigDecimal costuse) {
-		this.costuse = costuse;
 	}
 
 	public int getCountryid() {
@@ -377,22 +208,6 @@ public class Item implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public String getCurtype() {
-		return this.curtype;
-	}
-
-	public void setCurtype(String curtype) {
-		this.curtype = curtype;
-	}
-
-	public String getDiscgroup() {
-		return this.discgroup;
-	}
-
-	public void setDiscgroup(String discgroup) {
-		this.discgroup = discgroup;
-	}
-
 	public Date getEdate() {
 		return this.edate;
 	}
@@ -409,28 +224,12 @@ public class Item implements Serializable {
 		this.enname = enname;
 	}
 
-	public int getIncid() {
-		return this.incid;
-	}
-
-	public void setIncid(int incid) {
-		this.incid = incid;
-	}
-
-	public byte getIssample() {
+	public String getIssample() {
 		return this.issample;
 	}
 
-	public void setIssample(byte issample) {
+	public void setIssample(String issample) {
 		this.issample = issample;
-	}
-
-	public int getItcid() {
-		return this.itcid;
-	}
-
-	public void setItcid(int itcid) {
-		this.itcid = itcid;
 	}
 
 	public String getItemgroup() {
@@ -455,14 +254,6 @@ public class Item implements Serializable {
 
 	public void setItemstatus(String itemstatus) {
 		this.itemstatus = itemstatus;
-	}
-
-	public int getIttid() {
-		return this.ittid;
-	}
-
-	public void setIttid(int ittid) {
-		this.ittid = ittid;
 	}
 
 	public String getMemo() {
@@ -505,27 +296,19 @@ public class Item implements Serializable {
 		this.name = name;
 	}
 
-	public byte getNegativesales() {
-		return this.negativesales;
-	}
-
-	public void setNegativesales(byte negativesales) {
-		this.negativesales = negativesales;
-	}
-
-	public byte getNonstock() {
+	public String getNonstock() {
 		return this.nonstock;
 	}
 
-	public void setNonstock(byte nonstock) {
+	public void setNonstock(String nonstock) {
 		this.nonstock = nonstock;
 	}
 
-	public byte getOpenprice() {
+	public String getOpenprice() {
 		return this.openprice;
 	}
 
-	public void setOpenprice(byte openprice) {
+	public void setOpenprice(String openprice) {
 		this.openprice = openprice;
 	}
 
@@ -553,52 +336,12 @@ public class Item implements Serializable {
 		this.packvolume = packvolume;
 	}
 
-	public Date getPaend() {
-		return this.paend;
+	public float getPrice() {
+		return this.price;
 	}
 
-	public void setPaend(Date paend) {
-		this.paend = paend;
-	}
-
-	public Date getPastart() {
-		return this.pastart;
-	}
-
-	public void setPastart(Date pastart) {
-		this.pastart = pastart;
-	}
-
-	public String getPc() {
-		return this.pc;
-	}
-
-	public void setPc(String pc) {
-		this.pc = pc;
-	}
-
-	public int getPntaward() {
-		return this.pntaward;
-	}
-
-	public void setPntaward(int pntaward) {
-		this.pntaward = pntaward;
-	}
-
-	public int getPntredeem() {
-		return this.pntredeem;
-	}
-
-	public void setPntredeem(int pntredeem) {
-		this.pntredeem = pntredeem;
-	}
-
-	public Date getPrend() {
-		return this.prend;
-	}
-
-	public void setPrend(Date prend) {
-		this.prend = prend;
+	public void setPrice(float price) {
+		this.price = price;
 	}
 
 	public String getPricegroup() {
@@ -607,54 +350,6 @@ public class Item implements Serializable {
 
 	public void setPricegroup(String pricegroup) {
 		this.pricegroup = pricegroup;
-	}
-
-	public Date getPrstart() {
-		return this.prstart;
-	}
-
-	public void setPrstart(Date prstart) {
-		this.prstart = prstart;
-	}
-
-	public float getRecorderlvl() {
-		return this.recorderlvl;
-	}
-
-	public void setRecorderlvl(float recorderlvl) {
-		this.recorderlvl = recorderlvl;
-	}
-
-	public float getRecorderqty() {
-		return this.recorderqty;
-	}
-
-	public void setRecorderqty(float recorderqty) {
-		this.recorderqty = recorderqty;
-	}
-
-	public String getRel1() {
-		return this.rel1;
-	}
-
-	public void setRel1(String rel1) {
-		this.rel1 = rel1;
-	}
-
-	public String getRel2() {
-		return this.rel2;
-	}
-
-	public void setRel2(String rel2) {
-		this.rel2 = rel2;
-	}
-
-	public String getRel3() {
-		return this.rel3;
-	}
-
-	public void setRel3(String rel3) {
-		this.rel3 = rel3;
 	}
 
 	public String getRemark() {
@@ -761,14 +456,6 @@ public class Item implements Serializable {
 		this.sdate = sdate;
 	}
 
-	public String getSect() {
-		return this.sect;
-	}
-
-	public void setSect(String sect) {
-		this.sect = sect;
-	}
-
 	public String getShortdesc() {
 		return this.shortdesc;
 	}
@@ -783,22 +470,6 @@ public class Item implements Serializable {
 
 	public void setSizeid(int sizeid) {
 		this.sizeid = sizeid;
-	}
-
-	public byte getStaffdisc() {
-		return this.staffdisc;
-	}
-
-	public void setStaffdisc(byte staffdisc) {
-		this.staffdisc = staffdisc;
-	}
-
-	public int getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public int getStocktype() {
@@ -849,14 +520,6 @@ public class Item implements Serializable {
 		this.unitid = unitid;
 	}
 
-	public int getVarcount() {
-		return this.varcount;
-	}
-
-	public void setVarcount(int varcount) {
-		this.varcount = varcount;
-	}
-
 	public String getVatgroup() {
 		return this.vatgroup;
 	}
@@ -881,12 +544,20 @@ public class Item implements Serializable {
 		this.vendoritemno = vendoritemno;
 	}
 
-	public byte getVipdisc() {
-		return this.vipdisc;
+	public ItemColor getColor() {
+		return color;
 	}
 
-	public void setVipdisc(byte vipdisc) {
-		this.vipdisc = vipdisc;
+	public void setColor(ItemColor color) {
+		this.color = color;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
 	}
 
 }

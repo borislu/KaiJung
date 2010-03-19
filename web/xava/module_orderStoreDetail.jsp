@@ -123,12 +123,12 @@ Module.setStyle(style);
     parent.frames["frameEast"].window.location.reload();
   }
 			function afterDel(){
-						 //alert("trying: "+ $("#ox_KaiJung_OrderStoreDetailOnly__messages_table").length>0);
+						 //alert("trying: "+ $("#ox_KaiJung_orderStoreDetailOnly__messages_table").length>0);
 						 if ($("#ox_KaiJung_OrderStoreDetailOnly__messages_table").length>0) {
 						     parent.frames["frameEast"].window.location.reload();
          $.cookie("JSESSIONID", null);
 						 }else {
-						     setTimeout("afterDel()", 500);
+						     setTimeout("afterDel()", 50);
 						 }
 			}
   function changeLink(){
@@ -136,7 +136,6 @@ Module.setStyle(style);
     ///*
     if( ($('a')==null) || ($('a').length < 1) ){
         setTimeout( 'changeLink()', 50 );  
-        alert( 'test: '+ $('.portlet-content-container') );
     }else{
     //*/
         $('#ox_KaiJung_OrderStoreDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
@@ -145,15 +144,18 @@ Module.setStyle(style);
   }
   changeLink();
   function changeCss(){
-    $(document).ready(function(){
-        $('.portlet-content-container').attr('style','float:left');
+    //$(document).ready(function(){
+    if( ($('#ox_KaiJung_OrderStoreDetailOnly__view')==null) || ($('#ox_KaiJung_OrderStoreDetailOnly__view').length < 1) ){
+        setTimeout( 'changeCss()', 50 );  
+    }else{
+        $('#ox_KaiJung_OrderStoreDetailOnly__view').css('width','800px');
     }
   }
   changeCss();
 	</script>
 <% if (!isPortlet) { %>
 </head>
-<body bgcolor="#ffffff" onLoad="changeLink()">
+<body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>

@@ -18,19 +18,21 @@ import java.util.*;
  */
 @Entity
 @Views( {
-		@View(members = "order [ readCode; createTime; warehouse; employee ]"
+		@View(members = "order [ readCode; createTime; warehouse; orderman ]"
 				+ "picker [ pickerId; pickerTime; pickerBy ]"
 				+ "sender [ senderId; senderTime; senderBy ]"
 				+ "details"),
-		@View(name = "HeadOnly", members = "order [ readCode; createTime; warehouse; employee ]"
+		@View(name = "HeadOnly", members = "order [ readCode; createTime; warehouse; orderman ]"
 				+ "picker [ pickerId; pickerTime; pickerBy ]"
 				+ "sender [ senderId; senderTime; senderBy ]"),
-		@View(name = "DetailOnly", members = "order [ readCode; createTime; warehouse; employee ]"
+		@View(name = "DetailOnly", members = "order [ readCode; createTime; warehouse; orderman ]"
 			+ "picker [ pickerId; pickerTime; pickerBy ]"
 			+ "sender [ senderId; senderTime; senderBy ]"
 			+ "details"),
 })
-@Tab(name = "Latest", defaultOrder = "${oid} desc")
+@Tab(name = "Latest", defaultOrder = "${oid} desc"
+		,properties="oid, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
+)
 public class OrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -40,17 +42,26 @@ public class OrderStore implements Serializable {
 	private String oid;
 
 	// private int createBy;
-	@DescriptionsList(descriptionProperties = "name") @ManyToOne
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
 	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
-	private Employee employee; // 訂貨人員
+	private Employee orderman; // 訂貨人員
 	
 	@OneToMany(mappedBy="orderStore", cascade=CascadeType.REMOVE) //@AsEmbedded
+	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
+	+"sum, amount, isCustOrder, modifyId, remark, status"
+	)
 	private Collection<OrderStoreD> details ;// = new ArrayList<OrderStoreD>(); 
-	
+
+//	@OneToMany
+//	private Collection<OrderPickSend> orderPickers;
+
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int modifyBy;
+//	private int modifyBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee modifier; // 修改人員
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date modifyTime;
@@ -67,43 +78,47 @@ public class OrderStore implements Serializable {
 	private String readCode;
 
 	private String remark;
-
+	@Hidden
 	private String reserve1;
-
+	@Hidden
 	private String reserve10;
-
+	@Hidden
 	private String reserve2;
-
+	@Hidden
 	private String reserve3;
-
+	@Hidden
 	private String reserve4;
-
+	@Hidden
 	private String reserve5;
-
+	@Hidden
 	private String reserve6;
-
+	@Hidden
 	private String reserve7;
-
+	@Hidden
 	private String reserve8;
-
+	@Hidden
 	private String reserve9;
 
 	private String status;
 
 	// private int wareId;
-	@DescriptionsList(descriptionProperties = "name")
-	@ManyToOne
-	@JoinColumn(name = "wareId", referencedColumnName = "oid")
-	// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "wareId", referencedColumnName = "oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Warehouse warehouse;
 
-//	
-//	@Transient @ManyToOne
-//	//@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
-////	private Item item;
-//	public Item getItem() { // calculated property 無資料庫對應
-//		return null;
-//	}
+	@DisplaySize(8) @Transient
+	public String getTotalQty() { return ""; } // 總件數，無資料庫對應
+	
+	@DisplaySize(10) @Transient
+	public String getInTime() { return ""; } // 撥入日期，無資料庫對應
+	
+	
+	@Transient @ManyToOne
+	//@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+//	private Item item;
+	public Item getItem() { // calculated property 無資料庫對應
+		return null;
+	}
 
 	@DisplaySize(18)
 	@Transient
@@ -158,14 +173,6 @@ public class OrderStore implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getModifyBy() {
-		return this.modifyBy;
-	}
-
-	public void setModifyBy(int modifyBy) {
-		this.modifyBy = modifyBy;
 	}
 
 	public Date getModifyTime() {
@@ -280,14 +287,6 @@ public class OrderStore implements Serializable {
 		this.status = status;
 	}
 
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 	public Warehouse getWarehouse() {
 		return warehouse;
 	}
@@ -302,6 +301,37 @@ public class OrderStore implements Serializable {
 
 	public void setDetails(Collection<OrderStoreD> details) {
 		this.details = details;
+	}
+
+//    public Collection<OrderPickSend> getOrderPickerss() { return orderPickers; }
+//
+//	public Collection<OrderPickSend> getOrderPickers() {
+//		return orderPickers;
+//	}
+//
+//	public void setOrderPickers(Collection<OrderPickSend> orderPickers) {
+//		this.orderPickers = orderPickers;
+//	}
+
+	public void add(OrderPickSend association) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Employee getOrderman() {
+		return orderman;
+	}
+
+	public void setOrderman(Employee orderman) {
+		this.orderman = orderman;
+	}
+
+	public Employee getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(Employee modifier) {
+		this.modifier = modifier;
 	}
 
 }

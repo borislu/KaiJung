@@ -75,6 +75,30 @@ public class OrderStoreD implements Serializable {
 	@ReadOnly
 	private String status;
 
+	@DisplaySize(6) @Transient
+	public String get24() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get26() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get28() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get30() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get32() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getAmount() { return ""; } // 金額，無資料庫對應
+	
+	@DisplaySize(6) @Transient
+	public String getModifyId() { return ""; } // 修改單號，無資料庫對應
+
    public OrderStoreD () {
     }
     public OrderStoreD( String oid, boolean iscustOrder, int quantity ) {

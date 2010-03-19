@@ -2,7 +2,9 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.persistence.Entity;
 
+import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
 
@@ -11,6 +13,7 @@ import org.openxava.annotations.*;
  * 
  */
 @Entity
+@Tab(name = "Latest", defaultOrder = "${oid} desc")
 public class OrderPickerD implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -18,22 +21,72 @@ public class OrderPickerD implements Serializable {
 	@TableGenerator(
 	    name="SequenceGenerator", table="SequenceGen", 
 	    pkColumnName="oid", valueColumnName="value", 
-	    pkColumnValue="pickerD.oid", initialValue=1, allocationSize=1
+	    pkColumnValue="orderPicker.oid", initialValue=1, allocationSize=1
 	)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	@Column(insertable=false, updatable=false)
-	private int orderPicker_oid;
-	
+//	private int itemid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Item item;
+
 	@ManyToOne 
 	@JoinColumn(name="orderPicker_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderPicker orderPicker;
 	
-	private int itemid;
+//	private int orderPicker_oid;
 
 	private int quantity;
 
+	@DisplaySize(6) @Transient
+	public String get24() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get26() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get28() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get30() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get32() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get65() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get70() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get75() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get80() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get85() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getAmount() { return ""; } // 金額，無資料庫對應
+	
+	@DisplaySize(1) @Transient
+	public String getIsCustOrder() { return ""; } // 客訂，無資料庫對應
+	
+	@DisplaySize(6) @Transient
+	public String getModifyId() { return ""; } // 修改單號，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum2() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getAmount2() { return ""; } // 金額，無資料庫對應
+	
 	private String remark;
 	@Hidden
 	private String reserve1;
@@ -67,14 +120,6 @@ public class OrderPickerD implements Serializable {
 
 	public void setOid(int oid) {
 		this.oid = oid;
-	}
-
-	public int getItemid() {
-		return this.itemid;
-	}
-
-	public void setItemid(int itemid) {
-		this.itemid = itemid;
 	}
 
 	public int getQuantity() {
@@ -173,6 +218,14 @@ public class OrderPickerD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public OrderPicker getOrderPicker() {
 		return orderPicker;
 	}
@@ -181,20 +234,12 @@ public class OrderPickerD implements Serializable {
 		this.orderPicker = orderPicker;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public Item getItem() {
+		return item;
 	}
 
-	public String getStatus() {
-		return status;
-	}
-
-	public int getOrderPicker_oid() {
-		return orderPicker_oid;
-	}
-
-	public void setOrderPicker_oid(int orderPickerOid) {
-		orderPicker_oid = orderPickerOid;
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }

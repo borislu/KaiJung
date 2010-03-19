@@ -2,6 +2,9 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.openxava.annotations.*;
+
 import java.util.Date;
 
 
@@ -13,8 +16,13 @@ import java.util.Date;
 public class Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id @Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="stock.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
 	private int createBy;
@@ -22,12 +30,12 @@ public class Stock implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
+	private int itemid;
+
 	private int modifyBy;
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
-
-	private int productId;
 
 	private String remark;
 
@@ -90,6 +98,14 @@ public class Stock implements Serializable {
 		this.createTime = createTime;
 	}
 
+	public int getItemid() {
+		return this.itemid;
+	}
+
+	public void setItemid(int itemid) {
+		this.itemid = itemid;
+	}
+
 	public int getModifyBy() {
 		return this.modifyBy;
 	}
@@ -104,14 +120,6 @@ public class Stock implements Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
-	}
-
-	public int getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
 	}
 
 	public String getRemark() {
