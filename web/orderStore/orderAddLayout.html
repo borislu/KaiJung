@@ -3,33 +3,37 @@
 <head>
 <title>專櫃訂貨</title>
 <link rel="stylesheet" type="text/css"
-	href="../extjs/resources/css/ext-all.css" />
+ href="../extjs/resources/css/ext-all.css" />
 <script type="text/javascript" src="../extjs/adapter/ext/ext-base.js"></script>
 <script type="text/javascript" src="../extjs/ext-all.js"></script>
+<script type='text/javascript' src='../dwr/interface/OrderStoreNewD.js'></script>
+<script type='text/javascript' src='../js/engine.js'></script>
+<script type='text/javascript' src='../js/util.js'></script>
+<script type='text/javascript' src='../js/orderStoreNewD.js'></script>
 
 <!--<script type="text/javascript" src="actions.js"></script>-->
 <link rel="stylesheet" type="text/css" href="menus.css" />
 <link rel="stylesheet" type="text/css" href="examples.css" />
 <style type="text/css">
 html,body {
-	font: normal 12px verdana;
-	margin: 0;
-	padding: 0;
-	border: 0 none;
-	overflow: hidden;
-	height: 100%;
+ font: normal 12px verdana;
+ margin: 0;
+ padding: 0;
+ border: 0 none;
+ overflow: hidden;
+ height: 100%;
 }
 
 p {
-	margin: 5px;
+ margin: 5px;
 }
 
 .settings {
-	background-image: url(../shared/icons/fam/folder_wrench.png);
+ background-image: url(../shared/icons/fam/folder_wrench.png);
 }
 
 .nav {
-	background-image: url(../shared/icons/fam/folder_go.png);
+ background-image: url(../shared/icons/fam/folder_go.png);
 }
 </style>
 <script type="text/javascript">
@@ -75,27 +79,28 @@ p {
                       bbar:[{
                           text:'列印',
                           handler:function(){
-                                linkFrom ();
+                                Ext.getDom('frameEast').contentWindow ();
                           }
                       },{
                           text:'PDF',
                           handler:function(){
-                                linkFrom ();
+                                Ext.getDom('frameEast').contentWindow ();
                           }
                       },{
                           text:'EXCEL',
                           handler:function(){
-                                linkFrom ();
+                                Ext.getDom('frameEast').contentWindow ();
                           }
                       },{
                           text:'加入訂單',
                           handler:function(){
-                                Ext.get('frameEast').dom.contentDocument.getElementById('append').click();
+                                //Ext.get('frameEast').dom.contentDocument.getElementById('append').click();
+                                Ext.getDom('frameEast').contentWindow.batchOrder();
                           }
                       },{
                           text:'移除建議',
                           handler:function(){
-                                linkFrom ();
+                                Ext.getDom('frameEast').contentWindow.delCheckedTrs();
                           }
                       }]
                   },{
@@ -136,33 +141,36 @@ p {
                       },{
                           text:'自動訂貨',
                           handler:function(){
-                                Ext.get('frameEast').dom.contentDocument.getElementById('append').click();
+                                //Ext.get('frameEast').dom.contentDocument.getElementById('append').click();
+                                Ext.getDom('frameEast').contentWindow.batchOrder();
                           }
                       },{
                           text:'送出訂單',
                           handler:function(){
-                                linkFrom ();
+                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save');
                           }
                       },{
                           text:'搜尋',
                           handler:function(){
-                                linkFrom ();
+                                search ();
                           }
                       },{
                           text:'儲存',
                           handler:function(){
-                                Ext.get('frameWest').dom.contentDocument.getElementById('allInsert').click();
-                                Ext.get('frameWest').dom.contentDocument.getElementById('saveHead').click();
+                                //Ext.get('frameWest').dom.contentDocument.getElementById('allInsert').click();
+                                //Ext.get('frameWest').dom.contentDocument.getElementById('saveHead').click();
+                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save');
+                                Ext.getDom('frameWest').contentWindow.submitOSD();
                           }
                       },{
                           text:'刪除',
                           handler:function(){
-                                linkFrom ();
+                                Ext.getDom('frameEast').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'CRUD.delete');
                           }
                       },{
                           text:'取消',
                           handler:function(){
-                                linkFrom ();
+                                reset ();
                           }
                       }]
                   }
@@ -206,14 +214,14 @@ p {
 <body>
 <script type="text/javascript" src="../examples.js"></script>
 <!-- EXAMPLES -->
-<div id="east"><iframe id="frameEast" name="frameEast"	src="suggest.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
-<div id="west"><iframe id="frameWest" name="frameWest" src="new.jsp"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="east"><iframe id="frameEast" name="frameEast" src="suggest.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="west"><iframe id="frameWest" name="frameWest" src="new.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
 <div id="north">
 <p></p>
 </div>
 <div id="center2"></div>
 <div id="center1"></div>
-<div id="props-panel"	style="width: 200px; height: 200px; overflow: hidden;"></div>
+<div id="props-panel" style="width: 200px; height: 200px; overflow: hidden;"></div>
 
 </body>
 </html>

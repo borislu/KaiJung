@@ -28,3 +28,48 @@ function submitOSD(){
 		}
 	}	
 }
+
+function autoExport(){
+alert("index="+index);
+	for(z=1;z<=index;z++){
+//        alert( "barcode"+ z + ': '+ $( ('#barcode'+z) ) );
+        try{
+			if( document.getElementById(('barcode'+z)) != null || $(('#barcode'+z)) != 'undefined' ){
+				barcode = document.getElementById(('barcode'+z)).value;
+//				alert("barcode="+barcode);
+				OrderStoreNewD.autoExport(barcode,function(item){
+					y=z-1;
+					
+//					alert(item.articleno + " , " + item.price);
+//					alert('articleno: '+ y + ": "+ document.getElementById(('articleno'+y)));
+					$(('#articleno'+y)).value = item.articleno;
+					$(('#price'+y)).value = item.price;
+//					alert("price="+$('#price'+y).value);
+//					$('#color'+y).value = item.colorId;
+//					alert("color="+document.getElementById('color'+y).value);
+//					OrderStoreNewD.getColorName(document.getElementById('color'+y).value,function(colorName){
+//						document.getElementById('color'+y).value = colorName;
+//						alert("colorName="+document.getElementById('color'+y).value);
+//					});
+				});
+			}
+		}catch(err){
+		
+		}
+	}
+}
+
+function beginLoad(){
+	OrderStoreNewD.findSuggestOid(1,function(suggestOid){
+		for(var i=0; i<suggestOid.length ; i++){
+			var tempOid = suggestOid[i];
+			var oid = tempOid.oid;
+			
+			OrderStoreNewD.getSuggestDByOid(oid, function(suggestD){
+				
+			});
+		}
+	});
+
+}
+

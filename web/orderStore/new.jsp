@@ -1,8 +1,13 @@
 <!-- Last Coding By Jason -->
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
-<%@taglib uri="http://www.zkoss.org/jsp/zul" prefix="z"%>
-<z:init use="org.zkoss.zkplus.databind.AnnotateDataBinderInit"/>
+<!-- dump session --><!--
+<%@ taglib uri="http://jakarta.apache.org/taglibs/log-1.0" prefix="log" %>
+PAGE:<log:dump scope="page" />
+REQUEST:<log:dump scope="request" />
+SESSION:<log:dump scope="session" />
+APPLICATION:<log:dump scope="application" />
+-->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,21 +20,25 @@
 <script type='text/javascript' src='../js/util.js'></script>
 <script type='text/javascript' src='../js/orderStoreNewD.js'></script>
 <script type="text/javascript">
-function batchAdd( barcode, articlenos, price, colors, sizes24, sizes26, sizes28, sizes30, sizes32, memos ){ // 批次增加列
-    length = articlenos.length;
-    //alert( 'articlenos[0]: '+ articlenos[0].value );
-    for( i=0; i<length; i++ ){
-        index2 = addtr( 'mainTable', barcode[i].value, articlenos[i].value, price[i].value, colors[i].value, sizes24[i].value, sizes26[i].value, sizes28[i].value, 
-            sizes30[i].value, sizes32[i].value, memos[i].value ) ; //回傳的 index 從 2 開始
-    }
+var uuid;
+var index=1;
+
+function uuidGen(){
+    uuid = jQuery.uuid();
+    alert('uuid: '+ uuid );
 }
+
+function batchAdd( barcode, articlenos, price, colors, sizes24, sizes26, sizes28, sizes30, sizes32, memos ){ // 批次增加列
+    index2 = addtr( 'mainTable', barcode, articlenos, price, colors, sizes24, sizes26, sizes28, sizes30, sizes32, memos ) ; //回傳的 index 從 2 開始
+}//batchAdd
+
 //在id 指定的 table 中增加一列
 function addtr( tableid, barcode, articleno, price, color, size24, size26, size28, size30, size32, memo ){
     index = $("#"+ tableid +">tbody>tr:eq(1)").attr("id").substring(3);
     index = parseInt(index, 10);
     index++;
 
-    $("<tr id = 'row"+ index +"'><td><div align='center'><input name='checkbox' id='checkbox' type='checkbox' /></div></td><td><div align='center'>"+ index +"</div></td><td><div align='center'><input name='barcode"+index+"' id='barcode"+index+"' value='"+ barcode +"' size='13' maxlength='15' type='text' /></div></td><td><div align='center'><input name='articleno"+index+"' id='articleno"+index+"' value='"+ articleno +"' size='10' maxlength='13' type='text' /></div></td><td><div align='center'><input name='price"+index+"' id='price"+index+"' value='"+ price +"' size='5' maxlength='6' type='text' /></div></td><td><div align='center'><input name='color"+index+"' id='color"+index+"' value='"+ color +"' size='3' maxlength='3' type='text' /></div></td><td><div align='center' class='r1All'><input name='r1_"+index+"' id='r1_"+index+"' value='"+ size24 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r2All'><input name='r2_"+index+"' id='r2_"+index+"' value='"+ size26 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r3All'><input name='r3_"+index+"' id='r3_"+index+"' value='"+ size28 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r4All'><input name='r4_"+index+"' id='r4_"+index+"' value='"+ size30 +"' size='3' maxlength='3'class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r5All'><input name='r5_"+index+"' id='r5_"+index+"' value='"+ size32 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='total'><input name='r6"+index+"' id='r6"+index+"' value='0' size='6' maxlength='6' class='numbers' type='text' readOnly/></div></td><td><div align='center'><input name='modifyid"+index+"' id='modifyid"+index+"' value='' size='6' maxlength='6'type='text' /></div></td><td><div align='center'><input type='checkbox' name='isCustOrder"+index+"' id='isCustOrder"+index+"' value='checkbox'/></div></td><td><div align='center'><input name='memo"+index+"' id='memo"+index+"' value='"+ memo +"' size='28' maxlength='40' type='text' /></div></td><td><a href='javascript:void(0)' onclick='javascript:deltr(\"row"+ index +"\")' id='del"+ index +"'><img border='0' alt='刪除一列' src='../icons/cancel.png' class='addRow'></a></td></tr>").insertAfter($("#"+ tableid +">tbody>tr:eq(0)"));
+    $("<tr id = 'row"+ index +"'><td><div align='center'><input name='checkbox' id='checkbox' type='checkbox' /></div></td><td><div align='center'>"+ index +"</div></td><td><div align='center'><input name='barcode"+index+"' id='barcode"+index+"' value='"+ barcode +"' size='13' maxlength='15' type='text' onChange='autoExport();'/></div></td><td><div align='center'><input name='articleno"+index+"' id='articleno"+index+"' value='"+ articleno +"' size='10' maxlength='13' type='text' /></div></td><td><div align='center'><input name='price"+index+"' id='price"+index+"' value='"+ price +"' size='5' maxlength='6' type='text' /></div></td><td><div align='center'><input name='color"+index+"' id='color"+index+"' value='"+ color +"' size='3' maxlength='3' type='text' /></div></td><td><div align='center' class='r1All'><input name='r1_"+index+"' id='r1_"+index+"' value='"+ size24 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r2All'><input name='r2_"+index+"' id='r2_"+index+"' value='"+ size26 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r3All'><input name='r3_"+index+"' id='r3_"+index+"' value='"+ size28 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r4All'><input name='r4_"+index+"' id='r4_"+index+"' value='"+ size30 +"' size='3' maxlength='3'class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='r5All'><input name='r5_"+index+"' id='r5_"+index+"' value='"+ size32 +"' size='3' maxlength='3' class='numbers' type='text' onChange='setAll();'/></div></td><td><div align='center' class='total'><input name='r6"+index+"' id='r6"+index+"' value='0' size='6' maxlength='6' class='numbers' type='text' readOnly/></div></td><td><div align='center'><input name='modifyid"+index+"' id='modifyid"+index+"' value='' size='6' maxlength='6'type='text' /></div></td><td><div align='center'><input type='checkbox' name='isCustOrder"+index+"' id='isCustOrder"+index+"' value='checkbox'/></div></td><td><div align='center'><input name='memo"+index+"' id='memo"+index+"' value='"+ memo +"' size='28' maxlength='40' type='text' /></div></td><td><a href='javascript:void(0)' onclick='javascript:deltr(\"row"+ index +"\")' id='del"+ index +"'><img border='0' alt='刪除一列' src='../icons/cancel.png' class='addRow'></a></td></tr>").insertAfter($("#"+ tableid +">tbody>tr:eq(0)"));
     //    $('#'+ tableid ).append(str);
 
     return index;
@@ -125,16 +134,10 @@ function setAll(){
 //end test
 }
 </script>
-<style type="text/css">
-				<!--
-				#_eis_batchsave { visibility:hidden; }
-				-->
-</style>
+
 </head>
 
 <body>
-<z:page zscriptLanguage="java">
-<input type="hidden" id="quantity" value="@{gru$composer.beanD.quantity}"/> 
 
 <jsp:include page="../xava/module_include.jsp" flush="true"> 
     <jsp:param name="application" value="KaiJung" /> 
@@ -142,20 +145,7 @@ function setAll(){
 </jsp:include> 
 
 <div id="lineTable">
-<z:groupbox id="gru" apply="com.kaijung.zk.controller.OrderStoreDController">
-<zscript><![CDATA[
-    import com.kaijung.dao.*;
-    import com.kaijung.jpa.*;
-    import com.kaijung.zk.controller.OrderStoreDController;
-    OrderStoreDController controller = new OrderStoreDController();
-    OrderStoreD bean = new OrderStoreD();
-    void combineQty() {
-        alert( "qty_1_1: "+ qty_1_1.value );
-        bean.setQuantity( qty_1_1.value );
-        controller.insert( bean );
-    }
-    ]]>
-</zscript>
+
 <table border="0" cellpadding="0" cellspacing="0" width="734">
  <tbody>
   <tr>
@@ -198,7 +188,7 @@ function setAll(){
 
          <td rowspan="1" class="tableHead2" width="56">小計</td>
          <td rowspan="1" class="tableHead2" width="56">修改單號</td>
-         <td rowspan="1" class="tableHead2" width="10">客定</td>
+         <td rowspan="1" class="tableHead2" width="10">客訂</td>
          <td rowspan="1" colspan="1" class="tableHead2">備註</td>
          <td><a href='javascript:void(0)' onclick='addtr("mainTable","","","","","","","","","","")'>
               <img border='0' alt='新增一列' src='../icons/edit_add.png'></a></td>
@@ -212,7 +202,7 @@ function setAll(){
             </td>
             <td>
                 <div align="center">
-                	<input name="barcode1" id="barcode1" size="13" maxlength="15" type="text"/>
+                	<input name="barcode1" id="barcode1" size="13" maxlength="15" type="text" onChange="autoExport();"/>
                 </div>
             </td>
             <td>
@@ -257,7 +247,7 @@ function setAll(){
             <td>
                 <div align="center"><input name="memo1" id="memo1" value="" size="28" maxlength="40" class="rowAll1" type="text" /></div><!-- 備註 -->
             </td>
-            <td><a href="javascript:void(0)" id="edit_del1"><img border="0" alt="刪除一列" src="../icons/cancel.png" class="addRow"></a></td>
+            <td><a href="javascript:void(0)" id="edit_del1"><img border="0" alt="刪除一列" src="../icons/cancel.png" class="addRow" onclick='javascript:deltr("row1")'></a></td>
         </tr>
         <tr id="sumRow">
             <td rowspan="1" colspan="6" class="tableHead2">合計</td>
@@ -287,23 +277,26 @@ function setAll(){
         </tr>
       </tbody>
    </table>
-   <input type="button" id="allInsert" value="SAVE" onClick="submitOSD();" style="visibility:hidden;" />
-   <input type="button" id="saveHead" value="saveHead" onclick="javascript:openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save')" style="visibility:hidden;"/>
+   <!-- <input type="button" id="allInsert" value="SAVE" onClick="submitOSD();" style="visibility:hidden;" /> -->
+   <!-- <input type="button" id="saveHead" value="saveHead" onclick="javascript:openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save')" style="visibility:hidden;"/> -->
+   <!-- <input type="button" id="initImport" value="IMPORE" onClick="javascript:initImport();" /> -->
    </div>
    </td>
   </tr>
  </tbody>
 </table>
-<z:button id="batchsave" label="儲存" width="1px" height="1px"/><!-- onClick="combineQty()" onClick='Clients.evalJavaScript("combineQty()")'-->
-</z:groupbox> 
+
 </div>
-</z:page>
+
 </body>
 </html>
 <script type="text/javascript">
 function newCss() {
     $('#ox_KaiJung_OrderStoreHead__view').css('width','800px');
-    //alert('width: '+ $('#ox_KaiJung_OrderPickerHead__view').css('width'	));
+    $('ox_KaiJung_OrderStoreHead__oid').css('visibility','hidden');
+    $('ox_KaiJung_OrderStoreHead__oid').val(uuidGen());
+    $("name$='/KaiJung/xava/images/key.gif'").css('visibility','hidden');
+    alert('oid: '+ $('ox_KaiJung_OrderStoreHead__oid').val() );
     if( $('#ox_KaiJung_OrderStoreHead__view').css('width'	) == '800px' ){
         return;
     }

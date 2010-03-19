@@ -23,8 +23,8 @@ import java.util.*;
 				+ "sender [ senderId; senderTime; senderBy ]"
 				+ "details"),
 		@View(name = "HeadOnly", members = "order [ readCode; createTime; warehouse; orderman ]"
-				+ "picker [ pickerId; pickerTime; pickerBy ]"
-				+ "sender [ senderId; senderTime; senderBy ]"),
+				+ "picker [ pickerId; pickerTime; pickerBy; ]"
+				+ "sender [ senderId; senderTime; senderBy; oid ]"),
 		@View(name = "DetailOnly", members = "order [ readCode; createTime; warehouse; orderman ]"
 			+ "picker [ pickerId; pickerTime; pickerBy ]"
 			+ "sender [ senderId; senderTime; senderBy ]"
@@ -36,9 +36,9 @@ import java.util.*;
 public class OrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Hidden @Column(length = 32)
-	@GeneratedValue(generator = "system-uuid")
-	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Id @Column(length = 32) //@Hidden
+//	@GeneratedValue(generator = "system-uuid")
+//	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String oid;
 
 	// private int createBy;
