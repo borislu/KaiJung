@@ -15,17 +15,37 @@ APPLICATION:<log:dump scope="application" />
 <link href="../css/table.css" rel="stylesheet" type="text/css" />
 <link href="../xava/style/liferay51/css/everything_unpacked.css" rel="stylesheet" type="text/css" />
 <link href="../xava/style/liferay51/css/kaijung.css" rel="stylesheet" type="text/css" />
-<script type='text/javascript' src='../dwr/interface/OrderStoreNewD.js'></script>
+<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
 <script type='text/javascript' src='../js/engine.js'></script>
 <script type='text/javascript' src='../js/util.js'></script>
-<script type='text/javascript' src='../js/orderStoreNewD.js'></script>
+<script type='text/javascript' src='orderStoreNew.js'></script>
+<!--<script type='text/javascript' src='../js/jquery-1.4.2.min.js'></script>-->
+<!--<script type='text/javascript' src='../js/jQuery_uuid.js'></script>-->
 <script type="text/javascript">
-var uuid;
-var index=1;
+index=1;
+/*
+Usage 1: define the default prefix by using an object with the property prefix as a parameter which contains a string value; {prefix: 'id'}
+Usage 2: call the function jQuery_uuid() with a string parameter p to be used as a prefix to generate a random uuid;
+Usage 3: call the function jQuery_uuid() with no parameters to generate a uuid with the default prefix; defaul prefix: '' (empty string)
+*/
 
-function uuidGen(){
-    uuid = jQuery.uuid();
-    alert('uuid: '+ uuid );
+/*
+Generate fragment of random numbers
+*/
+jQuery_uuid_default_prefix = '';
+function jQuery_uuidlet () {
+ return(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+};
+/*
+Generates random uuid
+*/
+function jQuery_uuid (p) {
+ if (typeof(p) == 'object' && typeof(p.prefix) == 'string') {
+  jQuery_uuid_default_prefix = p.prefix;
+ } else {
+  p = p || jQuery_uuid_default_prefix || '';
+  return(p+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet());
+ }
 }
 
 function batchAdd( barcode, articlenos, price, colors, sizes24, sizes26, sizes28, sizes30, sizes32, memos ){ // 批次增加列
@@ -60,75 +80,75 @@ function combineQty(){
 }
 
 function setAll(){
-	var total = [];
-	var r1SumTotal = 0;
-	for(var a=0;a<5;a++){
-		total[a]=[];
-	}
-	$(".r1All :text").each(function(i){
-		var k = $(this)[0].value;
-		if(k != ""){
-			r1SumTotal += parseInt(k);
-			total[0][i] = parseInt(k);
-		}else{
-			total[0][i] = 0;
-		}
-		$("#sum1")[0].value = r1SumTotal;		
-	});
-	var r2SumTotal = 0;	
-	$(".r2All :text").each(function(i){
-		var k = $(this)[0].value;
-		if(k != ""){
-			r2SumTotal += parseInt(k);
-			total[1][i] = parseInt(k);
-		}else{
-			total[1][i] = 0;
-		}
-		$("#sum2")[0].value = r2SumTotal;		
-	});
-	var r3SumTotal = 0;	
-	$(".r3All :text").each(function(i){
-		var k = $(this)[0].value;
-		if(k != ""){
-			r3SumTotal += parseInt(k);
-			total[2][i] = parseInt(k);
-		}else{
-			total[2][i] = 0;
-		}
-		$("#sum3")[0].value = r3SumTotal;		
-	});
-	var r4SumTotal = 0;	
-	$(".r4All :text").each(function(i){
-		var k = $(this)[0].value;
-		if(k != ""){
-			r4SumTotal += parseInt(k);
-			total[3][i] = parseInt(k);
-		}else{
-			total[3][i] = 0;
-		}
-		$("#sum4")[0].value = r4SumTotal;		
-	});	
-	var r5SumTotal = 0;	
-	$(".r5All :text").each(function(i){
-		var k = $(this)[0].value;
-		if(k != ""){
-			r5SumTotal += parseInt(k);
-			total[4][i] = parseInt(k);
-		}else{
-			total[4][i] = 0;
-		}
-		$("#sum5")[0].value = r5SumTotal;		
-	});
-	var sum = 0
-	$(".total :text").each(function(i){
-		var totalSum = 0;
-		for(var c=0;c<5;c++){
-			totalSum += total[c][i];
-			sum += total[c][i];
-		}	
-		$(this)[0].value=totalSum;
-	});
-	$("#sumTotal")[0].value = sum;
+ var total = [];
+ var r1SumTotal = 0;
+ for(var a=0;a<5;a++){
+  total[a]=[];
+ }
+ $(".r1All :text").each(function(i){
+  var k = $(this)[0].value;
+  if(k != ""){
+   r1SumTotal += parseInt(k);
+   total[0][i] = parseInt(k);
+  }else{
+   total[0][i] = 0;
+  }
+  $("#sum1")[0].value = r1SumTotal;  
+ });
+ var r2SumTotal = 0; 
+ $(".r2All :text").each(function(i){
+  var k = $(this)[0].value;
+  if(k != ""){
+   r2SumTotal += parseInt(k);
+   total[1][i] = parseInt(k);
+  }else{
+   total[1][i] = 0;
+  }
+  $("#sum2")[0].value = r2SumTotal;  
+ });
+ var r3SumTotal = 0; 
+ $(".r3All :text").each(function(i){
+  var k = $(this)[0].value;
+  if(k != ""){
+   r3SumTotal += parseInt(k);
+   total[2][i] = parseInt(k);
+  }else{
+   total[2][i] = 0;
+  }
+  $("#sum3")[0].value = r3SumTotal;  
+ });
+ var r4SumTotal = 0; 
+ $(".r4All :text").each(function(i){
+  var k = $(this)[0].value;
+  if(k != ""){
+   r4SumTotal += parseInt(k);
+   total[3][i] = parseInt(k);
+  }else{
+   total[3][i] = 0;
+  }
+  $("#sum4")[0].value = r4SumTotal;  
+ }); 
+ var r5SumTotal = 0; 
+ $(".r5All :text").each(function(i){
+  var k = $(this)[0].value;
+  if(k != ""){
+   r5SumTotal += parseInt(k);
+   total[4][i] = parseInt(k);
+  }else{
+   total[4][i] = 0;
+  }
+  $("#sum5")[0].value = r5SumTotal;  
+ });
+ var sum = 0
+ $(".total :text").each(function(i){
+  var totalSum = 0;
+  for(var c=0;c<5;c++){
+   totalSum += total[c][i];
+   sum += total[c][i];
+  } 
+  $(this)[0].value=totalSum;
+ });
+ $("#sumTotal")[0].value = sum;
 //test
 
 //end test
@@ -198,26 +218,26 @@ function setAll(){
             <div align="center"><input name="checkbox" id="checkbox" type="checkbox" /></div>
             </td>
             <td>
-            	<div align="center">1</div>
+             <div align="center">1</div>
             </td>
             <td>
                 <div align="center">
-                	<input name="barcode1" id="barcode1" size="13" maxlength="15" type="text" onChange="autoExport();"/>
+                 <input name="barcode1" id="barcode1" size="13" maxlength="15" type="text" onChange="autoExport();"/>
                 </div>
             </td>
             <td>
-            	<div align="center">
-            		<input name="articleno1" id="articleno1" size="10" maxlength="13" type="text"/>
-            	</div>
+             <div align="center">
+              <input name="articleno1" id="articleno1" size="10" maxlength="13" type="text"/>
+             </div>
             </td>
             <td>
-            	<div align="center">
-            		<input name="price1" id="price1" size="5" maxlength="6" type="text" />
-            	</div>
+             <div align="center">
+              <input name="price1" id="price1" size="5" maxlength="6" type="text" />
+             </div>
             </td>
             <td>
                 <div align="center">
-                	<input name="color1" id="color1" size="3" maxlength="3" type="text" />
+                 <input name="color1" id="color1" size="3" maxlength="3" type="text" />
                 </div>
             </td>
             <td>
@@ -242,7 +262,7 @@ function setAll(){
                 <div align="center"><input name="modifyid1" id="modifyid1" value="" size="6" maxlength="6" class="rowAll1" type="text" /></div><!-- 修改單號 -->
             </td>
             <td>
-            	<div align="center"><input type="checkbox" name="isCustOrder1" id="isCustOrder1" class="rowAll1" value="checkbox"/></div>
+             <div align="center"><input type="checkbox" name="isCustOrder1" id="isCustOrder1" class="rowAll1" value="checkbox"/></div>
             </td>
             <td>
                 <div align="center"><input name="memo1" id="memo1" value="" size="28" maxlength="40" class="rowAll1" type="text" /></div><!-- 備註 -->
@@ -252,7 +272,7 @@ function setAll(){
         <tr id="sumRow">
             <td rowspan="1" colspan="6" class="tableHead2">合計</td>
             <td colspan="1" align="center">
-            	<div align="center"><input name="sum1" id="sum1" value="0" size="3" maxlength="4" type="text" readonly/></div>
+             <div align="center"><input name="sum1" id="sum1" value="0" size="3" maxlength="4" type="text" readonly/></div>
             </td>
             <td colspan="1" align="center">
                 <div align="center"><input name="sum2" id="sum2" value="0" size="3" maxlength="4" type="text" readonly/></div>
@@ -267,7 +287,7 @@ function setAll(){
                 <div align="center"><input name="sum5" id="sum5" value="0" size="3" maxlength="4" type="text" readonly/></div>
             </td>
             <td colspan="1" align="center">
-            	<div align="center"><input name="sumTotal" id="sumTotal" value="0" size="6" maxlength="6" type="text" readonly/></div>
+             <div align="center"><input name="sumTotal" id="sumTotal" value="0" size="6" maxlength="6" type="text" readonly/></div>
             </td>
             <td colspan="3" class="tableHead2"></td>
         </tr> 
@@ -291,18 +311,25 @@ function setAll(){
 </body>
 </html>
 <script type="text/javascript">
-function newCss() {
-    $('#ox_KaiJung_OrderStoreHead__view').css('width','800px');
-    $('ox_KaiJung_OrderStoreHead__oid').css('visibility','hidden');
-    $('ox_KaiJung_OrderStoreHead__oid').val(uuidGen());
-    $("name$='/KaiJung/xava/images/key.gif'").css('visibility','hidden');
-    alert('oid: '+ $('ox_KaiJung_OrderStoreHead__oid').val() );
-    if( $('#ox_KaiJung_OrderStoreHead__view').css('width'	) == '800px' ){
-        return;
+function orderStoreNew_refresh() {
+    $('#ox_KaiJung_OrderStoreHead__view').css('width','900px');
+    $("input[name='ox_KaiJung_OrderStoreHead__oid']").each(function(){ $(this).val(jQuery_uuid); $(this).css('visibility','hidden'); });
+    $("img[src$='key.gif']").each(function(){  $(this).css('visibility','hidden'); });
+    retry = 0;
+
+    if( $('#ox_KaiJung_OrderStoreHead__view').css('width') == '900px'){
+        $("input[name='ox_KaiJung_OrderStoreHead__oid']").each(function(){ 
+            if($(this).css('visibility')=='hidden'){ 
+                return;
+                }
+        });         setTimeout( 'orderStoreNew_refresh()', 500 );
+        retry++;
+    }else if( retry < 1000 ){
+        setTimeout( 'orderStoreNew_refresh()', 500 );
+        retry++;
     }
-    setTimeout( 'newCss()', 500 );
 }
-newCss();
+orderStoreNew_refresh();
 </script>
 
 

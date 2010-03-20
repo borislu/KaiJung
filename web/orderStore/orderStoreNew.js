@@ -1,7 +1,6 @@
 //Last Coding By Jason
 function submitOSD(){
-	alert("submitOSD Start!");
-	alert("index="+index);
+	//alert("orderStoreNew.js: submitOSD: index="+index);
 	for(i=1;i<=index;i++)
 	{
 		y=i+1;
@@ -19,10 +18,10 @@ function submitOSD(){
 				var memo = document.getElementById('memo'+i).value;
 				if(r != ""){
 					quantity = parseInt(r);
-					OrderStoreNewD.insert(quantity, modifyid, isCustOrder, memo);
+					OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo);
 				}else{
 					quantity = 0;
-					OrderStoreNewD.insert(quantity, modifyid, isCustOrder, memo);
+					OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo);
 				}				
 			}
 		}
@@ -30,14 +29,14 @@ function submitOSD(){
 }
 
 function autoExport(){
-alert("index="+index);
+alert("OrderStoreNew.js: autoExport: index="+index);
 	for(z=1;z<=index;z++){
 //        alert( "barcode"+ z + ': '+ $( ('#barcode'+z) ) );
         try{
 			if( document.getElementById(('barcode'+z)) != null || $(('#barcode'+z)) != 'undefined' ){
 				barcode = document.getElementById(('barcode'+z)).value;
 //				alert("barcode="+barcode);
-				OrderStoreNewD.autoExport(barcode,function(item){
+				OrderStoreNew.autoExport(barcode,function(item){
 					y=z-1;
 					
 //					alert(item.articleno + " , " + item.price);
@@ -47,7 +46,7 @@ alert("index="+index);
 //					alert("price="+$('#price'+y).value);
 //					$('#color'+y).value = item.colorId;
 //					alert("color="+document.getElementById('color'+y).value);
-//					OrderStoreNewD.getColorName(document.getElementById('color'+y).value,function(colorName){
+//					OrderStoreNew.getColorName(document.getElementById('color'+y).value,function(colorName){
 //						document.getElementById('color'+y).value = colorName;
 //						alert("colorName="+document.getElementById('color'+y).value);
 //					});
@@ -60,12 +59,12 @@ alert("index="+index);
 }
 
 function beginLoad(){
-	OrderStoreNewD.findSuggestOid(1,function(suggestOid){
+	OrderStoreNew.findSuggestOid(1,function(suggestOid){
 		for(var i=0; i<suggestOid.length ; i++){
 			var tempOid = suggestOid[i];
 			var oid = tempOid.oid;
 			
-			OrderStoreNewD.getSuggestDByOid(oid, function(suggestD){
+			OrderStoreNew.getSuggestDByOid(oid, function(suggestD){
 				
 			});
 		}

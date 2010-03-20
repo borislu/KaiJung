@@ -17,6 +17,10 @@
     <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
     <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
 
+    <create creator="new" javascript="Hello">
+      <param name="class" value="test.Hello" />
+    </create>
+    
 	   <create creator="new" javascript="OrderStoreNew">
       <param name="class" value="com.kaijung.dao.OrderStoreNew" />
     </create>

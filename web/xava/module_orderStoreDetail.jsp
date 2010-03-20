@@ -123,7 +123,6 @@ Module.setStyle(style);
     parent.frames["frameEast"].window.location.reload();
   }
 			function afterDel(){
-						 //alert("trying: "+ $("#ox_KaiJung_orderStoreDetailOnly__messages_table").length>0);
 						 if ($("#ox_KaiJung_OrderStoreDetailOnly__messages_table").length>0) {
 						     parent.frames["frameEast"].window.location.reload();
          $.cookie("JSESSIONID", null);

@@ -159,18 +159,19 @@ p {
                           handler:function(){
                                 //Ext.get('frameWest').dom.contentDocument.getElementById('allInsert').click();
                                 //Ext.get('frameWest').dom.contentDocument.getElementById('saveHead').click();
-                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save');
-                                Ext.getDom('frameWest').contentWindow.submitOSD();
+                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save'); //orderStoreNew.jsp
+                                Ext.getDom('frameWest').contentWindow.submitOSD();                                                                 //ox_ext_orderStoreNew.js orderStoreNew.jsp
+                                Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //orderStoreNew.jsp
                           }
                       },{
                           text:'刪除',
                           handler:function(){
-                                Ext.getDom('frameEast').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'CRUD.delete');
+                                //Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'CRUD.delete');
                           }
                       },{
                           text:'取消',
                           handler:function(){
-                                reset ();
+                    	      Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.new');
                           }
                       }]
                   }
@@ -182,7 +183,7 @@ p {
        westElement = Ext.get('frameWest');
        if( westElement != null ){
            westFrame = westElement.dom;  // 取得更新後的 HTML Document
-           westFrame.src = 'new.jsp';
+           westFrame.src = 'orderStoreNew.jsp';
            westDoc = westFrame.contentDocument || westFrame.contentWindow.document;
        }
    }
@@ -190,7 +191,7 @@ p {
        eastElement = Ext.get('frameEast');
        if( eastElement != null ){
            eastFrame = eastElement.dom;  // 取得更新後的 HTML Document
-           eastFrame.src = 'suggest.jsp';
+           eastFrame.src = 'orderStoreSuggest.jsp';
            eastDoc = eastFrame.contentDocument || eastFrame.contentWindow.document;
        }
    }
@@ -214,8 +215,8 @@ p {
 <body>
 <script type="text/javascript" src="../examples.js"></script>
 <!-- EXAMPLES -->
-<div id="east"><iframe id="frameEast" name="frameEast" src="suggest.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
-<div id="west"><iframe id="frameWest" name="frameWest" src="new.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="east"><iframe id="frameEast" name="frameEast" src="orderStoreSuggest.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="west"><iframe id="frameWest" name="frameWest" src="orderStoreNew.jsp" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
 <div id="north">
 <p></p>
 </div>
