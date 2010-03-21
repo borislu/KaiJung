@@ -54,7 +54,7 @@ If you want to add filters add them in filters.xml file in WEB-INF.
 		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>    
 		<init-param>
 			<param-name>debug</param-name>
-			<param-value>false</param-value>
+			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>12</load-on-startup>
 	</servlet>

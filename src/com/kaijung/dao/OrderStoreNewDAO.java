@@ -22,15 +22,15 @@ public class OrderStoreNewDAO {
 	    }
 	  }
 	  
-	  public void insert(String oid, int quantity, String modifyid, String isCustOrder, String memo){
+	  public void insert(String oid, int quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
 		    Connection conn = null;
 		    Statement stmt = null;
 		    try {
 		      conn = DriverManager.getConnection(url, user, pwd);
 		      stmt = conn.createStatement();
-		      logger.debug("OrderStoreNew.insert: isCustOrder:"+isCustOrder);
-		      stmt.executeUpdate("insert into OrderStoreD(oid,quantity,modifyid,isCustOrder,remark) " +
-		                             "values ('" + oid + "','" + quantity + "','" + modifyid + "','" + isCustOrder + "','" + memo +"')");
+		      logger.debug("OrderStoreNewDAO.insert: isCustOrder: "+ isCustOrder);
+		      stmt.executeUpdate("insert into OrderStoreD(oid,quantity,modifyid,isCustOrder,remark,orderStore_oid) " +
+		          "values ('" + oid + "','" + quantity + "','" + modifyid + "','" + isCustOrder + "','" + memo+ "','"+ orderStoreOid +"')");
 		    } catch (SQLException e) {
 		      e.printStackTrace();
 		    } finally {

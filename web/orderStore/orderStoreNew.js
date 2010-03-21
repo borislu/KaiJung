@@ -1,31 +1,35 @@
 //Last Coding By Jason
 function submitOSD(){
-	//alert("orderStoreNew.js: submitOSD: index="+index);
+debug = 'debug: ';
+	var headId = $("input[name='ox_KaiJung_OrderStoreHead__oid']").val();
 	for(i=1;i<=index;i++)
 	{
-		y=i+1;
-		if(document.getElementById('row'+i) != null){
+alert("orderStoreNew.js: submitOSD: row"+ i +" exist: "+ $('row'+i) + " headId: " + headId );
+		if( $('row'+i) ){
 			for(j=1;j<=5;j++)
 			{
-				var r=document.getElementById('r'+j+'_'+i).value;
-				var modifyid = document.getElementById('modifyid'+i).value;
-				var inputObj = document.getElementById('isCustOrder'+i).checked;
-				if(inputObj == true){
+				var modifyid = $('#modifyid'+i).val(); 
+				var inputObj = $('#isCustOrder'+i).checked;
+				if( inputObj == true){
 					var isCustOrder = 1;
 				}else{
 					var isCustOrder = 0;
 				}
-				var memo = document.getElementById('memo'+i).value;
-				if(r != ""){
-					quantity = parseInt(r);
-					OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo);
+				var memo = $('#memo'+i).val();
+				var q = $('#r'+j+'_'+i).val();
+				if( q != '' ){
+debug += ', 非空, q: '+ q;
+					quantity = parseInt(q);
+					OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo, headId);
 				}else{
+debug += ', 空值, q: '+ q;
 					quantity = 0;
-					OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo);
+					OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo, headId);
 				}				
 			}
 		}
-	}	
+	}
+alert( debug );
 }
 
 function autoExport(){

@@ -75,7 +75,7 @@ var quantities = {"quantities": [
     ]
 };
 function combineQty(){
-    alert( 'quantity: '+ $('quantity') );
+    alert( 'orderStoreNew: quantity: '+ $('quantity') );
     $('quantity').value = $('qty_1_1').value ;
 }
 
@@ -309,20 +309,21 @@ function setAll(){
 </div>
 
 </body>
-</html>
 <script type="text/javascript">
 function orderStoreNew_refresh() {
-    $('#ox_KaiJung_OrderStoreHead__view').css('width','900px');
+	   divWidth = '920px';
+    $('#ox_KaiJung_OrderStoreHead__view').css('width',divWidth );
     $("input[name='ox_KaiJung_OrderStoreHead__oid']").each(function(){ $(this).val(jQuery_uuid); $(this).css('visibility','hidden'); });
     $("img[src$='key.gif']").each(function(){  $(this).css('visibility','hidden'); });
     retry = 0;
 
-    if( $('#ox_KaiJung_OrderStoreHead__view').css('width') == '900px'){
+    if( $('#ox_KaiJung_OrderStoreHead__view').css('width') == divWidth ){
         $("input[name='ox_KaiJung_OrderStoreHead__oid']").each(function(){ 
             if($(this).css('visibility')=='hidden'){ 
                 return;
                 }
-        });         setTimeout( 'orderStoreNew_refresh()', 500 );
+        }); 
+        setTimeout( 'orderStoreNew_refresh()', 500 );
         retry++;
     }else if( retry < 1000 ){
         setTimeout( 'orderStoreNew_refresh()', 500 );
@@ -331,5 +332,6 @@ function orderStoreNew_refresh() {
 }
 orderStoreNew_refresh();
 </script>
+</html>
 
 

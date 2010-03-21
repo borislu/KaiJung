@@ -10,14 +10,15 @@ import java.util.*;
 
 
 public class OrderStoreNew {
-		public void insert(String oid, int quantity, String modifyid, String isCustOrder, String memo){
-		OrderStoreNewDAO osdnDAO = new OrderStoreNewDAO();
-		//在這裡生成OrderStoreD的UUID
-		//UUID uuid = UUID.randomUUID();
-		//String str = uuid.toString();
-		//String oid = str.substring(0,8) + str.substring(9, 13) + str.substring(14, 18) + str.substring(19, 23) + str.substring(24);
-		osdnDAO.insert(oid, quantity, modifyid, isCustOrder, memo);
-	}
+		private static Logger logger = Logger.getLogger(OrderStoreNew.class);
+	  
+		public void insert(int quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
+			OrderStoreNewDAO osdnDAO = new OrderStoreNewDAO();
+			//在這裡生成OrderStoreD的UUID
+			UUID uuid = UUID.randomUUID();
+			String oid = uuid.toString().replaceAll("-", ""); //str.substring(0,8) + str.substring(9, 13) + str.substring(14, 18) + str.substring(19, 23) + str.substring(24);
+			osdnDAO.insert(oid, quantity, modifyid, isCustOrder, memo, orderStoreOid);
+		}
 		public Item autoExport(String barcode) throws SQLException{
 			OrderStoreNewDAO osdnDAO = new OrderStoreNewDAO();
 			Item item = osdnDAO.getElementById(barcode);
