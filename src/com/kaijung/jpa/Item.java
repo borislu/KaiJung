@@ -5,7 +5,6 @@ import javax.persistence.*;
 
 import org.openxava.annotations.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -14,6 +13,14 @@ import java.util.Date;
  * 
  */
 @Entity
+@Views( {
+	@View(name = "DetailOnly", members = "name, createTime; articleno, createBy;"
+		+ "barcode, color; itemstatus; remark"
+	)
+})
+@Tab(name = "Latest", defaultOrder = "${createTime} desc"
+	,properties="name, articleno, barcode, color.sName, createTime, createBy, remark, itemstatus" 
+)
 public class Item implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -26,19 +33,18 @@ public class Item implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
+   @DisplaySize(20)
 	private String articleno;
 
+   @DisplaySize(20)
 	private String barcode;
 
 	private int brandid;
 
 //	private int colorid;
-	@DescriptionsList(descriptionProperties="name")
-	@ManyToOne 
+	@ManyToOne @DescriptionsList(descriptionProperties="name") 
 	@JoinColumn(name="colorid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private ItemColor color;
-
-	private BigDecimal costcurrent;
 
 	private int countryid;
 
@@ -58,6 +64,7 @@ public class Item implements Serializable {
 
 	private String itemno;
 
+   @DisplaySize(2)
 	private String itemstatus;
 
 	private String memo;
@@ -69,6 +76,7 @@ public class Item implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
 
+   @DisplaySize(20)
 	private String name;
 
 	private String nonstock;
@@ -174,14 +182,6 @@ public class Item implements Serializable {
 
 	public void setBrandid(int brandid) {
 		this.brandid = brandid;
-	}
-
-	public BigDecimal getCostcurrent() {
-		return this.costcurrent;
-	}
-
-	public void setCostcurrent(BigDecimal costcurrent) {
-		this.costcurrent = costcurrent;
 	}
 
 	public int getCountryid() {

@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Views({
 	@View(members=
-	    "colorCode, sName, name; modifyBy, modifyTime; modifyBy, modifyTime; createBy, createTime"
+	    "colorCode, sName, name; modifyBy, modifyTime; createBy, createTime"
 	)
 })
 @Tabs({
@@ -37,6 +37,7 @@ public class ItemColor implements Serializable {
 	)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
+	
 	@DisplaySize(5)
 	private String colorCode;
 

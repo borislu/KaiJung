@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 
 import com.kaijung.calculators.*;
 
@@ -30,7 +31,7 @@ import java.util.*;
 			+ "sender [ senderId; senderTime; senderBy ]"
 			+ "details"),
 })
-@Tab(name = "Latest", defaultOrder = "${oid} desc"
+@Tab(name = "Latest", defaultOrder = "${createTime} desc"
 		,properties="oid, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
 )
 public class OrderStore implements Serializable {
@@ -55,7 +56,7 @@ public class OrderStore implements Serializable {
 //	@OneToMany
 //	private Collection<OrderPickSend> orderPickers;
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.TIMESTAMP) @DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date createTime;
 
 //	private int modifyBy;

@@ -28,7 +28,7 @@ public class OrderStoreNewDAO {
 		    try {
 		      conn = DriverManager.getConnection(url, user, pwd);
 		      stmt = conn.createStatement();
-		      logger.debug("OrderStoreNewDAO.insert: isCustOrder: "+ isCustOrder);
+//		      logger.debug("OrderStoreNewDAO.insert: isCustOrder: "+ isCustOrder);
 		      stmt.executeUpdate("insert into OrderStoreD(oid,quantity,modifyid,isCustOrder,remark,orderStore_oid) " +
 		          "values ('" + oid + "','" + quantity + "','" + modifyid + "','" + isCustOrder + "','" + memo+ "','"+ orderStoreOid +"')");
 		    } catch (SQLException e) {
