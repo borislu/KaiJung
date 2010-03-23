@@ -15,8 +15,8 @@ APPLICATION:<log:dump scope="application" />
 <link href="../css/table.css" rel="stylesheet" type="text/css" />
 <link href="../xava/style/liferay51/css/everything_unpacked.css" rel="stylesheet" type="text/css" />
 <link href="../xava/style/liferay51/css/kaijung.css" rel="stylesheet" type="text/css" />
-<script type='text/javascript' src='../js/engine.js'></script>
-<script type='text/javascript' src='../js/util.js'></script>
+<script type='text/javascript' src='../dwr/engine.js'></script>
+<script type='text/javascript' src='../dwr/util.js'></script>
 <script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
 <script type='text/javascript' src='orderStoreNew.js'></script>
 <!--<script type='text/javascript' src='../js/jquery-1.4.2.min.js'></script>-->

@@ -1,6 +1,6 @@
 //Last Coding By Jason
 function submitOSD(){
-debug = 'debug: ';
+//debug = 'debug: ';
 	var headId = $("input[name='ox_KaiJung_OrderStoreHead__oid']").val();
 	for(i=1;i<=index;i++)
 	{
@@ -26,11 +26,11 @@ debug = 'debug: ';
 			}
 			quantity = quantity.substring( 0, quantity.length-1 );
 			quantity += '}'
-debug += quantity;
+//debug += quantity;//會把迴圈內的所有都印出來
 			OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo, headId);
 		}
 	}
-alert( debug );
+//alert( debug );
 }
 
 function autoExport(){
@@ -64,11 +64,12 @@ alert("OrderStoreNew.js: autoExport: index="+index);
 }
 
 function beginLoad(){
-	OrderStoreNew.findSuggestList(1,function(results){ // argument: wareId , results <OrderSuggest>
+	//alert('in findSuggestList()');
+	OrderStoreNew.findSuggestList ( 1, function(results){ // argument: wareId , return: results <OrderSuggest>
+		alert('results length: '+ results.length );
 		for (var i = 0;i < results.length;i++) {
-			alert( results [i]['reason'] );
+			alert( 'results: '+ results[i] + ' , reason: ' + results[i].reason );
 		}
 	});
-
 }
 

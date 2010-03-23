@@ -81,7 +81,7 @@ public class OrderStoreNewDAO {
 		  conn = DriverManager.getConnection(url, user, pwd);
 		  stmt = conn.createStatement();
 		  
-		  ResultSet st = stmt.executeQuery("select * from ItemColor where oid='"+colorId+"'");
+		  ResultSet st = stmt.executeQuery("select ic from ItemColor as ic where ic.oid='"+colorId+"'");//select i from Invoice as i where i.customer.number=1
 		  while(st.next()){
 			  colorName = st.getString("name");
 		   	  System.out.println("colorName="+st.getString("name"));			  
@@ -89,15 +89,21 @@ public class OrderStoreNewDAO {
 		  return colorName;
 	  }
 	  
-	  public List <OrderSuggestD> findSuggestD( int wareId ) throws SQLException{
+	  public Collection <OrderSuggestD> findSuggestD( int wareId ){
 			EntityManager em = XPersistence.getManager();
-
-			Query query = em.createQuery(
-					"select * from OrderSuggestD"
-					);
-//			query.setParameter( "mixId", mixId );
-
-			return query.getResultList();
+			Query query = null;
+			Collection <OrderSuggestD> resultList = null;
+			try{
+				query = em.createQuery(
+						"select osd from OrderSuggestD as osd"
+						);
+//				query.setParameter( "mixId", mixId );
+				resultList = query.getResultList();
+		      logger.debug("OrderStoreNewDAO.findSuggestD: result: "+ query.getResultList());
+			}catch( Exception e ){
+			    logger.error("OrderStoreNewDAO.findSuggestD: "+ e );
+			}
+			return resultList;
 	  }
 }
 		      

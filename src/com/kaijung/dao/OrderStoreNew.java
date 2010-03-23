@@ -30,9 +30,10 @@ public class OrderStoreNew {
 				String colorName = osdn1DAO.getColorNameById(colorId);
 				return colorName;
 		 }
-		 public List <OrderSuggestD> findSuggestList(int wareId) throws SQLException{
-			 return new OrderStoreNewDAO().findSuggestD( wareId );
+		 public Set <OrderSuggestD> findSuggestList(int wareId){
+			 logger.debug("OrderStoreNew.findSuggestList: wareId: "+ wareId );
+			 Collection <OrderSuggestD> cl = new OrderStoreNewDAO().findSuggestD( wareId );
+			 logger.debug("OrderStoreNew.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
+			 return new HashSet <OrderSuggestD>( cl );
 		 }
-	
-
 }
