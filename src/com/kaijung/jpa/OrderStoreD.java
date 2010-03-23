@@ -1,12 +1,12 @@
 package com.kaijung.jpa;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
+
 
 /**
  * The persistent class for the OrderStoreD database table.
@@ -34,21 +34,22 @@ public class OrderStoreD implements Serializable {
 	@Column(length=32)
 	private String oid;
 
-	private boolean isCustOrder;
-
+//	private String orderStore_oid;
 	@ManyToOne 
 	@JoinColumn(name="orderStore_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderStore orderStore;
-	
+
+
+//	private int itemid;
 	@ManyToOne 
 	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Item item;
 
-	private int modifyid;
+	private String isCustOrder;
 
-//	private String orderStore_oid;
+	private String modifyid;
 
-	private int quantity;
+	private String quantity;
 
 	private String remark;
 
@@ -72,8 +73,10 @@ public class OrderStoreD implements Serializable {
 	private String reserve8;
 	@Hidden
 	private String reserve9;
+	
 	@ReadOnly
 	private String status;
+	
 
 	@DisplaySize(6) @Transient
 	public String get24() { return ""; } // 尺寸，無資料庫對應
@@ -99,13 +102,14 @@ public class OrderStoreD implements Serializable {
 	@DisplaySize(6) @Transient
 	public String getModifyId() { return ""; } // 修改單號，無資料庫對應
 
-   public OrderStoreD () {
+   public OrderStoreD() {
     }
-    public OrderStoreD( String oid, boolean iscustOrder, int quantity ) {
-    	setOid( oid );
-    	setIsCustOrder(isCustOrder);
-    	setQuantity(quantity);
-    }
+   
+   public OrderStoreD( String oid, boolean iscustOrder, String quantity ) {
+   	setOid( oid );
+   	setIsCustOrder(isCustOrder);
+   	setQuantity(quantity);
+   }
 
 	public String getOid() {
 		return this.oid;
@@ -115,35 +119,27 @@ public class OrderStoreD implements Serializable {
 		this.oid = oid;
 	}
 
-	public boolean getIsCustOrder() {
+	public String getIsCustOrder() {
 		return this.isCustOrder;
 	}
 
-	public void setIsCustOrder(boolean isCustOrder) {
+	public void setIsCustOrder(String isCustOrder) {
 		this.isCustOrder = isCustOrder;
 	}
 
-	public int getModifyid() {
+	public String getModifyid() {
 		return this.modifyid;
 	}
 
-	public void setModifyid(int modifyid) {
+	public void setModifyid(String modifyid) {
 		this.modifyid = modifyid;
 	}
 
-//	public String getOrderStore_oid() {
-//		return this.orderStore_oid;
-//	}
-//
-//	public void setOrderStore_oid(String orderStore_oid) {
-//		this.orderStore_oid = orderStore_oid;
-//	}
-
-	public int getQuantity() {
+	public String getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 
@@ -243,24 +239,20 @@ public class OrderStoreD implements Serializable {
 		this.status = status;
 	}
 
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
-	public void setCustOrder(boolean isCustOrder) {
-		this.isCustOrder = isCustOrder;
-	}
-
 	public OrderStore getOrderStore() {
 		return orderStore;
 	}
 
 	public void setOrderStore(OrderStore orderStore) {
 		this.orderStore = orderStore;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }

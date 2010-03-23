@@ -37,7 +37,7 @@ public class OrderPickerD implements Serializable {
 	
 //	private int orderPicker_oid;
 
-	private int quantity;
+	private String quantity;
 
 	@DisplaySize(6) @Transient
 	public String get24() { return ""; } // 尺寸，無資料庫對應
@@ -122,11 +122,11 @@ public class OrderPickerD implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 

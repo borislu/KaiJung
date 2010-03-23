@@ -4,6 +4,11 @@ package com.kaijung.dao;
 import java.sql.*;
 import java.util.*;
 import java.lang.System;
+
+import javax.persistence.*;
+
+import org.openxava.jpa.*;
+
 import com.kaijung.jpa.*;
 import common.*;
 
@@ -22,13 +27,13 @@ public class OrderStoreNewDAO {
 	    }
 	  }
 	  
-	  public void insert(String oid, int quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
+	  public void insert(String oid, String quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
 		    Connection conn = null;
 		    Statement stmt = null;
 		    try {
 		      conn = DriverManager.getConnection(url, user, pwd);
 		      stmt = conn.createStatement();
-//		      logger.debug("OrderStoreNewDAO.insert: isCustOrder: "+ isCustOrder);
+		      logger.debug("OrderStoreNewDAO.insert: quantity: "+ quantity);
 		      stmt.executeUpdate("insert into OrderStoreD(oid,quantity,modifyid,isCustOrder,remark,orderStore_oid) " +
 		          "values ('" + oid + "','" + quantity + "','" + modifyid + "','" + isCustOrder + "','" + memo+ "','"+ orderStoreOid +"')");
 		    } catch (SQLException e) {
@@ -84,23 +89,15 @@ public class OrderStoreNewDAO {
 		  return colorName;
 	  }
 	  
-	  public List <OrderSuggest> findSuggestOid() throws SQLException{
-		  Connection conn = null;
-		  Statement stmt = null;
-		  List<OrderSuggest> list = new ArrayList();
-		  conn = DriverManager.getConnection(url, user, pwd);
-		  stmt = conn.createStatement();
+	  public List <OrderSuggestD> findSuggestD( int wareId ) throws SQLException{
+			EntityManager em = XPersistence.getManager();
 
-		  ResultSet st = stmt.executeQuery("select * from OrderSuggest");//找建議訂單單頭的編號
-		  System.out.println("in DAO");
-		  while(st.next()){
-			  System.out.println("st : "+st);
-			  OrderSuggest orderSuggest = new OrderSuggest();
-			  orderSuggest.setOid(st.getInt("oid"));
-			  list.add(orderSuggest);
-			  System.out.println("Oid="+orderSuggest.getOid());
-		  }		  
-		  return list;
+			Query query = em.createQuery(
+					"select * from OrderSuggestD"
+					);
+//			query.setParameter( "mixId", mixId );
+
+			return query.getResultList();
 	  }
 }
 		      

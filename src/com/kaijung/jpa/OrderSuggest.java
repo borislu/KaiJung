@@ -15,23 +15,14 @@ import java.util.*;
 @Entity
 @Tabs({
 	@Tab( 
-		defaultOrder="${oid} desc"
+		defaultOrder="${createTime} desc"
 	),
 	@Tab(name="Latest",  
-		defaultOrder="${oid} desc"
+		defaultOrder="${createTime} desc"
 	)
 })
 public class OrderSuggest implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id @Hidden
-	@TableGenerator(
-	    name="SequenceGenerator", table="SequenceGen", 
-	    pkColumnName="oid", valueColumnName="value", 
-	    pkColumnValue="suggest.oid", initialValue=1, allocationSize=1
-	)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
-	private int oid;
 
 	private int createBy;
 
@@ -42,6 +33,21 @@ public class OrderSuggest implements Serializable {
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
+
+	@Id @Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="suggest.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
+	private int oid;
+
+	@OneToMany(mappedBy="orderSuggest", cascade=CascadeType.REMOVE) //@AsEmbedded
+//	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
+//	+"sum, amount, isCustOrder, modifyid, remark, status"
+//	)
+	private Collection<OrderSuggestD> details ;// = new ArrayList<OrderSuggestD>(); 
 
 	private String remark;
 
@@ -71,14 +77,6 @@ public class OrderSuggest implements Serializable {
 
     public OrderSuggest() {
     }
-
-	public int getOid() {
-		return this.oid;
-	}
-
-	public void setOid(int oid) {
-		this.oid = oid;
-	}
 
 	public int getCreateBy() {
 		return this.createBy;
@@ -110,6 +108,14 @@ public class OrderSuggest implements Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	public int getOid() {
+		return this.oid;
+	}
+
+	public void setOid(int oid) {
+		this.oid = oid;
 	}
 
 	public String getRemark() {
@@ -215,4 +221,13 @@ public class OrderSuggest implements Serializable {
 	public void setWareId(int wareId) {
 		this.wareId = wareId;
 	}
+
+	public Collection<OrderSuggestD> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Collection<OrderSuggestD> details) {
+		this.details = details;
+	}
+
 }

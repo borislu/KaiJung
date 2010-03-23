@@ -12,7 +12,8 @@ import java.util.*;
 public class OrderStoreNew {
 		private static Logger logger = Logger.getLogger(OrderStoreNew.class);
 	  
-		public void insert(int quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
+		public void insert(String quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
+	      logger.debug("OrderStoreNew.insert: quantity: "+ quantity);
 			OrderStoreNewDAO osdnDAO = new OrderStoreNewDAO();
 			//在這裡生成OrderStoreD的UUID
 			UUID uuid = UUID.randomUUID();
@@ -29,10 +30,8 @@ public class OrderStoreNew {
 				String colorName = osdn1DAO.getColorNameById(colorId);
 				return colorName;
 		 }
-		 public List findSuggestOid(int q) throws SQLException{
-			 OrderStoreNewDAO osdnDAO = new OrderStoreNewDAO();
-			 List orderSuggest = osdnDAO.findSuggestOid();
-			 return orderSuggest;
+		 public List <OrderSuggestD> findSuggestList(int wareId) throws SQLException{
+			 return new OrderStoreNewDAO().findSuggestD( wareId );
 		 }
 	
 

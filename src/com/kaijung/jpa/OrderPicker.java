@@ -66,8 +66,7 @@ public class OrderPicker implements Serializable {
 	private Date modifyTime;
 
 	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
-		@PropertyValue(name = "dateCode", value = "100315") // Required,
-		, @PropertyValue(name = "docType", value = "B") // Required, 由基本檔取出
+		@PropertyValue(name = "docType", value = "B") // Required, 由基本檔取出
 		, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
 		, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
 																			// 記錄流水號的表格

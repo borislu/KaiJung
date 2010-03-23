@@ -32,7 +32,7 @@ import java.util.*;
 			+ "details"),
 })
 @Tab(name = "Latest", defaultOrder = "${createTime} desc"
-		,properties="oid, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
+		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
 )
 public class OrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -48,8 +48,8 @@ public class OrderStore implements Serializable {
 	private Employee orderman; // 訂貨人員
 	
 	@OneToMany(mappedBy="orderStore", cascade=CascadeType.REMOVE) //@AsEmbedded
-	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
-	+"sum, amount, isCustOrder, modifyId, remark, status"
+	@ListProperties("item.articleno, item.price, item.color.name, quantity"
+	+ ", sum, amount, isCustOrder, modifyid, remark, status"
 	)
 	private Collection<OrderStoreD> details ;// = new ArrayList<OrderStoreD>(); 
 
@@ -68,8 +68,7 @@ public class OrderStore implements Serializable {
 	private Date modifyTime;
 
 	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
-			@PropertyValue(name = "dateCode", value = "100315") // Required,
-			, @PropertyValue(name = "docType", value = "A") // Required, 由基本檔取出
+			@PropertyValue(name = "docType", value = "A") // Required, 由基本檔取出
 			, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
 			, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
 																				// 記錄流水號的表格

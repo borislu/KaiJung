@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 
 import java.util.Date;
 
@@ -50,10 +51,10 @@ public class Item implements Serializable {
 
 	private int createBy;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP) @DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date createTime;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date edate;
 
 	private String enname;
@@ -73,7 +74,7 @@ public class Item implements Serializable {
 
 	private int modifyBy;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP) @DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date modifyTime;
 
    @DisplaySize(20)

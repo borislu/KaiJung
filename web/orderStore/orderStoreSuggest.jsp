@@ -10,10 +10,10 @@
 <link href="../xava/style/liferay51/css/kaijung.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery.form.js"></script>
-<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
-<script type='text/javascript' src='../js/engine.js'></script>
-<script type='text/javascript' src='../js/util.js'></script>
-<script type='text/javascript' src='../js/orderStoreNew.js'></script>
+<!--<script type='text/javascript' src='../js/engine.js'></script>-->
+<!--<script type='text/javascript' src='../js/util.js'></script>-->
+<!--<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>-->
+<!--<script type='text/javascript' src='orderStoreNew.js'></script>-->
 <script type="text/javascript">
 var recordIndex;
 function batchOrder(){
@@ -96,7 +96,7 @@ function selectAll(){
 </style>
 </head>
 
-<body>
+<body onload="javascript:beginLoad();">
 <form id="form1" action="">
 <div><div>
   </div><table id="mainTable" border="1" bordercolor="#cccccc" cellpadding="0" cellspacing="0" width="818">
