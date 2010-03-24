@@ -90,20 +90,7 @@ public class OrderStoreNewDAO {
 	  }
 	  
 	  public Collection <OrderSuggestD> findSuggestD( int wareId ){
-			EntityManager em = XPersistence.getManager();
-			Query query = null;
-			Collection <OrderSuggestD> resultList = null;
-			try{
-				query = em.createQuery(
-						"select osd from OrderSuggestD as osd"
-						);
-//				query.setParameter( "mixId", mixId );
-				resultList = query.getResultList();
-		      logger.debug("OrderStoreNewDAO.findSuggestD: result: "+ query.getResultList());
-			}catch( Exception e ){
-			    logger.error("OrderStoreNewDAO.findSuggestD: "+ e );
-			}
-			return resultList;
+			return new OrderSuggestD().findSuggestD(wareId);
 	  }
 }
 		      

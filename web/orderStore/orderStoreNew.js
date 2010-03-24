@@ -65,11 +65,24 @@ alert("OrderStoreNew.js: autoExport: index="+index);
 
 function beginLoad(){
 	//alert('in findSuggestList()');
-	OrderStoreNew.findSuggestList ( 1, function(results){ // argument: wareId , return: results <OrderSuggest>
-		alert('results length: '+ results.length );
-		for (var i = 0;i < results.length;i++) {
-			alert( 'results: '+ results[i] + ' , reason: ' + results[i].reason );
+	OrderStoreNew.findSuggestList ( 1, function(orderSuggestD_Set){ // argument: wareId , return: orderSuggestD_Set
+		//alert('orderSuggestD_Set length: '+ orderSuggestD_Set.length );
+//var debug = 'orderSuggestD_Set: ';
+		for (var i=0; i < orderSuggestD_Set.length; i++) {
+//debug += ' , reason: ' + orderSuggestD_Set[i].reason ;
+			dwr.util.setValue( 'reason_'+ (i+1) , orderSuggestD_Set[i].reason );
+			dwr.util.setValue( 'articleno_'+ (i+1) , orderSuggestD_Set[i].item.articleno );
+			//dwr.util.setValue( 'color_'+ (i+1) , orderSuggestD_Set[i].item.color.sName );
+//debug += ' , qtyobj json: ' + jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
+			var qtyobj = jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
+//debug += ' , qtyobj: ' + qtyobj ;
+			dwr.util.setValue( 'size24_'+ (i+1) , qtyobj.s24 );
+			dwr.util.setValue( 'size26_'+ (i+1) , qtyobj.s26 );
+			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
+			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
+			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
 		}
+//alert( debug );
 	});
 }
 
