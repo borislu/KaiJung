@@ -17,7 +17,7 @@ import com.kaijung.jpa.*;
 import common.*;
 
 /*
- * author Boris@de-lian.com 
+ * author Boris Lu 
  */
 public class OrderStoreDDAO {
 	private static Logger logger = Logger.getLogger(OrderStoreDDAO.class);

@@ -36,4 +36,10 @@ public class OrderStoreNew {
 			 logger.debug("OrderStoreNew.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
 			 return new HashSet <OrderSuggestD>( cl );
 		 }
+		 public Set <OrderStoreD> getOrderD(int headId){
+			 logger.debug("OrderStoreNew.getOrderD: headId: "+ headId );
+			 Collection <OrderStoreD> cl = new OrderStoreNewDAO().getOrderD( headId );
+			 logger.debug("OrderStoreNew.getOrderD: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
+			 return new HashSet <OrderStoreD>( cl );
+		 }
 }

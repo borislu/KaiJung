@@ -53,7 +53,7 @@ public class OrderStore implements Serializable {
 	private Employee orderman; // 訂貨人員
 	
 	@OneToMany(mappedBy="orderStore", cascade=CascadeType.REMOVE) //@AsEmbedded
-	@ListProperties("item.articleno, item.price, item.color.name, quantity"
+	@ListProperties("item.articleno, item.price, item.color.sName, 24,26,28,30,32"
 	+ ", sum, amount, isCustOrder, modifyid, remark, status"
 	)
 	private Collection<OrderStoreD> details ;// = new ArrayList<OrderStoreD>(); 

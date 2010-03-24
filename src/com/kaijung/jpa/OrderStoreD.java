@@ -1,11 +1,17 @@
 package com.kaijung.jpa;
 
 import java.io.Serializable;
+import java.util.*;
+
 import javax.persistence.*;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
+import org.openxava.jpa.*;
+
+import com.kaijung.dao.*;
+import common.*;
 
 
 /**
@@ -28,6 +34,7 @@ import org.openxava.annotations.*;
 })
 public class OrderStoreD implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private static Logger logger = Logger.getLogger(OrderStoreNewDAO.class);
 
 	@Id @GeneratedValue(generator="system-uuid") @Hidden
 	@GenericGenerator(name="system-uuid", strategy="uuid")
@@ -102,6 +109,33 @@ public class OrderStoreD implements Serializable {
 	@DisplaySize(6) @Transient
 	public String getModifyId() { return ""; } // 修改單號，無資料庫對應
 
+	
+  public Collection <OrderStoreD> getOrderD( int headId ){
+		EntityManager em = XPersistence.getManager();
+		Query query = null;
+		Collection <OrderStoreD> resultList = null;
+		try{
+//			Query query = XPersistence.getManager().createQuery("from Carrier c where " +
+//					"c.warehouse.zoneNumber = :zone AND " + 
+//					"c.warehouse.number = :warehouseNumber AND " + 
+//					"NOT (c.number = :number) ");
+//				query.setParameter("zone", getWarehouse().getZoneNumber());
+//				query.setParameter("warehouseNumber", getWarehouse().getNumber());
+//				query.setParameter("number",  getNumber());
+			query = em.createQuery(
+					"SELECT osd FROM OrderStoreD AS osd"
+					+ " WHERE osd.orderStore_oid = "+ headId
+					);
+//			query.setParameter( "item", getItem().getOid() );
+//			query.setParameter( "item", 2 );
+			resultList = query.getResultList();
+	      logger.debug("OrderStoreD.getOrderD: result: "+ query.getResultList());
+		}catch( Exception e ){
+		   logger.error("OrderStoreD.getOrderD: "+ e );
+		}
+		return resultList;
+  }
+	
    public OrderStoreD() {
     }
    

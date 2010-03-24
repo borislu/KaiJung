@@ -92,6 +92,10 @@ public class OrderStoreNewDAO {
 	  public Collection <OrderSuggestD> findSuggestD( int wareId ){
 			return new OrderSuggestD().findSuggestD(wareId);
 	  }
+
+	  public Collection <OrderStoreD> getOrderD( int headId ){
+			return new OrderStoreD().getOrderD( headId );
+	  }
 }
 		      
 			  

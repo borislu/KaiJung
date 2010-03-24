@@ -132,19 +132,20 @@ Module.setStyle(style);
 			}
 			function editable(){
        //alert( 'tr: '+ tr );
+       if ( ! $('#ox_KaiJung_OrderStoreDetailOnly__bottom_buttons') ){
+ 		         setTimeout("editable()", 50);
+           }
        trs = $("tr[id^='ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_']"	);
        trs.each(function(sn){
               //alert('module_orderStoreDetail.jsp: '+ $('#ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
+              var szs = ['10', '5', '3', '3', '3', '3', '3', '3', '6', '8', '3', '6', '28', '8'];
               $(this).find('td:gt(1)').each(
                   function(i){
                 	     var data = $.trim(this.childNodes[0].data);
-                      if(data){
-            	              //$(this).find(':first-child').remove();
-            	              this.removeChild(this.childNodes[0]);
-                	          $(this).append('<input id="in_"'+ i + ' value="' + data +'" />');
-                      }else{
-                	          $(this).append('<input id="in_"'+ i + ' value="" />');
-                      }//else
+                      if(!data){ data = ''; }
+        	              //$(this).find(':first-child').remove();
+        	              this.removeChild(this.childNodes[0]);
+            	          $(this).append('<input id="in_'+ sn + '_' + i + '" value="' + data +'" size="'+ szs[i] +'"/>');
                        }//
                    );
        }); //trs.each
@@ -172,6 +173,10 @@ Module.setStyle(style);
   }
   changeCss();
 	</script>
+<script type='text/javascript' src='../dwr/engine.js'></script>
+<script type='text/javascript' src='../dwr/util.js'></script>
+<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
+<script type='text/javascript' src='orderStoreNew.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">

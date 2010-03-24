@@ -192,7 +192,9 @@ function changeLink(){
     	    function() {
         	    index = $(this).attr('href').substring(102);
         	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row=" + index ; 
-        	    this.onclick='javascript:parent.frames["frameWest"].editable();';
+        	    //先確認
+        	    //this.onclick='javascript:parent.frames["frameWest"].editable();';
+        	    $(this).attr('href', 'javascript:parent.frames["frameWest"].editable();');
         	    }//
 		   	);
   }

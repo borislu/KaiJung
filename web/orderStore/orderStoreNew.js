@@ -15,14 +15,14 @@ function submitOSD(){
 			}
 			var memo = $('#memo'+i).val();
 			var quantity = '{';
-			var sizes = ['24','26','28','30','32']; //尺寸數量暫定5組
+			var sizes = ['s24','s26','s28','s30','s32']; //尺寸數量暫定5組
 			for(j=1;j<=sizes.length;j++)
 			{
 				qtyVal = 0;
 				if( $('#r'+j+'_'+i) ){  
 					qtyVal = $('#r'+j+'_'+i).val();
 				}
-				quantity += sizes[j-1] + ':' + qtyVal + ',';
+				quantity += '\"'+ sizes[j-1] + '\":' + qtyVal + ',';
 			}
 			quantity = quantity.substring( 0, quantity.length-1 );
 			quantity += '}'
@@ -63,8 +63,7 @@ alert("OrderStoreNew.js: autoExport: index="+index);
 	}
 }
 
-function beginLoad(){
-	//alert('in findSuggestList()');
+function beginLoad(){ //orderStoreSuggest.jsp 在初始的時侯讀入建議訂單 
 	OrderStoreNew.findSuggestList ( 1, function(orderSuggestD_Set){ // argument: wareId , return: orderSuggestD_Set
 		//alert('orderSuggestD_Set length: '+ orderSuggestD_Set.length );
 //var debug = 'orderSuggestD_Set: ';
@@ -86,3 +85,23 @@ function beginLoad(){
 	});
 }
 
+function getOrderD( headId ){ //module_orderStoreDetail.jsp 讀入所屬的訂單明細 
+	OrderStoreNew.getOrderD ( 1, function(orderStoreD_Set){ // argument: wareId , return: orderStoreD_Set
+		//alert('orderStoreD_Set length: '+ orderStoreD_Set.length );
+//var debug = 'orderStoreD_Set: ';
+		for (var i=0; i < orderStoreD_Set.length; i++) {
+//debug += ' , reason: ' + orderStoreD_Set[i].reason ;
+			dwr.util.setValue( 'articleno_'+ (i+1) , orderStoreD_Set[i].item.articleno );
+			//dwr.util.setValue( 'color_'+ (i+1) , orderStoreD_Set[i].item.color.sName );
+//debug += ' , qtyobj json: ' + jQuery.parseJSON( orderStoreD_Set[i].suggestQty );
+			var qtyobj = jQuery.parseJSON( orderStoreD_Set[i].quantity );
+//debug += ' , qtyobj: ' + qtyobj ;
+			dwr.util.setValue( 'size24_'+ (i+1) , qtyobj.s24 );
+			dwr.util.setValue( 'size26_'+ (i+1) , qtyobj.s26 );
+			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
+			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
+			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
+		}
+//alert( debug );
+	});
+}
