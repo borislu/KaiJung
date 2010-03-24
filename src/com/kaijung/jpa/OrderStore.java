@@ -31,9 +31,14 @@ import java.util.*;
 			+ "sender [ senderId; senderTime; senderBy ]"
 			+ "details"),
 })
-@Tab(name = "Latest", defaultOrder = "${createTime} desc"
+@Tabs({
+@Tab( defaultOrder = "${createTime} desc"
+		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
+),
+@Tab( name = "Latest", defaultOrder = "${createTime} desc"
 		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
 )
+})
 public class OrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 

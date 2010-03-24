@@ -130,6 +130,25 @@ Module.setStyle(style);
 						     setTimeout("afterDel()", 50);
 						 }
 			}
+			function editable(){
+       //alert( 'tr: '+ tr );
+       trs = $("tr[id^='ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_']"	);
+       trs.each(function(sn){
+              //alert('module_orderStoreDetail.jsp: '+ $('#ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
+              $(this).find('td:gt(1)').each(
+                  function(i){
+                	     var data = $.trim(this.childNodes[0].data);
+                      if(data){
+            	              //$(this).find(':first-child').remove();
+            	              this.removeChild(this.childNodes[0]);
+                	          $(this).append('<input id="in_"'+ i + ' value="' + data +'" />');
+                      }else{
+                	          $(this).append('<input id="in_"'+ i + ' value="" />');
+                      }//else
+                       }//
+                   );
+       }); //trs.each
+				}
   function changeLink(){
     //$(document).ready(function(){
     ///*
@@ -139,6 +158,7 @@ Module.setStyle(style);
     //*/
         $('#ox_KaiJung_OrderStoreDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
         $('#ox_KaiJung_OrderStoreDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
+        editable();
     }
   }
   changeLink();

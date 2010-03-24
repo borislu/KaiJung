@@ -188,9 +188,12 @@ function changeLink(){
   if( ($('a')==null) || ($('a').length < 1) ){
       setTimeout( 'changeLink()', 50 );
   }else{
-    $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(function() {
-      index = $(this).attr('href').substring(102);
-      this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row="+ index }
+    $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(
+    	    function() {
+        	    index = $(this).attr('href').substring(102);
+        	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row=" + index ; 
+        	    this.onclick='javascript:parent.frames["frameWest"].editable();';
+        	    }//
 		   	);
   }
 }
