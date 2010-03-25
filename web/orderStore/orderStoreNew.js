@@ -6,6 +6,7 @@ function submitOSD(){
 	{
 //alert("orderStoreNew.js: submitOSD: row"+ i +" exist: "+ $('row'+i) + " headId: " + headId );
 		if( $('row'+i) ){
+			var barcode = $('#barcode'+i).val(); 
 			var modifyid = $('#modifyid'+i).val(); 
 			var inputObj = $('#isCustOrder'+i).checked;
 			if( inputObj == true){
@@ -27,41 +28,43 @@ function submitOSD(){
 			quantity = quantity.substring( 0, quantity.length-1 );
 			quantity += '}'
 //debug += quantity;//會把迴圈內的所有都印出來
-			OrderStoreNew.insert(quantity, modifyid, isCustOrder, memo, headId);
+			OrderStoreNew.insert(barcode, quantity, modifyid, isCustOrder, memo, headId);
 		}
 	}
 //alert( debug );
 }
 
-function autoExport(){
-alert("OrderStoreNew.js: autoExport: index="+index);
-	for(z=1;z<=index;z++){
-//        alert( "barcode"+ z + ': '+ $( ('#barcode'+z) ) );
-        try{
-			if( document.getElementById(('barcode'+z)) != null || $(('#barcode'+z)) != 'undefined' ){
-				barcode = document.getElementById(('barcode'+z)).value;
-//				alert("barcode="+barcode);
-				OrderStoreNew.autoExport(barcode,function(item){
-					y=z-1;
-					
-//					alert(item.articleno + " , " + item.price);
-//					alert('articleno: '+ y + ": "+ document.getElementById(('articleno'+y)));
-					$(('#articleno'+y)).value = item.articleno;
-					$(('#price'+y)).value = item.price;
-//					alert("price="+$('#price'+y).value);
-//					$('#color'+y).value = item.colorId;
-//					alert("color="+document.getElementById('color'+y).value);
-//					OrderStoreNew.getColorName(document.getElementById('color'+y).value,function(colorName){
-//						document.getElementById('color'+y).value = colorName;
-//						alert("colorName="+document.getElementById('color'+y).value);
-//					});
+function getByBarcode(el){
+//alert("OrderStoreNew.js: getByBarcode: el="+ el.id);
+    sn = el.id.substring( 7 );
+    var barcode = $( '#barcode'+sn );
+    if( barcode ){
+        barcode_val = barcode.val();
+//alert("barcode="+ barcode_val);
+				OrderStoreNew.getByBarcode ( barcode_val, function(item){
+//alert( "OrderStoreNew.js: getByBarcode: articleno: "+ item.articleno + " , price: " + item.price);
+					dwr.util.setValue( 'articleno'+ sn , item.articleno );
+					dwr.util.setValue( 'price'+ sn , item.price );
+					dwr.util.setValue( 'color'+ sn , item.color.sName );
 				});
-			}
-		}catch(err){
-		
-		}
-	}
+    }
 }
+function getByArticleno(el){
+//alert("OrderStoreNew.js: getByArticleno: el="+ el.id );
+    sn = el.id.substring( 9 );
+    var articleno = $( '#articleno'+sn );
+    if( articleno ){
+	        articleno_val = articleno.val();
+//alert("articleno="+ articleno_val);
+		     OrderStoreNew.getByArticleno ( articleno_val, function(item){
+//alert( "OrderStoreNew.js: getByArticleno: articleno: "+ item.articleno + " , price: " + item.price);
+				dwr.util.setValue( 'barcode'+ sn , item.barcode );
+				dwr.util.setValue( 'price'+ sn , item.price );
+				dwr.util.setValue( 'color'+ sn , item.color.sName );
+			});
+	    }
+    }
+
 
 function beginLoad(){ //orderStoreSuggest.jsp 在初始的時侯讀入建議訂單 
 	OrderStoreNew.findSuggestList ( 1, function(orderSuggestD_Set){ // argument: wareId , return: orderSuggestD_Set

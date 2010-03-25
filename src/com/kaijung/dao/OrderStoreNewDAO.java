@@ -10,6 +10,7 @@ import javax.persistence.*;
 import org.openxava.jpa.*;
 
 import com.kaijung.jpa.*;
+
 import common.*;
 
 public class OrderStoreNewDAO {
@@ -27,19 +28,24 @@ public class OrderStoreNewDAO {
 	    }
 	  }
 	  
-	  public void insert(String oid, String quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
+	  public void insert(String oid, String barcode, String quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
 		    Connection conn = null;
+		    Statement stmt2 = null;
 		    Statement stmt = null;
 		    try {
 		      conn = DriverManager.getConnection(url, user, pwd);
+		      stmt2 = conn.createStatement();
+		      ResultSet rs = stmt2.executeQuery("select i.oid from Item i where i.barcode = '" + barcode + "'");
+		      int itemid = rs.getInt("oid");
 		      stmt = conn.createStatement();
 		      logger.debug("OrderStoreNewDAO.insert: quantity: "+ quantity);
-		      stmt.executeUpdate("insert into OrderStoreD(oid,quantity,modifyid,isCustOrder,remark,orderStore_oid) " +
-		          "values ('" + oid + "','" + quantity + "','" + modifyid + "','" + isCustOrder + "','" + memo+ "','"+ orderStoreOid +"')");
+		      stmt.executeUpdate("insert into OrderStoreD(oid,itemid,quantity,modifyid,isCustOrder,remark,orderStore_oid) " +
+		          "values ('" + oid + "','" + itemid + "','" + quantity + "','" + modifyid + "','" + isCustOrder + "','" + memo+ "','"+ orderStoreOid +"')");
 		    } catch (SQLException e) {
 		      e.printStackTrace();
 		    } finally {
 		      try {
+		    	  stmt2.close();
 		        stmt.close();
 		      } catch (SQLException e) {
 		        e.printStackTrace();
@@ -52,29 +58,43 @@ public class OrderStoreNewDAO {
 		    }
 		  }
 	  //用條碼去找出貨號顏色價錢
-	  public Item getElementById(String barcode)throws SQLException{
-		  Connection conn = null;
-		  Statement stmt = null;
-		  Item item = new Item();
-		  conn = DriverManager.getConnection(url, user, pwd);
-		  stmt = conn.createStatement();
-		      
-		  ResultSet st = stmt.executeQuery("select * from Item where barcode='"+barcode+"'");
-		  while(st.next()){
-		   	  item.setArticleno(st.getString("articleno"));
-		   	  System.out.println("articleno="+st.getString("articleno"));
-		   	  item.setPrice(st.getFloat("price"));
-		   	  System.out.println("price="+st.getString("price"));
-		   	  System.out.println("colorId="+st.getInt("colorId"));		   	  
-//		   	  item.getColor().setOid(1);
-//		   	  item.setColorId(st.getInt("colorid"));
-		   	  System.out.println("colorId="+item.getColor().getOid());
-		   	  System.out.println("item="+item);
-		  }
-		  return item;
-	  }
-	  //利用COLORID找出顏色的名稱
-	  public String getColorNameById(String colorId)throws SQLException{
+	public Item getItemByBarcode(String barcode) throws SQLException{
+				EntityManager em = XPersistence.getManager();
+				Query query = null;
+				Item result = null;
+				try{
+			      logger.debug("OrderStoreNewDAO.getItemByBarcode: barcode: "+ barcode );
+					query = em.createQuery(
+							"SELECT i FROM Item AS i"
+							+ " WHERE i.barcode = '"+ barcode +"'"
+							);
+					result = (Item)query.setMaxResults(1).getSingleResult();
+			      logger.debug("OrderStoreNewDAO.getItemByBarcode: result: "+ result );
+				}catch( Exception e ){
+				    logger.error("OrderStoreNewDAO.getItemByBarcode: "+ e );
+				}
+				return result;
+	}
+	public Item getItemByArticleno(String articleno) throws SQLException{
+		EntityManager em = XPersistence.getManager();
+		Query query = null;
+		Item result = null;
+		try{
+	      logger.debug("OrderStoreNewDAO.getItemByArticleno: articleno: "+ articleno );
+			query = em.createQuery(
+					"SELECT i FROM Item AS i"
+					+ " WHERE i.articleno = '"+ articleno +"'"
+					);
+			result = (Item)query.setMaxResults(1).getSingleResult();
+	      logger.debug("OrderStoreNewDAO.getItemByArticleno: result: "+ result );
+		}catch( Exception e ){
+		    logger.error("OrderStoreNewDAO.getItemByArticleno: "+ e );
+		}
+		return result;
+}
+
+	//利用COLORID找出顏色的名稱
+	  public String getColorNameById(String colorId) throws SQLException{
 		  Connection conn = null;
 		  Statement stmt = null;
 		  String colorName = null;;
@@ -84,7 +104,7 @@ public class OrderStoreNewDAO {
 		  ResultSet st = stmt.executeQuery("select ic from ItemColor as ic where ic.oid='"+colorId+"'");//select i from Invoice as i where i.customer.number=1
 		  while(st.next()){
 			  colorName = st.getString("name");
-		   	  System.out.println("colorName="+st.getString("name"));			  
+		   	  logger.debug("colorName="+st.getString("name"));			  
 		  }
 		  return colorName;
 	  }

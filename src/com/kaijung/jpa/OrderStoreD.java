@@ -129,7 +129,7 @@ public class OrderStoreD implements Serializable {
 //			query.setParameter( "item", getItem().getOid() );
 //			query.setParameter( "item", 2 );
 			resultList = query.getResultList();
-	      logger.debug("OrderStoreD.getOrderD: result: "+ query.getResultList());
+	      logger.debug("OrderStoreD.getOrderD: result: "+ resultList );
 		}catch( Exception e ){
 		   logger.error("OrderStoreD.getOrderD: "+ e );
 		}
