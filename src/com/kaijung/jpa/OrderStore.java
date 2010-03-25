@@ -31,18 +31,13 @@ import java.util.*;
 			+ "sender [ senderId; senderTime; senderBy ]"
 			+ "details"),
 })
-@Tabs({
-@Tab( defaultOrder = "${createTime} desc"
-		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
-),
 @Tab( name = "Latest", defaultOrder = "${createTime} desc"
 		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
 )
-})
 public class OrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Column(length = 32) //@Hidden
+	@Id @Column(length = 32) @Hidden
 //	@GeneratedValue(generator = "system-uuid")
 //	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String oid;
@@ -75,8 +70,7 @@ public class OrderStore implements Serializable {
 	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
 			@PropertyValue(name = "docType", value = "A") // Required, 由基本檔取出
 			, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
-			, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
-																				// 記錄流水號的表格
+			, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required, SeqGenOrderStore:記錄流水號的表格
 	})
 	@ReadOnly @DisplaySize(20)
 	private String readCode;

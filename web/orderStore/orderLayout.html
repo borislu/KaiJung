@@ -129,7 +129,9 @@ p {
                       },{
                           text:'儲存',
                           handler:function(){
-                                linkFrom ();
+				                          Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'CRUD.save'); //orderStoreNew.jsp
+				                          Ext.getDom('frameWest').contentWindow.updateOSD();                                                                 //orderStoreNew.js orderStoreNew.jsp
+				                          //Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //orderStoreNew.jsp
                           }
                       }]
                   }

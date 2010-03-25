@@ -117,69 +117,17 @@ Module.setStyle(style);
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
 		} 
-  function afterSave(){
-    $.cookie("JSESSIONID",null);
-    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderStoreListOnly', '', false, 'List.goPage', 'page=1');
-    parent.frames["frameEast"].window.location.reload();
-  }
-			function afterDel(){
-						 if ($("#ox_KaiJung_OrderStoreDetailOnly__messages_table").length>0) {
-						     parent.frames["frameEast"].window.location.reload();
-         $.cookie("JSESSIONID", null);
-						 }else {
-						     setTimeout("afterDel()", 50);
-						 }
-			}
-			function editable(){
-       //alert( 'tr: '+ tr );
-       if ( ! $('#ox_KaiJung_OrderStoreDetailOnly__bottom_buttons') ){
- 		         setTimeout("editable()", 50);
-           }
-       trs = $("tr[id^='ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_']"	);
-       trs.each(function(sn){
-              //alert('module_orderStoreDetail.jsp: '+ $('#ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
-              var szs = ['10', '5', '3', '3', '3', '3', '3', '3', '6', '8', '3', '6', '28', '8'];
-              $(this).find('td:gt(1)').each(
-                  function(i){
-                	     var data = $.trim(this.childNodes[0].data);
-                      if(!data){ data = ''; }
-        	              //$(this).find(':first-child').remove();
-        	              this.removeChild(this.childNodes[0]);
-            	          $(this).append('<input id="in_'+ sn + '_' + i + '" value="' + data +'" size="'+ szs[i] +'"/>');
-                       }//
-                   );
-       }); //trs.each
-				}
-  function changeLink(){
-    //$(document).ready(function(){
-    ///*
-    if( ($('a')==null) || ($('a').length < 1) ){
-        setTimeout( 'changeLink()', 50 );  
-    }else{
-    //*/
-        $('#ox_KaiJung_OrderStoreDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
-        $('#ox_KaiJung_OrderStoreDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
-        editable();
-    }
-  }
-  changeLink();
-  function changeCss(){
-    //$(document).ready(function(){
-    if( ($('#ox_KaiJung_OrderStoreDetailOnly__view')==null) || ($('#ox_KaiJung_OrderStoreDetailOnly__view').length < 1) ){
-        setTimeout( 'changeCss()', 50 );  
-    }else{
-        $('#ox_KaiJung_OrderStoreDetailOnly__view').css('width','800px');
-    }
-  }
-  changeCss();
 	</script>
+<script type="text/javascript">
+</script>
 <script type='text/javascript' src='../dwr/engine.js'></script>
 <script type='text/javascript' src='../dwr/util.js'></script>
 <script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
-<script type='text/javascript' src='orderStoreNew.js'></script>
+<script type='text/javascript' src='../orderStore/orderStoreNew.js'></script>
+<script type='text/javascript' src='../orderStore/orderStoreDetail.js'></script>
 <% if (!isPortlet) { %>
 </head>
-<body bgcolor="#ffffff">
+<body bgcolor="#ffffff" onload="editable()">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>

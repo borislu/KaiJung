@@ -98,7 +98,6 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/js/ox_ext_orderStoreList.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
@@ -119,6 +118,7 @@ Module.setStyle(style);
 			jQuery = portalJQuery;    
 		}   
 	</script>
+	<script type='text/javascript' src='../orderStore/orderStoreList.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff" onLoad="changeLink()">
@@ -184,20 +184,4 @@ String initiated=prefix + "_initiated";
 window.onload = <%=onLoadFunction%>;
 setTimeout('<%=onLoadFunction%>()', 1000);
 document.additionalParameters="<%=getAdditionalParameters(request)%>"; 
-function changeLink(){  
-  if( ($('a')==null) || ($('a').length < 1) ){
-      setTimeout( 'changeLink()', 50 );
-  }else{
-    $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(
-    	    function() {
-        	    index = $(this).attr('href').substring(102);
-        	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row=" + index ; 
-        	    //先確認
-        	    //this.onclick='javascript:parent.frames["frameWest"].editable();';
-        	    $(this).attr('href', 'javascript:parent.frames["frameWest"].editable();');
-        	    }//
-		   	);
-  }
-}
-changeLink();
 </script>
