@@ -13,7 +13,6 @@ public class SeqGenOrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
 	private String oid;
 
 	private int value;

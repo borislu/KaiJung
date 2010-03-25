@@ -157,7 +157,7 @@ function selectAll(){
       <td style="text-align: center;"><input id="size32_1"   name="size32_1"  value="9" maxlength="3"  class="orderSize"/>/115</td>
       <td style="text-align: center;"><input id="memo_1"   name="memo_1" class="memo01" /></td>
       <td style="text-align: center;"><input id="chk_1"   name="chk" type="checkbox" checked/></td>
-      <td style="text-align: center;"><input id="barcode_1"  name="barcode_1" value="BC000001" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="barcode_1"  name="barcode_1" value="bc1901" readonly class="barcodeR" style="visibility:hidden;"></td>
       <td style="text-align: center;"><input id="price_1"   name="price_1" value="1000" readonly class="barcodeR" style="visibility:hidden;"></td>
     </tr>
     <tr id="tr2" class="datarow">
@@ -174,7 +174,7 @@ function selectAll(){
       <td style="text-align: center;"><input id="size32_2"   name="size32_2"  value="15" maxlength="3"  class="orderSize"/>/115</td>
       <td style="text-align: center;"><input id="memo_2"   name="memo_2" class="memo01" /></td>
       <td style="text-align: center;"><input id="chk_2"   name="chk" type="checkbox" checked/></td>
-      <td style="text-align: center;"><input id="barcode_2"  name="barcode_2" value="BC000002" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="barcode_2"  name="barcode_2" value="bc1902" readonly class="barcodeR" style="visibility:hidden;"></td>
       <td style="text-align: center;"><input id="price_2"   name="price_2" value="450" readonly class="barcodeR" style="visibility:hidden;"></td>
     </tr>
     <tr>

@@ -157,7 +157,7 @@ function setAll(){
 
 </head>
 
-<body>
+<body onload='javascript:openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.new')'>
 
 <jsp:include page="../xava/module_include.jsp" flush="true"> 
     <jsp:param name="application" value="KaiJung" /> 

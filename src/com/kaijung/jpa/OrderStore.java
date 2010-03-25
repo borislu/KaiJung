@@ -78,8 +78,7 @@ public class OrderStore implements Serializable {
 			, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
 																				// 記錄流水號的表格
 	})
-	@ReadOnly
-	@DisplaySize(20)
+	@ReadOnly @DisplaySize(20)
 	private String readCode;
 
 	private String remark;

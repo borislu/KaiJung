@@ -36,6 +36,7 @@ public class OrderStoreNewDAO {
 		      conn = DriverManager.getConnection(url, user, pwd);
 		      stmt2 = conn.createStatement();
 		      ResultSet rs = stmt2.executeQuery("select i.oid from Item i where i.barcode = '" + barcode + "'");
+		      rs.next();
 		      int itemid = rs.getInt("oid");
 		      stmt = conn.createStatement();
 		      logger.debug("OrderStoreNewDAO.insert: quantity: "+ quantity);
