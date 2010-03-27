@@ -20,6 +20,11 @@ public class OrderStoreNew {
 			String oid = uuid.toString().replaceAll("-", ""); //str.substring(0,8) + str.substring(9, 13) + str.substring(14, 18) + str.substring(19, 23) + str.substring(24);
 			osdnDAO.insert(oid, barcode, quantity, modifyid, isCustOrder, memo, orderStoreOid);
 		}
+		public int update(String oid, String quantity, String modifyid, String isCustOrder, String memo){
+		      logger.debug("OrderStoreNew.update: quantity: "+ quantity);
+				OrderStoreNewDAO osdnDAO = new OrderStoreNewDAO();
+				return osdnDAO.update(oid, quantity, modifyid, isCustOrder, memo);
+			}
 		public Item getByBarcode(String barcode) throws SQLException{//以條碼找出商品
 			return new OrderStoreNewDAO().getItemByBarcode(barcode);
 		}

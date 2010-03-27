@@ -91,6 +91,7 @@ item = 商品
 item.articleno = 貨號
 item.barcode = 條碼
 item.color.name = 顏色
+item.color.sName = 顏色
 item.name = 品名
 item.price = 售價
 item.stock.shelf = 貨架

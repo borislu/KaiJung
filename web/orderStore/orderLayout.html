@@ -124,15 +124,18 @@ p {
                  ,bbar:[{
                           text:'刪除',
                           handler:function(){
-                                linkFrom ();
+                             Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete')
                           }
                       },{
                           text:'儲存',
                           handler:function(){
-				                          Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'CRUD.save'); //orderStoreNew.jsp
-				                          Ext.getDom('frameWest').contentWindow.updateOSD();                                                                 //orderStoreNew.js orderStoreNew.jsp
-				                          //Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //orderStoreNew.jsp
-                          }
+                    	          Ext.getDom('frameWest').contentWindow.updateOSD() ;
+                    	          //alert( 'orderLayout.html result: '+ result );
+                              //if( result == '1' ){
+										                       //   Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'CRUD.save'); //orderStoreNew.jsp
+										                          //Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //orderStoreNew.jsp
+                                        //}
+                                   }
                       }]
                   }
                ]
@@ -151,14 +154,19 @@ p {
 <body>
 <script type="text/javascript" src="../examples.js"></script>
 <!-- EXAMPLES -->
-<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/module_orderStoreList.jsp?application=KaiJung&module=OrderStoreListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
-<div id="west"><iframe id="frameWest" name="frameWest" src="../xava/module_orderStoreDetail.jsp?application=KaiJung&module=OrderStoreDetailOnly"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="east"><iframe id="frameEast" name="frameEast"
+	src="../xava/module_orderStoreList.jsp?application=KaiJung&module=OrderStoreListOnly"
+	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="west"><iframe id="frameWest" name="frameWest"
+	src="../xava/module_orderStoreDetail.jsp?application=KaiJung&module=OrderStoreDetailOnly"
+	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
 <div id="north">
 <p></p>
 </div>
 <div id="center2"></div>
 <div id="center1"></div>
-<div id="props-panel"	style="width: 200px; height: 200px; overflow: hidden;"></div>
+<div id="props-panel"
+	style="width: 200px; height: 200px; overflow: hidden;"></div>
 
 </body>
 </html>

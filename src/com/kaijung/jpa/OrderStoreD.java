@@ -13,43 +13,36 @@ import org.openxava.jpa.*;
 import com.kaijung.dao.*;
 import common.*;
 
-
 /**
  * The persistent class for the OrderStoreD database table.
  * 
  */
 @Entity
-@Views({
-	@View( name ="Simple", members=
-	    "name, status; enname; barcode, brandid;"
-	)
-})
-@Tabs({
-	@Tab(properties="item.barcode, item.articleno, item.color.name, isCustOrder, item.name, quantity, remark, status",
-		defaultOrder="${oid} desc"
-	),
-	@Tab(name="Latest", properties="item.barcode, item.articleno, item.color.name, isCustOrder, item.name, quantity, remark, status",
-		defaultOrder="${oid} desc"
-	)
-})
+@Views( { @View(name = "Simple", members = "name, status; enname; barcode, brandid;") })
+@Tabs( {
+		@Tab(properties = "item.barcode, item.articleno, item.color.name, isCustOrder, item.name, quantity, remark, status", defaultOrder = "${oid} desc"),
+		@Tab(name = "Latest", properties = "item.barcode, item.articleno, item.color.name, isCustOrder, item.name, quantity, remark, status", defaultOrder = "${oid} desc") })
 public class OrderStoreD implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static Logger logger = Logger.getLogger(OrderStoreNewDAO.class);
 
-	@Id @GeneratedValue(generator="system-uuid") @Hidden
-	@GenericGenerator(name="system-uuid", strategy="uuid")
-	@Column(length=32)
+	@Id
+	@GeneratedValue(generator = "system-uuid")
+	@Hidden
+	@GenericGenerator(name = "system-uuid", strategy = "uuid")
+	@Column(length = 32)
 	private String oid;
 
-//	private String orderStore_oid;
-	@ManyToOne 
-	@JoinColumn(name="orderStore_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	// private String orderStore_oid;
+	@ManyToOne
+	@JoinColumn(name = "orderStore_oid", referencedColumnName = "oid")
+	// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderStore orderStore;
 
-
-//	private int itemid;
-	@ManyToOne 
-	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	// private int itemid;
+	@ManyToOne
+	@JoinColumn(name = "itemid", referencedColumnName = "oid")
+	// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Item item;
 
 	private String isCustOrder;
@@ -80,70 +73,122 @@ public class OrderStoreD implements Serializable {
 	private String reserve8;
 	@Hidden
 	private String reserve9;
-	
+
 	@ReadOnly
 	private String status;
-	
 
-	@DisplaySize(6) @Transient
-	public String get24() { return ""; } // 尺寸，無資料庫對應
+	@DisplaySize(6)
+	@Transient
+	public String get24() {
+		return "";
+	} // 尺寸，無資料庫對應
 
-	@DisplaySize(6) @Transient
-	public String get26() { return ""; } // 尺寸，無資料庫對應
+	@DisplaySize(6)
+	@Transient
+	public String get26() {
+		return "";
+	} // 尺寸，無資料庫對應
 
-	@DisplaySize(6) @Transient
-	public String get28() { return ""; } // 尺寸，無資料庫對應
+	@DisplaySize(6)
+	@Transient
+	public String get28() {
+		return "";
+	} // 尺寸，無資料庫對應
 
-	@DisplaySize(6) @Transient
-	public String get30() { return ""; } // 尺寸，無資料庫對應
+	@DisplaySize(6)
+	@Transient
+	public String get30() {
+		return "";
+	} // 尺寸，無資料庫對應
 
-	@DisplaySize(6) @Transient
-	public String get32() { return ""; } // 尺寸，無資料庫對應
+	@DisplaySize(6)
+	@Transient
+	public String get32() {
+		return "";
+	} // 尺寸，無資料庫對應
 
-	@DisplaySize(6) @Transient
-	public String getSum() { return ""; } // 小計，無資料庫對應
+	@DisplaySize(6)
+	@Transient
+	public String getSum() {
+		return "";
+	} // 小計，無資料庫對應
 
-	@DisplaySize(8) @Transient
-	public String getAmount() { return ""; } // 金額，無資料庫對應
-	
-	@DisplaySize(6) @Transient
-	public String getModifyId() { return ""; } // 修改單號，無資料庫對應
+	@DisplaySize(8)
+	@Transient
+	public String getAmount() {
+		return "";
+	} // 金額，無資料庫對應
 
-	
-  public Collection <OrderStoreD> getOrderD( int headId ){
+	@DisplaySize(6)
+	@Transient
+	public String getModifyId() {
+		return "";
+	} // 修改單號，無資料庫對應
+
+	public Collection<OrderStoreD> getOrderD(int headId) {
 		EntityManager em = XPersistence.getManager();
 		Query query = null;
-		Collection <OrderStoreD> resultList = null;
-		try{
-//			Query query = XPersistence.getManager().createQuery("from Carrier c where " +
-//					"c.warehouse.zoneNumber = :zone AND " + 
-//					"c.warehouse.number = :warehouseNumber AND " + 
-//					"NOT (c.number = :number) ");
-//				query.setParameter("zone", getWarehouse().getZoneNumber());
-//				query.setParameter("warehouseNumber", getWarehouse().getNumber());
-//				query.setParameter("number",  getNumber());
-			query = em.createQuery(
-					"SELECT osd FROM OrderStoreD AS osd"
-					+ " WHERE osd.orderStore_oid = "+ headId
-					);
-//			query.setParameter( "item", getItem().getOid() );
-//			query.setParameter( "item", 2 );
+		Collection<OrderStoreD> resultList = null;
+		try {
+			// Query query =
+			// XPersistence.getManager().createQuery("from Carrier c where " +
+			// "c.warehouse.zoneNumber = :zone AND " +
+			// "c.warehouse.number = :warehouseNumber AND " +
+			// "NOT (c.number = :number) ");
+			// query.setParameter("zone", getWarehouse().getZoneNumber());
+			// query.setParameter("warehouseNumber",
+			// getWarehouse().getNumber());
+			// query.setParameter("number", getNumber());
+			query = em.createQuery("SELECT osd FROM OrderStoreD AS osd"
+					+ " WHERE osd.orderStore_oid = " + headId);
+			// query.setParameter( "item", getItem().getOid() );
+			// query.setParameter( "item", 2 );
 			resultList = query.getResultList();
-	      logger.debug("OrderStoreD.getOrderD: result: "+ resultList );
-		}catch( Exception e ){
-		   logger.error("OrderStoreD.getOrderD: "+ e );
+			logger.debug("OrderStoreD.getOrderD: result: " + resultList);
+		} catch (Exception e) {
+			logger.error("OrderStoreD.getOrderD: " + e);
 		}
 		return resultList;
-  }
-	
-   public OrderStoreD() {
-    }
-   
-   public OrderStoreD( String oid, boolean iscustOrder, String quantity ) {
-   	setOid( oid );
-   	setIsCustOrder(isCustOrder);
-   	setQuantity(quantity);
-   }
+	}
+
+	public int update(String oid, String quantity, String modifyid,
+			String isCustOrder, String memo) {
+		logger.debug("OrderStoreD.update: " +
+				"oid: " + oid 
+				+ ", quantity: "	+ quantity
+				+ ", modifyid: "	+ modifyid
+				+ ", isCustOrder: "	+ isCustOrder
+				+ ", memo: "	+ memo
+				);
+
+		EntityManager em = XPersistence.getManager();
+		OrderStoreD orderStoreD = em.find ( OrderStoreD.class, oid );
+		logger.debug("OrderStoreD.update: orderStoreD: " + orderStoreD );
+		if( orderStoreD != null ){
+			orderStoreD.setQuantity(quantity);
+			orderStoreD.setModifyid(modifyid);
+			orderStoreD.setIsCustOrder(isCustOrder);
+			orderStoreD.setRemark(memo);
+			try {
+				em.merge( orderStoreD );
+				XPersistence.commit();
+			} catch (Exception e) {
+				logger.error("OrderStoreD.update: " + e);
+			}
+			return 1; // 1:成功
+		}
+
+		return 0; // 0:失敗
+	}
+
+	public OrderStoreD() {
+	}
+
+	public OrderStoreD(String oid, boolean iscustOrder, String quantity) {
+		setOid(oid);
+		setIsCustOrder(isCustOrder);
+		setQuantity(quantity);
+	}
 
 	public String getOid() {
 		return this.oid;

@@ -28,7 +28,7 @@ function submitOSD(){
 			quantity = quantity.substring( 0, quantity.length-1 );
 			quantity += '}'
 //debug += quantity;//會把迴圈內的所有都印出來
-			OrderStoreNew.insert(barcode, quantity, modifyid, isCustOrder, memo, headId);
+			OrderStoreNew.insert(barcode, quantity, modifyid, isCustOrder, memo);
 		}
 	}
 //alert( debug );
