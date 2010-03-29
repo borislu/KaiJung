@@ -37,7 +37,7 @@ import java.util.*;
 public class OrderStore implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Column(length = 32) @Hidden
+	@Id @Column(length = 32) //@Hidden
 //	@GeneratedValue(generator = "system-uuid")
 //	@GenericGenerator(name = "system-uuid", strategy = "uuid")
 	private String oid;

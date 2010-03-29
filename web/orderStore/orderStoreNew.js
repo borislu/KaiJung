@@ -1,7 +1,7 @@
 //Last Coding By Jason
 function submitOSD(){
 //debug = 'debug: ';
-	var headId = $("input[name='ox_KaiJung_OrderStoreHead__oid']").val();
+	var headId = $('#ox_KaiJung_OrderStoreHead__oid').val();
 	for(i=1;i<=index;i++)
 	{
 //alert("orderStoreNew.js: submitOSD: row"+ i +" exist: "+ $('row'+i) + " headId: " + headId );
@@ -31,7 +31,7 @@ function submitOSD(){
 			quantity = quantity.substring( 0, quantity.length-1 );
 			quantity += '}'
 //debug += quantity;//會把迴圈內的所有都印出來
-			OrderStoreNew.insert(barcode, quantity, modifyid, isCustOrder, memo);
+			OrderStoreNew.insert(barcode, quantity, modifyid, isCustOrder, memo, headId);
 		}
 	}
 //alert( debug );

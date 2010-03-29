@@ -48,6 +48,28 @@ function jQuery_uuid (p) {
  }
 }
 
+function orderStoreNew_refresh() { // 刷新頁面時執行
+	divWidth = '920px';
+ retry = 0;
+ if( $('#ox_KaiJung_OrderStoreHead__view').css('width') == divWidth ){
+     openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.new');
+     var oidObj = $("input[name='ox_KaiJung_OrderStoreHead__oid']");
+     if( oidObj ){//產生新的uuid，然後隱藏oid欄位 
+    	     oidObj.first().val(jQuery_uuid);
+    	     oidObj.first().attr('id','ox_KaiJung_OrderStoreHead__oid');
+    	     $('#ox_KaiJung_OrderStoreHead__oid').hide();//$(this).css('visibility','hidden'); 
+     }else{
+         setTimeout( 'orderStoreNew_refresh()', 500 );
+       }
+     alert('OrderStoreHead__oid: '+ $('#ox_KaiJung_OrderStoreHead__oid').val() );
+ }else if( retry < 100 ){
+     retry++;
+     $('#ox_KaiJung_OrderStoreHead__view').css('width',divWidth );
+     $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
+     setTimeout( 'orderStoreNew_refresh()', 500 );
+ }
+}
+
 function batchAdd( barcode, articlenos, price, colors, sizes24, sizes26, sizes28, sizes30, sizes32, memos ){ // 批次增加列
     index2 = addtr( 'mainTable', barcode, articlenos, price, colors, sizes24, sizes26, sizes28, sizes30, sizes32, memos ) ; //回傳的 index 從 2 開始
 }//batchAdd
@@ -157,7 +179,7 @@ function setAll(){
 
 </head>
 
-<body onload='javascript:openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.new')'>
+<body>
 
 <jsp:include page="../xava/module_include.jsp" flush="true"> 
     <jsp:param name="application" value="KaiJung" /> 
@@ -310,26 +332,6 @@ function setAll(){
 
 </body>
 <script type="text/javascript">
-function orderStoreNew_refresh() {
-	   divWidth = '920px';
-    $('#ox_KaiJung_OrderStoreHead__view').css('width',divWidth );
-    $("input[name='ox_KaiJung_OrderStoreHead__oid']").each(function(){ $(this).val(jQuery_uuid); $(this).css('visibility','hidden'); });
-    $("img[src$='key.gif']").each(function(){  $(this).css('visibility','hidden'); });
-    retry = 0;
-
-    if( $('#ox_KaiJung_OrderStoreHead__view').css('width') == divWidth ){
-        $("input[name='ox_KaiJung_OrderStoreHead__oid']").each(function(){ 
-            if($(this).css('visibility')=='hidden'){ 
-                return;
-                }
-        }); 
-        setTimeout( 'orderStoreNew_refresh()', 500 );
-        retry++;
-    }else if( retry < 1000 ){
-        setTimeout( 'orderStoreNew_refresh()', 500 );
-        retry++;
-    }
-}
 orderStoreNew_refresh();
 </script>
 </html>

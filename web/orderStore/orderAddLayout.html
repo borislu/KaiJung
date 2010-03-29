@@ -144,9 +144,9 @@ p {
                           handler:function(){
                                 //Ext.get('frameWest').dom.contentDocument.getElementById('allInsert').click();
                                 //Ext.get('frameWest').dom.contentDocument.getElementById('saveHead').click();
-                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save'); //orderStoreNew.jsp
-                                Ext.getDom('frameWest').contentWindow.submitOSD();                                                                 //orderStoreNew.js orderStoreNew.jsp
                                 Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //orderStoreNew.jsp
+                                Ext.getDom('frameWest').contentWindow.submitOSD();                                                              //orderStoreNew.js orderStoreNew.jsp
+                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save'); //orderStoreNew.jsp
                           }
                       },{
                           text:'刪除',
