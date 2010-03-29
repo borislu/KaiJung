@@ -109,7 +109,6 @@ Module.setStyle(style);
 			portalJQuery = jQuery;
 		}
 	</script>				
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>			
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.cookie.js	"></script>			
 	<script type="text/javascript">

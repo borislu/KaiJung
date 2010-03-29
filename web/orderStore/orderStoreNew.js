@@ -22,6 +22,9 @@ function submitOSD(){
 				qtyVal = 0;
 				if( $('#r'+j+'_'+i) ){  
 					qtyVal = $('#r'+j+'_'+i).val();
+					if( qtyVal == '' || qtyVal == null ){
+						qtyVal = '0';
+					}
 				}
 				quantity += '\"'+ sizes[j-1] + '\":' + qtyVal + ',';
 			}

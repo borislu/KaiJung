@@ -49,15 +49,16 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
 //alert( 'orderStoreDetail.js: oid: '+ oid_txt );
      // 用來將quantity的資料從json取出，置入欄位中。 
      OrderStoreNew.getDetailSet ( oid_txt, function(orderStoreD_Set){ // argument: wareId , return: orderStoreD_Set
-alert( 'orderStoreDetail.js: length: '+ orderStoreD_Set.length );
+//alert( 'orderStoreDetail.js: length: '+ orderStoreD_Set.length );
     		for (var i=0; i < orderStoreD_Set.length; i++) {
-alert( 'orderStoreDetail.js: quantity: '+ orderStoreD_Set[i].quantity );
+//alert( 'orderStoreDetail.js: quantity: '+ orderStoreD_Set[i].quantity );
     			var qtyobj = jQuery.parseJSON( orderStoreD_Set[i].quantity );
-    			dwr.util.setValue( 'size24_'+ (i+1) , qtyobj.s24 );
-    			dwr.util.setValue( 'size26_'+ (i+1) , qtyobj.s26 );
-    			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
-    			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
-    			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
+//alert( 'orderStoreDetail.js: qtyobj: '+ qtyobj.s24 );
+    			dwr.util.setValue( 's24_'+ i , qtyobj.s24 );
+    			dwr.util.setValue( 's26_'+ i , qtyobj.s26 );
+    			dwr.util.setValue( 's28_'+ i , qtyobj.s28 );
+    			dwr.util.setValue( 's30_'+ i , qtyobj.s30 );
+    			dwr.util.setValue( 's32_'+ i , qtyobj.s32 );
     		}//for
      });
 }
