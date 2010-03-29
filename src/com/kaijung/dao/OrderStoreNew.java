@@ -42,10 +42,16 @@ public class OrderStoreNew {
 			 logger.debug("OrderStoreNew.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
 			 return new HashSet <OrderSuggestD>( cl );
 		 }
-		 public Set <OrderStoreD> getOrderD(int headId){
+		 public Set <OrderStoreD> getOrderD(String headId){//以主檔(單頭)的oid，查出所有的明細檔
 			 logger.debug("OrderStoreNew.getOrderD: headId: "+ headId );
 			 Collection <OrderStoreD> cl = new OrderStoreNewDAO().getOrderD( headId );
 			 logger.debug("OrderStoreNew.getOrderD: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
+			 return new HashSet <OrderStoreD>( cl );
+		 }
+		 public Set <OrderStoreD> getDetailSet(String oid){//以明細檔的oid(任何一個)，查出所有的明細檔
+			 logger.debug("OrderStoreNew.getDetailSet: oid: "+ oid );
+			 Collection <OrderStoreD> cl = new OrderStoreNewDAO().getDetailSet( oid );
+			 logger.debug("OrderStoreNew.getDetailSet: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
 			 return new HashSet <OrderStoreD>( cl );
 		 }
 }

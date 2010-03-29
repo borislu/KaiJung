@@ -83,11 +83,11 @@ function beginLoad(){ //orderStoreSuggest.jsp 在初始的時侯讀入建議訂�
 			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
 			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
 			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
-		}
+		}//for
 //alert( debug );
 	});
 }
-
+/*
 function getOrderD( headId ){ //module_orderStoreDetail.jsp 讀入所屬的訂單明細 
 	OrderStoreNew.getOrderD ( 1, function(orderStoreD_Set){ // argument: wareId , return: orderStoreD_Set
 		//alert('orderStoreD_Set length: '+ orderStoreD_Set.length );
@@ -108,3 +108,4 @@ function getOrderD( headId ){ //module_orderStoreDetail.jsp 讀入所屬的訂�
 //alert( debug );
 	});
 }
+*/

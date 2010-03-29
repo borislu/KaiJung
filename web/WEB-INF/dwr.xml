@@ -24,6 +24,7 @@
     <convert match="com.kaijung.jpa.ItemColor" converter="bean" javascript="ItemColor"></convert>
     <convert match="com.kaijung.jpa.OrderSuggest" converter="bean" javascript="OrderSuggest"></convert>
     <convert match="com.kaijung.jpa.OrderSuggestD" converter="bean" javascript="OrderSuggestD"></convert>
+    <convert match="com.kaijung.jpa.OrderStoreD" converter="bean" javascript="OrderStoreD"></convert>
 
         
   </allow>

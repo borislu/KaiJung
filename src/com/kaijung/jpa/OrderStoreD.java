@@ -125,7 +125,7 @@ public class OrderStoreD implements Serializable {
 		return "";
 	} // 修改單號，無資料庫對應
 
-	public Collection<OrderStoreD> getOrderD(int headId) {
+	public Collection<OrderStoreD> getOrderD(String headId) {
 		EntityManager em = XPersistence.getManager();
 		Query query = null;
 		Collection<OrderStoreD> resultList = null;
@@ -151,6 +151,43 @@ public class OrderStoreD implements Serializable {
 		return resultList;
 	}
 
+	public Collection<OrderStoreD> getDetailSet(String oid) {//以明細檔的oid(任何一個)，查出所有的明細檔
+		EntityManager em = XPersistence.getManager();
+		Query query = null;
+		Collection<OrderStoreD> resultList = null;
+		String headId = getHeadId ( oid );
+		logger.debug("OrderStoreD.getDetailSet: headId: " + headId);
+		try {
+			query = em.createQuery("SELECT osd FROM OrderStoreD AS osd"
+					+ " WHERE osd.orderStore.oid = :headId");
+			query.setParameter( "headId", headId );
+			resultList = query.getResultList();
+			logger.debug("OrderStoreD.getDetailSet: result: " + resultList);
+		} catch (Exception e) {
+			logger.error("OrderStoreD.getDetailSet: " + e);
+		}
+		return resultList;
+	}
+
+	public String getHeadId ( String oid ){//以明細檔的oid(任何一個)，查出主檔的oid
+		EntityManager em = XPersistence.getManager();
+		Query query = null;
+		String headId = null;
+//		logger.debug("OrderStoreD.getHeadId: oid: "+ oid);
+		try {
+			query = em.createQuery("SELECT DISTINCT osd FROM OrderStoreD osd"
+					+ " WHERE oid = :oid");//SELECT DISTINCT a FROM Author a INNER JOIN a.books b WHERE b.publisher.name = 'XYZ Press'
+
+			query.setParameter( "oid", oid );
+			OrderStoreD orderD = (OrderStoreD) query.getSingleResult();
+			headId = orderD.getOrderStore().getOid();
+//			logger.debug("OrderStoreD.getHeadId: headId: "+ headId);
+		} catch (Exception e) {
+			logger.error("OrderStoreD.getHeadId: " + e);
+		}
+		return headId;
+	}
+	
 	public int update(String oid, String quantity, String modifyid,
 			String isCustOrder, String memo) {
 		logger.debug("OrderStoreD.update: " +

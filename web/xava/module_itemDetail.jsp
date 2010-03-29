@@ -117,15 +117,45 @@ Module.setStyle(style);
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
 		} 
+  function afterSave(){
+    $.cookie("JSESSIONID",null);
+    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'ItemListOnly', '', false, 'List.goPage', 'page=1');
+    parent.frames["frameEast"].window.location.reload();
+  }
+			function afterDel(){
+						 //alert("trying: "+ $("#ox_KaiJung_PickerDetailOnly__messages_table").length>0);
+						 if ($("#ox_KaiJung_ItemDetailOnly__messages_table").length>0) {
+						     parent.frames["frameEast"].window.location.reload();
+         $.cookie("JSESSIONID", null);
+						 }else {
+						     setTimeout("afterDel()", 50);
+						 }
+			}
+  function changeLink(){
+    //$(document).ready(function(){
+    ///*
+    if( ($('a')==null) || ($('a').length < 1) ){
+        setTimeout( 'changeLink()', 50 );  
+    }else{
+    //*/
+        $('#ox_KaiJung_ItemDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
+        $('#ox_KaiJung_ItemDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
+    }
+  }
+  changeLink();
+  function changeCss(){
+    //$(document).ready(function(){
+    if( ($('#ox_KaiJung_ItemDetailOnly__view')==null) || ($('#ox_KaiJung_ItemDetailOnly__view').length < 1) ){
+        setTimeout( 'changeCss()', 50 );  
+    }else{
+        $('#ox_KaiJung_ItemDetailOnly__view').css('width','800px');
+    }
+  }
+  changeCss();
 	</script>
-<!-- 	<script type='text/javascript' src='../dwr/engine.js'></script> -->
-<!-- <script type='text/javascript' src='../dwr/util.js'></script> -->
-<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
-<script type='text/javascript' src='../orderStore/orderStoreNew.js'></script>
-<script type='text/javascript' src='../orderStore/orderStoreDetail.js'></script>
 <% if (!isPortlet) { %>
 </head>
-<body bgcolor="#ffffff" onload="editable()">
+<body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>

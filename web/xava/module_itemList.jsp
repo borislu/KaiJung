@@ -68,6 +68,7 @@ Module.setStyle(style);
 <%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 
+
 <head>
 	<title><%=managerHome.getModuleDescription() %></title>
 	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>" rel="stylesheet" type="text/css"> 
@@ -97,6 +98,7 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/js/ox_ext_itemList.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
@@ -110,22 +112,26 @@ Module.setStyle(style);
 		}
 	</script>				
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>			
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.cookie.js	"></script>			
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>				
 	<script type="text/javascript">
 		$ = jQuery;
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
-		} 
+		}   
+  function changeLink(){  
+    if( ($('a')==null) || ($('a').length < 1) ){
+        setTimeout( 'changeLink()', 50 );
+    }else{
+      $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'ItemListOnly\', \'\', false, \'List.viewDetail\'']").each(function() {
+        rowIndex = $(this).attr('href').substring(96);
+        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'ItemDetailOnly', '', false, 'List.viewDetail', 'row="+ rowIndex }
+				   	);
+    }
+  }
 	</script>
-<!-- 	<script type='text/javascript' src='../dwr/engine.js'></script> -->
-<!-- <script type='text/javascript' src='../dwr/util.js'></script> -->
-<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
-<script type='text/javascript' src='../orderStore/orderStoreNew.js'></script>
-<script type='text/javascript' src='../orderStore/orderStoreDetail.js'></script>
 <% if (!isPortlet) { %>
 </head>
-<body bgcolor="#ffffff" onload="editable()">
+<body bgcolor="#ffffff" onLoad="changeLink()">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>

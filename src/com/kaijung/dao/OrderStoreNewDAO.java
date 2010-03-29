@@ -142,7 +142,12 @@ public class OrderStoreNewDAO {
 		return new OrderSuggestD().findSuggestD(wareId);
 	}
 
-	public Collection<OrderStoreD> getOrderD(int headId) {
+	public Collection<OrderStoreD> getOrderD(String headId) {
 		return new OrderStoreD().getOrderD(headId);
 	}
+	
+	public Collection<OrderStoreD> getDetailSet(String oid) {
+		return new OrderStoreD().getDetailSet(oid);
+	}
+
 }
