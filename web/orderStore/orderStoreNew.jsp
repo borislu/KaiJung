@@ -52,17 +52,17 @@ function orderStoreNew_refresh() { // 刷新頁面時執行
 	divWidth = '920px';
  retry = 0;
  if( $('#ox_KaiJung_OrderStoreHead__view').css('width') == divWidth ){
-     openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.new');
+     openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.new');//應該也是Ajax
      var oidObj = $("input[name='ox_KaiJung_OrderStoreHead__oid']");
-     if( oidObj ){//產生新的uuid，然後隱藏oid欄位 
+     if( oidObj && oidObj.first().val() == '' ){//產生新的uuid，然後隱藏oid欄位 
     	     oidObj.first().val(jQuery_uuid);
     	     oidObj.first().attr('id','ox_KaiJung_OrderStoreHead__oid');
+    	     //alert('OrderStoreHead__oid: '+ $('#ox_KaiJung_OrderStoreHead__oid').val() );
     	     $('#ox_KaiJung_OrderStoreHead__oid').hide();//$(this).css('visibility','hidden'); 
      }else{
          setTimeout( 'orderStoreNew_refresh()', 500 );
        }
-     alert('OrderStoreHead__oid: '+ $('#ox_KaiJung_OrderStoreHead__oid').val() );
- }else if( retry < 100 ){
+ }else if( retry < 300 ){
      retry++;
      $('#ox_KaiJung_OrderStoreHead__view').css('width',divWidth );
      $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
