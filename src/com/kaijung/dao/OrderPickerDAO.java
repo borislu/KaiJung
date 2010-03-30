@@ -65,11 +65,6 @@ public class OrderPickerDAO {
 		return new OrderPicker();
 	}
 
-	public List<OrderPickerD> getPickerDList( int oid ){
-		OrderPickerDDAO dDao = new OrderPickerDDAO();
-		return dDao.findAll(oid);
-	}
-	
 //	public boolean delete(OrderStoreD beanD){
 //		Connection conn = null;
 //		Statement stmt = null;

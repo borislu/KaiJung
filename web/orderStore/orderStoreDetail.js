@@ -23,9 +23,9 @@ function afterDel() {
 function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
 	 var oid_txt;
     trs = $("tr[id^='ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_']"	);
-	 var oid_th = $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.orderBy', 'property=oid,collection=details')\"]")
+	 var oid_th = $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.orderBy', 'property=oid,collection=details')\"]");
 //alert('oid_th:'+ oid_th.text() );
-    oid_th.parent().parent().remove();
+    oid_th.parent().parent().remove();//移除最後的orderStore_oid欄位標題
     trs.each(function(sn){
         //alert('module_orderStoreDetail.jsp: '+ $('#ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
         var ids = ['articleno', 'price', 'color', 's24', 's26', 's28', 's30', 's32', 'sum', 'amount', 'isCustOrder', 'modifyid', 'memo', 'status', 'oid'];
@@ -40,11 +40,11 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
          	    var data = $.trim(this.childNodes[0].data);
                 if(!data){ data = ''; }
   	             //$(this).find(':first-child').remove();
-  	             this.removeChild(this.childNodes[0]);
+  	             this.removeChild(this.childNodes[0]);//移除原來的label資料
       	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" value="' + data +'" size="'+ szs[i] +'"/>');
                  }//
            );
-        oid.remove();
+        oid.remove();//移除最後的orderStore_oid欄位
     }); //trs.each
 //alert( 'orderStoreDetail.js: oid: '+ oid_txt );
      // 用來將quantity的資料從json取出，置入欄位中。 

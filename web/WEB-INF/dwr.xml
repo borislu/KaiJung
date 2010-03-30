@@ -20,11 +20,15 @@
 	   <create creator="new" javascript="OrderStoreNew">
       <param name="class" value="com.kaijung.dao.OrderStoreNew" />
     </create>
+	   <create creator="new" javascript="OrderPickerDwr">
+      <param name="class" value="com.kaijung.dao.OrderPickerDwr" />
+    </create>
     <convert match="com.kaijung.jpa.Item" converter="bean" javascript="Item"></convert>    
     <convert match="com.kaijung.jpa.ItemColor" converter="bean" javascript="ItemColor"></convert>
     <convert match="com.kaijung.jpa.OrderSuggest" converter="bean" javascript="OrderSuggest"></convert>
     <convert match="com.kaijung.jpa.OrderSuggestD" converter="bean" javascript="OrderSuggestD"></convert>
     <convert match="com.kaijung.jpa.OrderStoreD" converter="bean" javascript="OrderStoreD"></convert>
+    <convert match="com.kaijung.jpa.OrderPickerD" converter="bean" javascript="OrderPickerD"></convert>
 
         
   </allow>

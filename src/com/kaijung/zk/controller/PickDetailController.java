@@ -21,7 +21,7 @@ import common.*;
 @SuppressWarnings("serial")
 public class PickDetailController extends GenericForwardComposer {	
 	private static Logger logger = Logger.getLogger(PickDetailController.class);
-	private OrderPickerDAO pDao = new OrderPickerDAO();
+	private OrderPickerDDAO pDao = new OrderPickerDDAO();
 	private List<OrderPickerD> pickDList;
  
 	public PickDetailController() {
@@ -38,7 +38,7 @@ public class PickDetailController extends GenericForwardComposer {
 			id = 0;
 			logger.debug("PickDetailController.init: " + e );
 		}
-		pickDList = pDao.getPickerDList(id);
+//		pickDList = pDao.getPickerDList(id);
 		
 		logger.debug("PickDetailController.init: pickDList.size: "+ pickDList.size() );
 //		for ( int i=0; i<pickDList.size(); i++) {

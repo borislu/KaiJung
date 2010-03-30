@@ -109,7 +109,7 @@ Module.setStyle(style);
 			portalJQuery = jQuery;
 		}
 	</script>				
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.2.min.js"></script>
+	<!-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.2.min.js"></script> -->
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>			
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.cookie.js	"></script>			
 	<script type="text/javascript">
@@ -117,42 +117,10 @@ Module.setStyle(style);
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
 		} 
-  function afterSave(){
-    $.cookie("JSESSIONID",null);
-    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderPickerListOnly', '', false, 'List.goPage', 'page=1');
-    parent.frames["frameEast"].window.location.reload();
-  }
-			function afterDel(){
-						 //alert("trying: "+ $("#ox_KaiJung_PickerDetailOnly__messages_table").length>0);
-						 if ($("#ox_KaiJung_OrderPickerDetailOnly__messages_table").length>0) {
-						     parent.frames["frameEast"].window.location.reload();
-         $.cookie("JSESSIONID", null);
-						 }else {
-						     setTimeout("afterDel()", 50);
-						 }
-			}
-  function changeLink(){
-    //$(document).ready(function(){
-    ///*
-    if( ($('a')==null) || ($('a').length < 1) ){
-        setTimeout( 'changeLink()', 50 );  
-    }else{
-    //*/
-        $('#ox_KaiJung_OrderPickerDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
-        $('#ox_KaiJung_OrderPickerDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
-    }
-  }
-  changeLink();
-  function changeCss(){
-    //$(document).ready(function(){
-    if( ($('#ox_KaiJung_OrderPickerDetailOnly__view')==null) || ($('#ox_KaiJung_OrderPickerDetailOnly__view').length < 1) ){
-        setTimeout( 'changeCss()', 50 );  
-    }else{
-        $('#ox_KaiJung_OrderPickerDetailOnly__view').css('width','800px');
-    }
-  }
-  changeCss();
 	</script>
+<!-- <script type='text/javascript' src='../dwr/interface/OrderPickerDwr.js'></script>
+<script type='text/javascript' src='../orderStore/orderPickerDwr.js'></script> -->
+<script type='text/javascript' src='../orderStore/pickerDetail.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">

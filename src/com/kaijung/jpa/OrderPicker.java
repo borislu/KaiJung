@@ -20,7 +20,7 @@ import java.util.*;
 @Entity
 @Views( {
 	@View(name = "DetailOnly", members = "order [ orderId; orderTime; wareId; orderBy ]"
-		+ "picker [ readCode; createTime; picker ]"
+		+ "picker [ readCode; createTime; picker; oid ]"
 		+ "sender [ senderId; senderTime; senderBy ] details"
 	)
 })
@@ -30,7 +30,7 @@ import java.util.*;
 public class OrderPicker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Hidden
+	@Id //@Hidden
 	@TableGenerator(
 	    name="SequenceGenerator", table="SequenceGen", 
 	    pkColumnName="oid", valueColumnName="value", 
@@ -44,7 +44,8 @@ public class OrderPicker implements Serializable {
 	
 	@OneToMany(mappedBy="orderPicker", cascade=CascadeType.REMOVE) //@AsEmbedded
 	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
-	+"sum, amount, isCustOrder, modifyId, remark, item.stock.shelf, 24,26,28,30,32," // 此2個 remark 不同，前者要從修改單的記錄取出
+	+"sum, amount, isCustOrder, modifyId, remark, " // 此2個 remark 不同，前者要從修改單的記錄取出
+	+"warehouse, item.stock.shelf, col, row, 24,26,28,30,32,"
 	+"sum2, amount2, remark, status"
 	)
 	private Collection<OrderPickerD> details ;// = new ArrayList<OrderStoreD>(); 

@@ -86,6 +86,15 @@ public class OrderPickerD implements Serializable {
 
 	@DisplaySize(8) @Transient
 	public String getAmount2() { return ""; } // 金額，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getWarehouse() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getCol() { return ""; } // 庫位-行，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getRow() { return ""; } // 庫位-列，無資料庫對應
 	
 	private String remark;
 	@Hidden

@@ -1,16 +1,70 @@
-function changeLink(){        	    //alert('module_orderStoreList.jsp: after changeLink');  
-  if( $('a').length < 1 ){
-      setTimeout( 'changeLink()', 50 );
-  }else{
-	  $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(
-    	    function() {
-        	    rowIndex = $(this).attr('href').substring(103);
-        	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ; 
-        	    $(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
-        	 }//function
-	  );
-  }
+function afterSave(){
+    $.cookie("JSESSIONID",null);
+    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderPickerListOnly', '', false, 'List.goPage', 'page=1');
+    parent.frames["frameEast"].window.location.reload();
 }
+function afterDel(){
+	 //alert("trying: "+ $("#ox_KaiJung_PickerDetailOnly__messages_table").length>0);
+	 if ($("#ox_KaiJung_OrderPickerDetailOnly__messages_table").length>0) {
+	     parent.frames["frameEast"].window.location.reload();
+        $.cookie("JSESSIONID", null);
+	 }else {
+		     setTimeout("afterDel()", 50);
+	 }
+}
+function changeLink(){
+    if( ($('a')==null) || ($('a').length < 1) ){
+        setTimeout( 'changeLink()', 50 );  
+    }else{
+        $('#ox_KaiJung_OrderPickerDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
+        $('#ox_KaiJung_OrderPickerDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
+     }
+}
+function changeCss(){
+    //$(document).ready(function(){
+    if( ($('#ox_KaiJung_OrderPickerDetailOnly__view')==null) || ($('#ox_KaiJung_OrderPickerDetailOnly__view').length < 1) ){
+        setTimeout( 'changeCss()', 50 );  
+    }else{
+        $('#ox_KaiJung_OrderPickerDetailOnly__view').css('width','800px');
+        $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
+     }
+}
+
+function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
+    trs = $("tr[id^='ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_']"	);
+    trs.each(function(sn){
+        //alert('module_pickerDetail.jsp: '+ $('#ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
+        var ids = ['s24', 's26', 's28', 's30', 's32'];
+        var idm = ['m24', 'm26', 'm28', 'm30', 'm32'];
+        var szs = ['3', '3', '3', '3', '3']; //var types = ['','','','','','','','','','','','','',''];
+        $(this).find('td:gt(5):lt(9)').each(//訂單的尺寸數量(惟讀)
+            function(i){
+      	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" size="'+ szs[i] +'" type=hidden/>');
+                 }//
+           );
+        $(this).find('td:gt(19):lt(23)').each(//本揀貨單的尺寸數量(可編輯)
+                function(i){
+          	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" size="'+ szs[i] +'"/>');
+                     }//
+               );
+    }); //trs.each
+     // 用來將quantity的資料從訂貨單(json)取出，置入欄位中。
+    pickId = $('ox_KaiJung_OrderPickerDetailOnly__oid').first().val();
+    OrderPickerDwr.getRelations ( pickId, function(orderD_Set){ // argument: wareId , return: orderD_Set
+alert( 'pickerDetail.js: length: '+ orderD_Set.length + ' pickId: ' + pickId );
+    		for (var i=0; i < orderD_Set.length; i++) {
+//alert( 'pickerDetail.js: quantity: '+ orderD_Set[i].quantity );
+    			var qtyobj = jQuery.parseJSON( orderD_Set[i].quantity );
+//alert( 'pickerDetail.js: qtyobj: '+ qtyobj.s24 );
+    			dwr.util.setValue( 's24_'+ i , qtyobj.s24 );
+    			dwr.util.setValue( 's26_'+ i , qtyobj.s26 );
+    			dwr.util.setValue( 's28_'+ i , qtyobj.s28 );
+    			dwr.util.setValue( 's30_'+ i , qtyobj.s30 );
+    			dwr.util.setValue( 's32_'+ i , qtyobj.s32 );
+    		}//for
+     });
+}
+
 openxava.refreshPage = function(result) { // override OpenXava
 	var changed = "";	
 	if (result.error != null) {		
@@ -110,6 +164,8 @@ openxava.refreshPage = function(result) { // override OpenXava
     /* Author: Boris
      * OrderListOnly 清單頁用來更新明細的連結
       */
-	changeLink();
+//	changeCss();
+//	changeLink();
+//	editable();
 }
 

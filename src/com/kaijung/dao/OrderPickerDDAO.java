@@ -26,64 +26,43 @@ import common.*;
 public class OrderPickerDDAO {
 	private static Logger logger = Logger.getLogger(OrderPickerDDAO.class);
 
-	private List pickDList;
-
 	public OrderPickerDDAO() {
 	}
 
-	public List<OrderPickerD> findAll( int orderPicker_oid ){
-		EntityManagerFactory f =
-			Persistence.createEntityManagerFactory("default");//You need an EntityManagerFactory to create a manager
-		EntityManager manager = f.createEntityManager(); //You create the manager
-		manager.getTransaction().begin(); //You have to start a transaction		
-
+	public Collection <OrderPickerD> findAll( int orderPicker_oid ){ // 用揀貨單編號(單頭)查出明細檔
 		Query query = XPersistence.getManager()
-//		.createQuery("from OrderPickerD)"); //JPQL query
-//		.createQuery("from OrderPickerD as d where d.orderPicker_oid = :orderPicker_oid )"); //JPQL query
-//		query.setParameter("orderPicker_oid", orderPicker_oid);
-		.createNativeQuery("select * from OrderPickerD where orderPicker_oid = '"+ orderPicker_oid +"'");
+		.createQuery("FROM OrderPickerD d where d.orderPicker_oid = :orderPicker_oid )"); //JPQL query
+		query.setParameter("orderPicker_oid", orderPicker_oid);
 
-		logger.debug("OrderPickerDDAO.findAll query: "+ query);
-
-		pickDList = query.getResultList();
+		Collection pickDList = query.getResultList();
 		
-//		OrderPickerD opd = new OrderPickerD();
-//		opd.setItemid(85);
-//		pickDList.add(opd);
-//		opd.setItemid(86);
-//		pickDList.add(opd);
-
 		logger.debug("OrderPickerDDAO.findAll pickDList: "+ pickDList);
-		for( int i=0; i<pickDList.size(); i++ ){
-			OrderPickerD opd = new OrderPickerD();
-//			logger.debug( pickDList.get(i) );
-//			logger.debug( "OrderPickerDDAO.findAll query: "+ (Object[])pickDList.get(i) ) ;
-			try{
-				logger.debug( "OrderPickerDDAO.findAll query: i: "+ i + ", " + (Object[])pickDList.get(i) ) ;
-				Object[] strArr = (Object[])pickDList.get(i);
-//				opd.setOid ( Integer.parseInt( ""+ strArr[0] ) );
-//				opd.setItemid( Integer.parseInt( (String)strArr[1] ) );
-//				opd.setQuantity( Integer.parseInt( (String)strArr[2] ) );
-				opd.setStatus( (String)strArr[3] );
-				opd.setRemark( (String)strArr[4] );
-//				opd.setReserve1( (String)strArr[5] );
-//				opd.setReserve2( (String)strArr[6] );
-//				opd.setReserve3( (String)strArr[7] );
-//				opd.setReserve4( (String)strArr[8] );
-//				opd.setReserve5( (String)strArr[9] );
-//				opd.setReserve6( (String)strArr[10] );
-//				opd.setReserve7( (String)strArr[11] );
-//				opd.setReserve8( (String)strArr[12] );
-//				opd.setReserve9( (String)strArr[13] );
-//				opd.setReserve10( (String)strArr[14] );
-//				opd.setOrderPicker_oid( Integer.parseInt( (String)strArr[15] ) );
-				
-				pickDList.set( i , opd );
-			}catch( Exception e ){
-				logger.error( "OrderPickerDDAO.findAll query: "+ e ) ;
-			}
-		}
+		
 		return pickDList; 
+	}
+
+	public OrderPickSend getRelation ( int pickDid ){ // 用 揀貨單明細編號 查出和 訂單明細關連檔
+		Query query = XPersistence.getManager()
+		.createQuery("FROM OrderPickSend d where d.pickDid = :pickDid )"); //JPQL query
+		query.setParameter("pickDid", pickDid);
+
+		OrderPickSend ops = (OrderPickSend) query.getSingleResult();
+		
+		logger.debug("OrderPickerDDAO.findAll ops: "+ ops);
+		
+		return ops; 
+	}
+
+	public Collection <OrderPickSend> getRelations ( int pickId ){ // 用 揀貨單編號 查出和 訂單明細關連檔
+		Query query = XPersistence.getManager()
+		.createQuery("FROM OrderPickSend d WHERE d.pickDid IN (FROM OrderPickerD where orderPicker_oid = :pickId )"); //JPQL query
+		query.setParameter("pickId", pickId);
+
+		Collection ops = query.getResultList();
+		
+		logger.debug("OrderPickerDDAO.findAll pickDList: "+ ops);
+		
+		return ops; 
 	}
 
 //	public OrderPickerD getPickerD(int id) {

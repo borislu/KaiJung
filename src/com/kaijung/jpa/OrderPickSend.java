@@ -14,57 +14,67 @@ public class OrderPickSend implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	private int pikSendId;
+	private int opsid;
 
-	private int orderSN;
+	private String orderDid;
 
-	private int orderWare;
+	private int pickDid;
 
-	private int pickId;
+	private String reserve1;
 
-	private int sendId;
+	private int sendDid;
+
+	private int wareId;
 
     public OrderPickSend() {
     }
 
-	public int getPikSendId() {
-		return this.pikSendId;
+	public int getOpsid() {
+		return this.opsid;
 	}
 
-	public void setPikSendId(int pikSendId) {
-		this.pikSendId = pikSendId;
+	public void setOpsid(int opsid) {
+		this.opsid = opsid;
 	}
 
-	public int getOrderSN() {
-		return this.orderSN;
+	public String getOrderDid() {
+		return this.orderDid;
 	}
 
-	public void setOrderSN(int orderSN) {
-		this.orderSN = orderSN;
+	public void setOrderDid(String orderDid) {
+		this.orderDid = orderDid;
 	}
 
-	public int getOrderWare() {
-		return this.orderWare;
+	public int getPickDid() {
+		return this.pickDid;
 	}
 
-	public void setOrderWare(int orderWare) {
-		this.orderWare = orderWare;
+	public void setPickDid(int pickDid) {
+		this.pickDid = pickDid;
 	}
 
-	public int getPickId() {
-		return this.pickId;
+	public String getReserve1() {
+		return this.reserve1;
 	}
 
-	public void setPickId(int pickId) {
-		this.pickId = pickId;
+	public void setReserve1(String reserve1) {
+		this.reserve1 = reserve1;
 	}
 
-	public int getSendId() {
-		return this.sendId;
+	public int getSendDid() {
+		return this.sendDid;
 	}
 
-	public void setSendId(int sendId) {
-		this.sendId = sendId;
+	public void setSendDid(int sendDid) {
+		this.sendDid = sendDid;
+	}
+
+	public int getWareId() {
+		return this.wareId;
+	}
+
+	public void setWareId(int wareId) {
+		this.wareId = wareId;
 	}
 
 }
