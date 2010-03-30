@@ -184,7 +184,7 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
                 title: src.text,
                 width: 998,
                 height: 480,
-                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/pickLayout.zul" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/pickerLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
                 iconCls: 'bogus',
                 shim: false,
                 animCollapse: false,

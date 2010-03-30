@@ -98,7 +98,7 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/js/ox_ext_orderPickerList.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/orderStore/pickerList.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
@@ -118,16 +118,6 @@ Module.setStyle(style);
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
 		}   
-  function changeLink(){  
-    if( ($('a')==null) || ($('a').length < 1) ){
-        setTimeout( 'changeLink()', 50 );
-    }else{
-      $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderPickerListOnly\', \'\', false, \'List.viewDetail\'']").each(function() {
-        rowIndex = $(this).attr('href').substring(103);
-        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'List.viewDetail', 'row="+ rowIndex }
-				   	);
-    }
-  }
 	</script>
 <% if (!isPortlet) { %>
 </head>

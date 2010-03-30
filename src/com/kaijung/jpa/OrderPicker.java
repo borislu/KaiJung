@@ -19,7 +19,7 @@ import java.util.*;
  */
 @Entity
 @Views( {
-	@View(name = "DetailOnly", members = "order [ readCode; orderId; orderTime; orderBy ]"
+	@View(name = "DetailOnly", members = "order [ orderId; orderTime; wareId; orderBy ]"
 		+ "picker [ readCode; createTime; picker ]"
 		+ "sender [ senderId; senderTime; senderBy ] details"
 	)
@@ -39,8 +39,8 @@ public class OrderPicker implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 	
-	@OneToMany
-	private Collection<OrderPickSend> orderStores;
+//	@OneToMany
+//	private Collection<OrderPickSend> orderStores;
 	
 	@OneToMany(mappedBy="orderPicker", cascade=CascadeType.REMOVE) //@AsEmbedded
 	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
@@ -109,14 +109,14 @@ public class OrderPicker implements Serializable {
 //	    orderStore.add(association);
 //	}
 
-	@DisplaySize(18)
-	@Transient
-	public String getOrderId() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(18) @Transient
+	public String getOrderId() { return ""; } // calculated property 無資料庫對應
 
 	@DisplaySize(11) @Transient
 	public String getOrderTime() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(11) @Transient
+	public String getWareId() { return ""; } // calculated property 無資料庫對應
 
 	@DisplaySize(10) @Transient
 	public String getOrderBy() { return ""; } // calculated property 無資料庫對應
@@ -259,12 +259,6 @@ public class OrderPicker implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-    public Collection<OrderPickSend> getOrderStores() { return orderStores; }
-    
-	public void setOrderStores(Collection<OrderPickSend> orderStores) {
-		this.orderStores = orderStores;
 	}
 
 	public Collection<OrderPickerD> getDetails() {

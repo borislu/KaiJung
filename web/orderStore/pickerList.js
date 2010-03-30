@@ -1,3 +1,15 @@
+function changeLink(){        	    //alert('module_pickerList.jsp: after changeLink');  
+  if( $('a').length < 1 ){
+      setTimeout( 'changeLink()', 50 );
+  }else{
+	  $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderPickerListOnly\', \'\', false, \'List.viewDetail\'']").each(
+    	    function() {
+        	    rowIndex = $(this).attr('href').substring(103);
+        	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ; 
+        	 }//function
+	  );
+  }
+}
 openxava.refreshPage = function(result) {
 	var changed = "";	
 	if (result.error != null) {		
@@ -97,10 +109,6 @@ openxava.refreshPage = function(result) {
     /* Author: Boris
      * OrderListOnly 清單頁用來更新明細的連結
       */
-    $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderPickerListOnly\', \'\', false, \'List.viewDetail\'']").each(function() {
-        //alert( $(this).attr('href') + ' , ' + $(this).attr('href').substring(103) );
-        rowIndex = $(this).attr('href').substring(103);
-        this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'List.viewDetail', 'row="+ rowIndex }
-					);
+	changeLink();
 }
 
