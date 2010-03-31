@@ -118,8 +118,8 @@ Module.setStyle(style);
 			jQuery = portalJQuery;    
 		} 
 	</script>
-<!-- <script type='text/javascript' src='../dwr/interface/OrderPickerDwr.js'></script>
-<script type='text/javascript' src='../orderStore/orderPickerDwr.js'></script> -->
+<script type='text/javascript' src='../dwr/interface/OrderPickerDwr.js'></script>
+<script type='text/javascript' src='../orderStore/pickerDwr.js'></script>
 <script type='text/javascript' src='../orderStore/pickerDetail.js'></script>
 <% if (!isPortlet) { %>
 </head>

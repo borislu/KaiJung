@@ -31,27 +31,30 @@ function changeCss(){
 }
 
 function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
+    var ids = ['s24', 's26', 's28', 's30', 's32'];
+    var idm = ['m24', 'm26', 'm28', 'm30', 'm32'];
+    var szs = ['3', '3', '3', '3', '3']; //var types = ['','','','','','','','','','','','','',''];
+    var bgcolor = 'F0F5F7';
     trs = $("tr[id^='ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_']"	);
     trs.each(function(sn){
         //alert('module_pickerDetail.jsp: '+ $('#ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
-        var ids = ['s24', 's26', 's28', 's30', 's32'];
-        var idm = ['m24', 'm26', 'm28', 'm30', 'm32'];
-        var szs = ['3', '3', '3', '3', '3']; //var types = ['','','','','','','','','','','','','',''];
-        $(this).find('td:gt(5):lt(9)').each(//訂單的尺寸數量(惟讀)
+    	  if(sn%2==1){ bgcolor = 'D3DADD'; }//奇數列
+        $(this).find('td').slice(5, 10).each(//訂單的尺寸數量(惟讀)
             function(i){
-      	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" size="'+ szs[i] +'" type=hidden/>');
-                 }//
+      	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" size="'+ szs[i] +'" readonly style="border:0;background:#'+ bgcolor +' none repeat scroll 0 0;">');
+                 }
            );
-        $(this).find('td:gt(19):lt(23)').each(//本揀貨單的尺寸數量(可編輯)
+        $(this).find('td').slice(19,24).each(//本揀貨單的尺寸數量(可編輯)
                 function(i){
           	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" size="'+ szs[i] +'"/>');
                      }//
                );
     }); //trs.each
      // 用來將quantity的資料從訂貨單(json)取出，置入欄位中。
-    pickId = $('ox_KaiJung_OrderPickerDetailOnly__oid').first().val();
-    OrderPickerDwr.getRelations ( pickId, function(orderD_Set){ // argument: wareId , return: orderD_Set
-alert( 'pickerDetail.js: length: '+ orderD_Set.length + ' pickId: ' + pickId );
+alert( 'pickerDetail.js: pickId: ' + $('input[name="ox_KaiJung_OrderPickerDetailOnly__oid"]').eq(1).val() );
+    pickId = $('input[name="ox_KaiJung_OrderPickerDetailOnly__oid"]').eq(1).val();
+    OrderPickerDwr.getOrderDByPick ( pickId, function(orderD_Set){ // argument: wareId , return: orderD_Set
+//alert( 'pickerDetail.js: length: '+ orderD_Set.length + ' pickId: ' + pickId );
     		for (var i=0; i < orderD_Set.length; i++) {
 //alert( 'pickerDetail.js: quantity: '+ orderD_Set[i].quantity );
     			var qtyobj = jQuery.parseJSON( orderD_Set[i].quantity );
@@ -164,8 +167,8 @@ openxava.refreshPage = function(result) { // override OpenXava
     /* Author: Boris
      * OrderListOnly 清單頁用來更新明細的連結
       */
-//	changeCss();
-//	changeLink();
-//	editable();
+	changeCss();
+	changeLink();
+	editable();
 }
 

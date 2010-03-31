@@ -31,11 +31,10 @@ public class OrderPickerD implements Serializable {
 	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Item item;
 
+//	private int orderPicker_oid;
 	@ManyToOne 
 	@JoinColumn(name="orderPicker_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderPicker orderPicker;
-	
-//	private int orderPicker_oid;
 
 	private String quantity;
 
@@ -73,7 +72,7 @@ public class OrderPickerD implements Serializable {
 	public String getAmount2() { return ""; } // 金額，無資料庫對應
 
 	@DisplaySize(6) @Transient
-	public String getWarehouse() { return ""; } // 小計，無資料庫對應
+	public String getWarehouse() { return ""; } //無資料庫對應
 
 	@DisplaySize(8) @Transient
 	public String getCol() { return ""; } // 庫位-行，無資料庫對應

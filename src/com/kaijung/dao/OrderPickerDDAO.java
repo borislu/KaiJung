@@ -53,14 +53,30 @@ public class OrderPickerDDAO {
 		return ops; 
 	}
 
-	public Collection <OrderPickSend> getRelations ( int pickId ){ // 用 揀貨單編號 查出和 訂單明細關連檔
+	public Collection <OrderStoreD> getOrderDByPick ( int pickId ){ // 用 揀貨單編號 查出 訂單明細檔
 		Query query = XPersistence.getManager()
-		.createQuery("FROM OrderPickSend d WHERE d.pickDid IN (FROM OrderPickerD where orderPicker_oid = :pickId )"); //JPQL query
+		.createQuery(
+				"FROM OrderStoreD o WHERE o.oid IN" +
+				" (SELECT ops.orderDid FROM OrderPickSend ops WHERE ops.pickDid IN " +
+				" (FROM OrderPickerD d WHERE d.orderPicker.oid = :pickId ))"
+			); //JPQL query
 		query.setParameter("pickId", pickId);
 
 		Collection ops = query.getResultList();
 		
 		logger.debug("OrderPickerDDAO.findAll pickDList: "+ ops);
+		
+		return ops; 
+	}
+
+	public Collection <OrderPickSend> getRelations ( String pickId ){ // 用 揀貨單編號 查出 訂單明細關連檔
+		Query query = XPersistence.getManager()
+		.createQuery("FROM OrderPickSend d WHERE d.pickDid IN (FROM OrderPickerD where orderPicker.oid = :pickId )"); //JPQL query
+		query.setParameter("pickId", pickId);
+
+		Collection ops = query.getResultList();
+		
+		logger.debug("OrderPickerDDAO.getRelations pickDList: "+ ops);
 		
 		return ops; 
 	}

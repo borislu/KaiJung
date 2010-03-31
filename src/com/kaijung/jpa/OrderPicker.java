@@ -30,7 +30,7 @@ import java.util.*;
 public class OrderPicker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id //@Hidden
+	@Id @Hidden
 	@TableGenerator(
 	    name="SequenceGenerator", table="SequenceGen", 
 	    pkColumnName="oid", valueColumnName="value", 

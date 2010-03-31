@@ -39,10 +39,12 @@ public class OrderPickerDwr {
 //			 logger.debug("OrderPicker.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
 //			 return new HashSet <OrderSuggestD>( cl );
 //		 }
-		 public Set <OrderPickSend> getRelations(int pickId){//以揀貨單的oid查出對應的訂貨明細關連檔
-			 logger.debug("OrderPicker.getDetailSet: oid: "+ pickId );
-			 Collection <OrderPickSend> cl = new OrderPickerDDAO().getRelations( pickId );
-			 logger.debug("OrderPicker.getDetailSet: Collection: "+ new HashSet <OrderPickSend>( cl ).toString() );
-			 return new HashSet <OrderPickSend>( cl );
+		 public Set <OrderStoreD> getOrderDByPick(String pickId){//以揀貨單的oid查出對應的訂貨明細關連檔
+			 logger.debug("OrderPickerDwr.getOrderDByPick: pickId: "+ pickId );
+			 int intPickId = 0;
+			 try{ intPickId = Integer.parseInt(pickId); }catch(Exception e){};
+			 Collection <OrderStoreD> cl = new OrderPickerDDAO().getOrderDByPick( intPickId );
+			 logger.debug("OrderPickerDwr.getOrderDByPick: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
+			 return new HashSet <OrderStoreD>( cl );
 		 }
 }
