@@ -4,7 +4,7 @@ function changeLink(){        	    //alert('module_orderStoreList.jsp: after cha
   }else{
 	  $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderStoreListOnly\', \'\', false, \'List.viewDetail\'']").each(
     	    function() {
-        	    rowIndex = $(this).attr('href').substring(103);
+        	    rowIndex = $(this).attr('href').substring(102);
         	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ; 
         	    $(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
         	 }//function

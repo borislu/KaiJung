@@ -55,21 +55,6 @@ public class OrderPickerD implements Serializable {
 	public String get32() { return ""; } // 尺寸，無資料庫對應
 
 	@DisplaySize(6) @Transient
-	public String get65() { return ""; } // 尺寸，無資料庫對應
-
-	@DisplaySize(6) @Transient
-	public String get70() { return ""; } // 尺寸，無資料庫對應
-
-	@DisplaySize(6) @Transient
-	public String get75() { return ""; } // 尺寸，無資料庫對應
-
-	@DisplaySize(6) @Transient
-	public String get80() { return ""; } // 尺寸，無資料庫對應
-
-	@DisplaySize(6) @Transient
-	public String get85() { return ""; } // 尺寸，無資料庫對應
-
-	@DisplaySize(6) @Transient
 	public String getSum() { return ""; } // 小計，無資料庫對應
 
 	@DisplaySize(8) @Transient
