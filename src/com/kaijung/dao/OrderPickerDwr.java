@@ -12,10 +12,10 @@ import java.util.*;
 public class OrderPickerDwr {
 		private static Logger logger = Logger.getLogger(OrderPickerDwr.class);
 	  
-		public void insert(String barcode, String quantity, String modifyid, String isCustOrder, String memo, String orderStoreOid){
-	      logger.debug("OrderPicker.insert: quantity: "+ quantity);
-			OrderPickerDAO osdnDAO = new OrderPickerDAO();
-//			osdnDAO.insert(oid, barcode, quantity, modifyid, isCustOrder, memo, orderStoreOid);
+		public void update(String oid, String quantity, String memo){
+	      logger.debug("OrderPickerDwr.update: quantity: "+ quantity);
+			OrderPickerDDAO dao = new OrderPickerDDAO();
+			dao.update(Integer.parseInt(oid), quantity, memo);
 		}
 //		public int update(String oid, String quantity, String modifyid, String isCustOrder, String memo){
 //		      logger.debug("OrderPicker.update: quantity: "+ quantity);

@@ -151,27 +151,31 @@ p {
                  ,bbar:[{
                      text:'列印',
                      handler:function(){
-                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                	        Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'PDF',
                      handler:function(){
-                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'EXCEL',
                      handler:function(){
-                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'儲存',
                      handler:function(){
-                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+       	                 Ext.getDom('frameWest').contentWindow.updatePick() ;
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'刪除',
                      handler:function(){
-                           linkFrom ();
+                	        Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete');
+                	        Ext.getDom('frameEast').contentWindow.location.reload();
+                	        Ext.getDom('frameWest').contentWindow.$.cookie("JSESSIONID",null);
+                	    	    Ext.getDom('frameEast').contentWindow.openxava.executeAction('KaiJung', 'OrderPickerListOnly', '', false, 'List.goPage', 'page=1');
                      }
                  }]
                   }

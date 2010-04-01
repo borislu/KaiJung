@@ -115,7 +115,7 @@ function updateOSD(){
 					quantity += '\"'+ sizes[j] + '\":' + qtyVal + ',';
 				}
 				quantity = quantity.substring( 0, quantity.length-1 ); //刪最後一個逗號
-				quantity += '}'
+				quantity += '}';
 //debug += quantity;//會把迴圈內的所有都印出來
 				OrderStoreNew.update(oid, quantity, modifyid, isCustOrder, memo);
 		}//for

@@ -46,7 +46,7 @@ public class OrderPicker implements Serializable {
 	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
 	+"sum, amount, isCustOrder, modifyId, remark, " // 此2個 remark 不同，前者要從修改單的記錄取出
 	+"warehouse, item.stock.shelf, col, row, 24,26,28,30,32,"
-	+"sum2, amount2, remark, status"
+	+"sum2, amount2, remark, status, oid"
 	)
 	private Collection<OrderPickerD> details ;// = new ArrayList<OrderStoreD>(); 
 

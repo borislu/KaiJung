@@ -119,7 +119,6 @@ Module.setStyle(style);
 		} 
 	</script>
 <script type='text/javascript' src='../dwr/interface/OrderPickerDwr.js'></script>
-<script type='text/javascript' src='../orderStore/pickerDwr.js'></script>
 <script type='text/javascript' src='../orderStore/pickerDetail.js'></script>
 <% if (!isPortlet) { %>
 </head>

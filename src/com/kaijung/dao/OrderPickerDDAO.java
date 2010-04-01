@@ -17,6 +17,7 @@ import org.openxava.jpa.*;
 import org.zkoss.zk.ui.*;
 
 import com.kaijung.jpa.*;
+
 import common.*;
 
 /*
@@ -41,18 +42,6 @@ public class OrderPickerDDAO {
 		return pickDList; 
 	}
 
-	public OrderPickSend getRelation ( int pickDid ){ // 用 揀貨單明細編號 查出和 訂單明細關連檔
-		Query query = XPersistence.getManager()
-		.createQuery("FROM OrderPickSend d where d.pickDid = :pickDid )"); //JPQL query
-		query.setParameter("pickDid", pickDid);
-
-		OrderPickSend ops = (OrderPickSend) query.getSingleResult();
-		
-		logger.debug("OrderPickerDDAO.findAll ops: "+ ops);
-		
-		return ops; 
-	}
-
 	public Collection <OrderStoreD> getOrderDByPick ( int pickId ){ // 用 揀貨單編號 查出 訂單明細檔
 		Query query = XPersistence.getManager()
 		.createQuery(
@@ -65,6 +54,18 @@ public class OrderPickerDDAO {
 		Collection ops = query.getResultList();
 		
 		logger.debug("OrderPickerDDAO.findAll pickDList: "+ ops);
+		
+		return ops; 
+	}
+
+	public OrderPickSend getRelation ( int pickDid ){ // 用 揀貨單明細編號 查出和 訂單明細關連檔
+		Query query = XPersistence.getManager()
+		.createQuery("FROM OrderPickSend d where d.pickDid = :pickDid )"); //JPQL query
+		query.setParameter("pickDid", pickDid);
+
+		OrderPickSend ops = (OrderPickSend) query.getSingleResult();
+		
+		logger.debug("OrderPickerDDAO.findAll ops: "+ ops);
 		
 		return ops; 
 	}
@@ -161,35 +162,28 @@ public class OrderPickerDDAO {
 //		return result;
 //	}
 	
-//	public boolean update(OrderStoreD beanD){
-//		Connection conn = null;
-//		Statement stmt = null;
-//		boolean result = false;
-//		try {
-//			// get connection
-//			conn = DriverManager.getConnection(url, user, pwd);
-//		    stmt = conn.createStatement();				
-//			if (stmt.executeUpdate("update event set name = '" + beanD.getName() + 
-//					"', priority = " + beanD.getPriority() + ", date = '" + 
-//					new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(beanD.getDate())+ 
-//					"' where id = '" + beanD.getId() + "'") > 0);
-//			result = true;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}finally{
-//			try {
-//				stmt.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//			try {
-//				conn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		return result;
-//	}
+	public int update(int oid, String quantity, String memo){ //更新揀貨單的揀貨數量
+		logger.debug("OrderPickerDDAO.update: " +
+				"pickId: " + oid 
+				+ ", quantity: "	+ quantity
+				+ ", memo: "	+ memo
+				);
+
+		EntityManager em = XPersistence.getManager();
+		OrderPickerD bean = em.find ( OrderPickerD.class, oid );
+		logger.debug("OrderPickerD.update: orderPickerD: " + bean );
+		if( bean != null ){
+			bean.setQuantity(quantity);
+			bean.setRemark(memo);
+			try {
+				em.merge( bean );
+				XPersistence.commit();
+			} catch (Exception e) {
+				logger.error("OrderStoreD.update: " + e);
+			}
+			return 1; // 1:成功
+		}
+		return 0; // 0:失敗
+	}
 
 }
