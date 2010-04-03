@@ -2,21 +2,32 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
- * The persistent class for the ProdType database table.
+ * The persistent class for the ItemTheme database table.
  * 
  */
 @Entity
-public class ProdType implements Serializable {
+public class ItemTheme implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int oid;
 
-	private String desc;
+	private int createBy;
+
+    @Temporal( TemporalType.TIMESTAMP)
+	private Date createTime;
+
+	private String enname;
+
+	private int modifyBy;
+
+    @Temporal( TemporalType.TIMESTAMP)
+	private Date modifyTime;
 
 	private String name;
 
@@ -32,9 +43,7 @@ public class ProdType implements Serializable {
 
 	private String reserve5;
 
-	private int status;
-
-    public ProdType() {
+    public ItemTheme() {
     }
 
 	public int getOid() {
@@ -45,12 +54,44 @@ public class ProdType implements Serializable {
 		this.oid = oid;
 	}
 
-	public String getDesc() {
-		return this.desc;
+	public int getCreateBy() {
+		return this.createBy;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setCreateBy(int createBy) {
+		this.createBy = createBy;
+	}
+
+	public Date getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getEnname() {
+		return this.enname;
+	}
+
+	public void setEnname(String enname) {
+		this.enname = enname;
+	}
+
+	public int getModifyBy() {
+		return this.modifyBy;
+	}
+
+	public void setModifyBy(int modifyBy) {
+		this.modifyBy = modifyBy;
+	}
+
+	public Date getModifyTime() {
+		return this.modifyTime;
+	}
+
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
 	public String getName() {
@@ -107,14 +148,6 @@ public class ProdType implements Serializable {
 
 	public void setReserve5(String reserve5) {
 		this.reserve5 = reserve5;
-	}
-
-	public int getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 }

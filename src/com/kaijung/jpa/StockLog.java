@@ -2,33 +2,32 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
- * The persistent class for the Product database table.
+ * The persistent class for the StockLog database table.
  * 
  */
 @Entity
-public class Product implements Serializable {
+public class StockLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int oid;
 
-	private String articleno;
+	private int createBy;
 
-	private String barcode;
+    @Temporal( TemporalType.TIMESTAMP)
+	private Date createTime;
 
-	private int brandid;
+	private int modifyBy;
 
-	private int colorid;
+    @Temporal( TemporalType.TIMESTAMP)
+	private Date modifyTime;
 
-	private String enname;
-
-	private String name;
-
-	private float price;
+	private String remark;
 
 	private String reserve1;
 
@@ -50,15 +49,13 @@ public class Product implements Serializable {
 
 	private String reserve9;
 
-	private int sizeid;
-
 	private int status;
 
-	private int typeid;
+	private String tableid;
 
-	private int unitid;
+	private String tablename;
 
-    public Product() {
+    public StockLog() {
     }
 
 	public int getOid() {
@@ -69,60 +66,44 @@ public class Product implements Serializable {
 		this.oid = oid;
 	}
 
-	public String getArticleno() {
-		return this.articleno;
+	public int getCreateBy() {
+		return this.createBy;
 	}
 
-	public void setArticleno(String articleno) {
-		this.articleno = articleno;
+	public void setCreateBy(int createBy) {
+		this.createBy = createBy;
 	}
 
-	public String getBarcode() {
-		return this.barcode;
+	public Date getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setBarcode(String barcode) {
-		this.barcode = barcode;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public int getBrandid() {
-		return this.brandid;
+	public int getModifyBy() {
+		return this.modifyBy;
 	}
 
-	public void setBrandid(int brandid) {
-		this.brandid = brandid;
+	public void setModifyBy(int modifyBy) {
+		this.modifyBy = modifyBy;
 	}
 
-	public int getColorid() {
-		return this.colorid;
+	public Date getModifyTime() {
+		return this.modifyTime;
 	}
 
-	public void setColorid(int colorid) {
-		this.colorid = colorid;
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
-	public String getEnname() {
-		return this.enname;
+	public String getRemark() {
+		return this.remark;
 	}
 
-	public void setEnname(String enname) {
-		this.enname = enname;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public float getPrice() {
-		return this.price;
-	}
-
-	public void setPrice(float price) {
-		this.price = price;
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public String getReserve1() {
@@ -205,14 +186,6 @@ public class Product implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getSizeid() {
-		return this.sizeid;
-	}
-
-	public void setSizeid(int sizeid) {
-		this.sizeid = sizeid;
-	}
-
 	public int getStatus() {
 		return this.status;
 	}
@@ -221,20 +194,20 @@ public class Product implements Serializable {
 		this.status = status;
 	}
 
-	public int getTypeid() {
-		return this.typeid;
+	public String getTableid() {
+		return this.tableid;
 	}
 
-	public void setTypeid(int typeid) {
-		this.typeid = typeid;
+	public void setTableid(String tableid) {
+		this.tableid = tableid;
 	}
 
-	public int getUnitid() {
-		return this.unitid;
+	public String getTablename() {
+		return this.tablename;
 	}
 
-	public void setUnitid(int unitid) {
-		this.unitid = unitid;
+	public void setTablename(String tablename) {
+		this.tablename = tablename;
 	}
 
 }

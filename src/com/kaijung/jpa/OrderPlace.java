@@ -15,14 +15,12 @@ import java.util.*;
 @Entity
 @Views( {
 	@View(name = "DetailOnly" 
-//		, members = 
-//		  "order [ orderId; orderTime; wareId; orderBy ]"
-//		+ "picker [ readCode; createTime; picker; oid ]"
-//		+ "sender [ senderId; senderTime; senderBy ] details"
+		, members = 
+		"header[ readCode, createTime ] details"
 	)
 })
 @Tab(name = "Latest", defaultOrder = "${oid} desc"
-//	,properties="orderId, orderTime, orderBy, readCode, createTime, status, remark" //
+	,properties="readCode, createTime, createBy, status, remark, status2" //details.realQty, 
 )
 public class OrderPlace implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -37,11 +35,10 @@ public class OrderPlace implements Serializable {
 	private int oid;
 
 	@OneToMany(mappedBy="orderPlace", cascade=CascadeType.REMOVE) //@AsEmbedded
-//	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
-//	+"sum, amount, isCustOrder, modifyId, remark, " // 此2個 remark 不同，前者要從修改單的記錄取出
-//	+"warehouse, item.stock.shelf, col, row, 24,26,28,30,32,"
-//	+"sum2, amount2, remark, status, oid"
-//	)
+	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
+	+"sum, warehouse.name, shelf, x, y, rate," //加上可出貨天數
+	+"24,26,28,30,32, sum2, warehouse.name, shelf, x, y, createBy, remark, go"
+	)
 	private Collection<OrderPlaceD> details ;// = new ArrayList<OrderStoreD>(); 
 	
 	private int createBy;
@@ -54,7 +51,8 @@ public class OrderPlace implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
 
-	private String readCode;
+   @DisplaySize(20)
+   private String readCode;
 
 	private String remark;
 

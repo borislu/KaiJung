@@ -24,7 +24,7 @@ public class OrderMarkD implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int finishQty;
+	private int itemid;
 
 	private String markingNo;
 
@@ -35,9 +35,11 @@ public class OrderMarkD implements Serializable {
 
 	private int orderMark_oid;
 
+	private int presetQty;
+
 	private int priority;
 
-	private int productId;
+	private int realQty;
 
 	private String remark;
 
@@ -61,13 +63,11 @@ public class OrderMarkD implements Serializable {
 
 	private String reserve9;
 
-	private int setQty;
-
 	private String shelf;
 
-	private int status;
+	private String status;
 
-	private int wareId;
+	private int wareid;
 
 	private int x;
 
@@ -108,12 +108,12 @@ public class OrderMarkD implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public int getFinishQty() {
-		return this.finishQty;
+	public int getItemid() {
+		return this.itemid;
 	}
 
-	public void setFinishQty(int finishQty) {
-		this.finishQty = finishQty;
+	public void setItemid(int itemid) {
+		this.itemid = itemid;
 	}
 
 	public String getMarkingNo() {
@@ -148,6 +148,14 @@ public class OrderMarkD implements Serializable {
 		this.orderMark_oid = orderMark_oid;
 	}
 
+	public int getPresetQty() {
+		return this.presetQty;
+	}
+
+	public void setPresetQty(int presetQty) {
+		this.presetQty = presetQty;
+	}
+
 	public int getPriority() {
 		return this.priority;
 	}
@@ -156,12 +164,12 @@ public class OrderMarkD implements Serializable {
 		this.priority = priority;
 	}
 
-	public int getProductId() {
-		return this.productId;
+	public int getRealQty() {
+		return this.realQty;
 	}
 
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setRealQty(int realQty) {
+		this.realQty = realQty;
 	}
 
 	public String getRemark() {
@@ -252,14 +260,6 @@ public class OrderMarkD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getSetQty() {
-		return this.setQty;
-	}
-
-	public void setSetQty(int setQty) {
-		this.setQty = setQty;
-	}
-
 	public String getShelf() {
 		return this.shelf;
 	}
@@ -268,20 +268,20 @@ public class OrderMarkD implements Serializable {
 		this.shelf = shelf;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public int getWareId() {
-		return this.wareId;
+	public int getWareid() {
+		return this.wareid;
 	}
 
-	public void setWareId(int wareId) {
-		this.wareId = wareId;
+	public void setWareid(int wareid) {
+		this.wareid = wareid;
 	}
 
 	public int getX() {

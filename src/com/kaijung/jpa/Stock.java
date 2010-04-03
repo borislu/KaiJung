@@ -2,6 +2,9 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.openxava.annotations.*;
+
 import java.util.Date;
 
 
@@ -10,11 +13,24 @@ import java.util.Date;
  * 
  */
 @Entity
+@Views( {
+	@View(name = "DetailOnly", members = "name, createTime; articleno, createBy;"
+		+ "barcode, color; itemstatus; remark"
+	)
+})
+@Tab(name = "Latest", defaultOrder = "${createTime} desc"
+	,properties="name, articleno, barcode, color.sName, createTime, createBy, remark, itemstatus" 
+)
 public class Stock implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="stock.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
 	private int createBy;
@@ -22,7 +38,10 @@ public class Stock implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int itemid;
+//	private int itemid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Item item;
 
 	private int modifyBy;
 
@@ -57,7 +76,10 @@ public class Stock implements Serializable {
 
 	private int volume;
 
-	private int wareId;
+//	private int wareId;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="wareId",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Warehouse warehouse;
 
 	private int x;
 
@@ -88,14 +110,6 @@ public class Stock implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getItemid() {
-		return this.itemid;
-	}
-
-	public void setItemid(int itemid) {
-		this.itemid = itemid;
 	}
 
 	public int getModifyBy() {
@@ -226,14 +240,6 @@ public class Stock implements Serializable {
 		this.volume = volume;
 	}
 
-	public int getWareId() {
-		return this.wareId;
-	}
-
-	public void setWareId(int wareId) {
-		this.wareId = wareId;
-	}
-
 	public int getX() {
 		return this.x;
 	}
@@ -248,6 +254,22 @@ public class Stock implements Serializable {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 
 }

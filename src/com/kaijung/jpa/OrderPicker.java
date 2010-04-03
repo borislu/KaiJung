@@ -56,7 +56,7 @@ public class OrderPicker implements Serializable {
 	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Employee picker; // 揀貨人員
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
 //	private int modifyBy;
@@ -64,7 +64,7 @@ public class OrderPicker implements Serializable {
 	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Employee modifier; // 修改人員
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
 
 	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {

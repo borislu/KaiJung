@@ -6,11 +6,11 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the ProductClass database table.
+ * The persistent class for the ItemType database table.
  * 
  */
 @Entity
-public class ProductClass implements Serializable {
+public class ItemType implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -21,6 +21,10 @@ public class ProductClass implements Serializable {
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
+
+	private String enname;
+
+	private String memo;
 
 	private int modifyBy;
 
@@ -43,7 +47,7 @@ public class ProductClass implements Serializable {
 
 	private int status;
 
-    public ProductClass() {
+    public ItemType() {
     }
 
 	public int getOid() {
@@ -68,6 +72,22 @@ public class ProductClass implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public String getEnname() {
+		return this.enname;
+	}
+
+	public void setEnname(String enname) {
+		this.enname = enname;
+	}
+
+	public String getMemo() {
+		return this.memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 	public int getModifyBy() {

@@ -54,7 +54,7 @@ public class OrderMark implements Serializable {
 
 	private String reserve9;
 
-	private int status;
+	private String status;
 
     public OrderMark() {
     }
@@ -203,11 +203,11 @@ public class OrderMark implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

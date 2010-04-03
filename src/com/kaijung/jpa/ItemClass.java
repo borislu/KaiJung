@@ -6,26 +6,28 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the Theme database table.
+ * The persistent class for the ItemClass database table.
  * 
  */
 @Entity
-public class Theme implements Serializable {
+public class ItemClass implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	private int themeId;
+	private int oid;
 
 	private int createBy;
 
     @Temporal( TemporalType.TIMESTAMP)
-	private Date createDate;
+	private Date createTime;
+
+	private String enname;
 
 	private int modifyBy;
 
     @Temporal( TemporalType.TIMESTAMP)
-	private Date modifyDate;
+	private Date modifyTime;
 
 	private String name;
 
@@ -41,15 +43,17 @@ public class Theme implements Serializable {
 
 	private String reserve5;
 
-    public Theme() {
+	private int status;
+
+    public ItemClass() {
     }
 
-	public int getThemeId() {
-		return this.themeId;
+	public int getOid() {
+		return this.oid;
 	}
 
-	public void setThemeId(int themeId) {
-		this.themeId = themeId;
+	public void setOid(int oid) {
+		this.oid = oid;
 	}
 
 	public int getCreateBy() {
@@ -60,12 +64,20 @@ public class Theme implements Serializable {
 		this.createBy = createBy;
 	}
 
-	public Date getCreateDate() {
-		return this.createDate;
+	public Date getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getEnname() {
+		return this.enname;
+	}
+
+	public void setEnname(String enname) {
+		this.enname = enname;
 	}
 
 	public int getModifyBy() {
@@ -76,12 +88,12 @@ public class Theme implements Serializable {
 		this.modifyBy = modifyBy;
 	}
 
-	public Date getModifyDate() {
-		return this.modifyDate;
+	public Date getModifyTime() {
+		return this.modifyTime;
 	}
 
-	public void setModifyDate(Date modifyDate) {
-		this.modifyDate = modifyDate;
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
 	}
 
 	public String getName() {
@@ -138,6 +150,14 @@ public class Theme implements Serializable {
 
 	public void setReserve5(String reserve5) {
 		this.reserve5 = reserve5;
+	}
+
+	public int getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

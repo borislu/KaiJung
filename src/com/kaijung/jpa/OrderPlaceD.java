@@ -31,12 +31,15 @@ public class OrderPlaceD implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int itemid;
+//	private int itemid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Item item;
 
 //	private int orderPlace_oid;
 	@ManyToOne 
 	@JoinColumn(name="orderPlace_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
-	private OrderPicker orderPlace;
+	private OrderPlace orderPlace;
 
 	private int presetQty;
 
@@ -64,11 +67,47 @@ public class OrderPlaceD implements Serializable {
 
 	private String reserve9;
 
+	private String shelf;
+
 	private String status;
 
-	private int stockid;
+//	private int wareid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="wareid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Warehouse warehouse;
 
-    public OrderPlaceD() {
+	private int x;
+
+	private int y;
+
+	@DisplaySize(6) @Transient
+	public String get24() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get26() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get28() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get30() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get32() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getRate() { return ""; } // 銷貨速度，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum2() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(3) @Transient
+	public String getGo() { return ""; } // 上架checkbox，無資料庫對應
+
+   public OrderPlaceD() {
     }
 
 	public int getOid() {
@@ -93,22 +132,6 @@ public class OrderPlaceD implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getItemid() {
-		return this.itemid;
-	}
-
-	public void setItemid(int itemid) {
-		this.itemid = itemid;
-	}
-
-	public OrderPicker getOrderPlace() {
-		return orderPlace;
-	}
-
-	public void setOrderPlace(OrderPicker orderPlace) {
-		this.orderPlace = orderPlace;
 	}
 
 	public int getPresetQty() {
@@ -215,6 +238,14 @@ public class OrderPlaceD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
+	public String getShelf() {
+		return this.shelf;
+	}
+
+	public void setShelf(String shelf) {
+		this.shelf = shelf;
+	}
+
 	public String getStatus() {
 		return this.status;
 	}
@@ -223,12 +254,44 @@ public class OrderPlaceD implements Serializable {
 		this.status = status;
 	}
 
-	public int getStockid() {
-		return this.stockid;
+	public int getX() {
+		return this.x;
 	}
 
-	public void setStockid(int stockid) {
-		this.stockid = stockid;
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return this.y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public OrderPlace getOrderPlace() {
+		return orderPlace;
+	}
+
+	public void setOrderPlace(OrderPlace orderPlace) {
+		this.orderPlace = orderPlace;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 
 }

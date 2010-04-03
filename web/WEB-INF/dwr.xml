@@ -17,22 +17,51 @@
     <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
     <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
 
-	   <create creator="new" javascript="OrderStoreNew">
-      <param name="class" value="com.kaijung.dao.OrderStoreNew" />
-    </create>
 	   <create creator="new" javascript="OrderPickerDwr">
       <param name="class" value="com.kaijung.dao.OrderPickerDwr" />
     </create>
+	   <create creator="new" javascript="OrderPlaceDwr">
+      <param name="class" value="com.kaijung.dao.OrderPlaceDwr" />
+    </create>
+	   <create creator="new" javascript="OrderSenderDwr">
+      <param name="class" value="com.kaijung.dao.OrderSenderDwr" />
+    </create>
+	   <create creator="new" javascript="OrderStoreNew">
+      <param name="class" value="com.kaijung.dao.OrderStoreNew" />
+    </create>
+    <convert match="com.kaijung.jpa.Area" converter="bean" javascript="Area"></convert>    
+    <convert match="com.kaijung.jpa.Brand" converter="bean" javascript="Brand"></convert>    
+    <convert match="com.kaijung.jpa.Country" converter="bean" javascript="Country"></convert>    
+    <convert match="com.kaijung.jpa.Customer" converter="bean" javascript="Customer"></convert>    
+    <convert match="com.kaijung.jpa.Department" converter="bean" javascript="Department"></convert>    
+    <convert match="com.kaijung.jpa.District" converter="bean" javascript="District"></convert>    
+    <convert match="com.kaijung.jpa.Employee" converter="bean" javascript="Employee"></convert>    
+    <convert match="com.kaijung.jpa.EmployeeD" converter="bean" javascript="EmployeeD"></convert>    
     <convert match="com.kaijung.jpa.Item" converter="bean" javascript="Item"></convert>    
+    <convert match="com.kaijung.jpa.ItemBrand" converter="bean" javascript="ItemBrand"></convert>
+    <convert match="com.kaijung.jpa.ItemClass" converter="bean" javascript="ItemClass"></convert>
     <convert match="com.kaijung.jpa.ItemColor" converter="bean" javascript="ItemColor"></convert>
-    <convert match="com.kaijung.jpa.OrderSuggest" converter="bean" javascript="OrderSuggest"></convert>
-    <convert match="com.kaijung.jpa.OrderSuggestD" converter="bean" javascript="OrderSuggestD"></convert>
-    <convert match="com.kaijung.jpa.OrderStore" converter="bean" javascript="OrderStore"></convert>
-    <convert match="com.kaijung.jpa.OrderStoreD" converter="bean" javascript="OrderStoreD"></convert>
+    <convert match="com.kaijung.jpa.ItemPrice" converter="bean" javascript="ItemPrice"></convert>
+    <convert match="com.kaijung.jpa.ItemTheme" converter="bean" javascript="ItemTheme"></convert>
+    <convert match="com.kaijung.jpa.ItemType" converter="bean" javascript="ItemType"></convert>
+    <convert match="com.kaijung.jpa.Mall" converter="bean" javascript="Mall"></convert>
+    <convert match="com.kaijung.jpa.OrderMark" converter="bean" javascript="OrderMark"></convert>
     <convert match="com.kaijung.jpa.OrderPickerD" converter="bean" javascript="OrderPickerD"></convert>
     <convert match="com.kaijung.jpa.OrderPickSend" converter="bean" javascript="OrderPickSend"></convert>
+    <convert match="com.kaijung.jpa.OrderPlace" converter="bean" javascript="OrderPlace"></convert>
+    <convert match="com.kaijung.jpa.OrderPlaceD" converter="bean" javascript="OrderPlaceD"></convert>
+    <convert match="com.kaijung.jpa.OrderSender" converter="bean" javascript="OrderSender"></convert>
+    <convert match="com.kaijung.jpa.OrderSenderD" converter="bean" javascript="OrderSenderD"></convert>
+    <convert match="com.kaijung.jpa.OrderStore" converter="bean" javascript="OrderStore"></convert>
+    <convert match="com.kaijung.jpa.OrderStoreD" converter="bean" javascript="OrderStoreD"></convert>
+    <convert match="com.kaijung.jpa.OrderSuggest" converter="bean" javascript="OrderSuggest"></convert>
+    <convert match="com.kaijung.jpa.OrderSuggestD" converter="bean" javascript="OrderSuggestD"></convert>
+    <convert match="com.kaijung.jpa.Stock" converter="bean" javascript="Stock"></convert>
+    <convert match="com.kaijung.jpa.Store" converter="bean" javascript="Store"></convert>
+    <convert match="com.kaijung.jpa.StoreLevel" converter="bean" javascript="StoreLevel"></convert>
+    <convert match="com.kaijung.jpa.Warehouse" converter="bean" javascript="Warehouse"></convert>
+    <convert match="com.kaijung.jpa.WarehouseD" converter="bean" javascript="WarehouseD"></convert>
 
-        
   </allow>
   
     <signatures>
