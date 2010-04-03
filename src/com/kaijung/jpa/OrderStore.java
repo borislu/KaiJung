@@ -31,7 +31,7 @@ import java.util.*;
 			+ "sender [ senderId; senderTime; senderBy ]"
 			+ "details"),
 })
-@Tab( name = "Latest", defaultOrder = "${createTime} desc"
+@Tab( name = "Latest", defaultOrder = "${oid} desc"
 		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
 )
 public class OrderStore implements Serializable {

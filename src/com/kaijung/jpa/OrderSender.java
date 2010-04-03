@@ -15,14 +15,13 @@ import java.util.Date;
  * 
  */
 @Entity
-//@Views({
-//	@View(members=
-//	    "order [ readCode; createTime; warehouse; employee ]" +
-//	    "picker [ pickerId; pickerTime; pickerBy ]" +
-//	    "sender [ senderId; senderTime; senderBy ]" +
-//	    "orderDetails"
-//	)
-//})
+@Views({
+	@View(name = "DetailOnly" //, members=
+//	     "order [ readCode; createTime; warehouse; employee ]"
+//		 +"picker [ pickerId; pickerTime; pickerBy ]"
+//	    +"sender [ senderId; senderTime; senderBy ]"
+	)
+})
 @Tab(name="Latest", 
 		defaultOrder="${oid} desc"
 )
@@ -37,10 +36,10 @@ public class OrderSender implements Serializable {
 
 	private int createBy; //揀貨人員
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime; //揀貨時間
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date logisticsTime;
 
 	private int modifyBy;

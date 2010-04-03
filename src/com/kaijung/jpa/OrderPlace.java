@@ -2,7 +2,10 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+
+import org.openxava.annotations.*;
+
+import java.util.*;
 
 
 /**
@@ -10,13 +13,37 @@ import java.util.Date;
  * 
  */
 @Entity
+@Views( {
+	@View(name = "DetailOnly" 
+//		, members = 
+//		  "order [ orderId; orderTime; wareId; orderBy ]"
+//		+ "picker [ readCode; createTime; picker; oid ]"
+//		+ "sender [ senderId; senderTime; senderBy ] details"
+	)
+})
+@Tab(name = "Latest", defaultOrder = "${oid} desc"
+//	,properties="orderId, orderTime, orderBy, readCode, createTime, status, remark" //
+)
 public class OrderPlace implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="orderPlace.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
+	@OneToMany(mappedBy="orderPlace", cascade=CascadeType.REMOVE) //@AsEmbedded
+//	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
+//	+"sum, amount, isCustOrder, modifyId, remark, " // 此2個 remark 不同，前者要從修改單的記錄取出
+//	+"warehouse, item.stock.shelf, col, row, 24,26,28,30,32,"
+//	+"sum2, amount2, remark, status, oid"
+//	)
+	private Collection<OrderPlaceD> details ;// = new ArrayList<OrderStoreD>(); 
+	
 	private int createBy;
 
     @Temporal( TemporalType.TIMESTAMP)
@@ -26,6 +53,8 @@ public class OrderPlace implements Serializable {
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
+
+	private String readCode;
 
 	private String remark;
 
@@ -49,7 +78,9 @@ public class OrderPlace implements Serializable {
 
 	private String reserve9;
 
-	private int status;
+	private String status;
+
+	private String status2;
 
     public OrderPlace() {
     }
@@ -92,6 +123,14 @@ public class OrderPlace implements Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
+	}
+
+	public String getReadCode() {
+		return this.readCode;
+	}
+
+	public void setReadCode(String readCode) {
+		this.readCode = readCode;
 	}
 
 	public String getRemark() {
@@ -182,12 +221,28 @@ public class OrderPlace implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getStatus2() {
+		return this.status2;
+	}
+
+	public void setStatus2(String status2) {
+		this.status2 = status2;
+	}
+
+	public Collection<OrderPlaceD> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Collection<OrderPlaceD> details) {
+		this.details = details;
 	}
 
 }

@@ -2,6 +2,9 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.openxava.annotations.*;
+
 import java.util.Date;
 
 
@@ -10,11 +13,17 @@ import java.util.Date;
  * 
  */
 @Entity
+@Tab(name = "Latest", defaultOrder = "${oid} desc")
 public class OrderPlaceD implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id @Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="orderPlaceD.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
 	private int createBy;
@@ -22,11 +31,16 @@ public class OrderPlaceD implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int finishedQty;
+	private int itemid;
 
-	private int orderPlace_oid;
+//	private int orderPlace_oid;
+	@ManyToOne 
+	@JoinColumn(name="orderPlace_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private OrderPicker orderPlace;
 
-	private int productId;
+	private int presetQty;
+
+	private int realQty;
 
 	private String remark;
 
@@ -50,17 +64,9 @@ public class OrderPlaceD implements Serializable {
 
 	private String reserve9;
 
-	private int setQty;
+	private String status;
 
-	private String shelf;
-
-	private int status;
-
-	private int wareId;
-
-	private int x;
-
-	private int y;
+	private int stockid;
 
     public OrderPlaceD() {
     }
@@ -89,28 +95,36 @@ public class OrderPlaceD implements Serializable {
 		this.createTime = createTime;
 	}
 
-	public int getFinishedQty() {
-		return this.finishedQty;
+	public int getItemid() {
+		return this.itemid;
 	}
 
-	public void setFinishedQty(int finishedQty) {
-		this.finishedQty = finishedQty;
+	public void setItemid(int itemid) {
+		this.itemid = itemid;
 	}
 
-	public int getOrderPlace_oid() {
-		return this.orderPlace_oid;
+	public OrderPicker getOrderPlace() {
+		return orderPlace;
 	}
 
-	public void setOrderPlace_oid(int orderPlace_oid) {
-		this.orderPlace_oid = orderPlace_oid;
+	public void setOrderPlace(OrderPicker orderPlace) {
+		this.orderPlace = orderPlace;
 	}
 
-	public int getProductId() {
-		return this.productId;
+	public int getPresetQty() {
+		return this.presetQty;
 	}
 
-	public void setProductId(int productId) {
-		this.productId = productId;
+	public void setPresetQty(int presetQty) {
+		this.presetQty = presetQty;
+	}
+
+	public int getRealQty() {
+		return this.realQty;
+	}
+
+	public void setRealQty(int realQty) {
+		this.realQty = realQty;
 	}
 
 	public String getRemark() {
@@ -201,52 +215,20 @@ public class OrderPlaceD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getSetQty() {
-		return this.setQty;
-	}
-
-	public void setSetQty(int setQty) {
-		this.setQty = setQty;
-	}
-
-	public String getShelf() {
-		return this.shelf;
-	}
-
-	public void setShelf(String shelf) {
-		this.shelf = shelf;
-	}
-
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public int getWareId() {
-		return this.wareId;
+	public int getStockid() {
+		return this.stockid;
 	}
 
-	public void setWareId(int wareId) {
-		this.wareId = wareId;
-	}
-
-	public int getX() {
-		return this.x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return this.y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
+	public void setStockid(int stockid) {
+		this.stockid = stockid;
 	}
 
 }

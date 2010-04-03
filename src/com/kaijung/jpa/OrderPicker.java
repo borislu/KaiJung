@@ -19,7 +19,8 @@ import java.util.*;
  */
 @Entity
 @Views( {
-	@View(name = "DetailOnly", members = "order [ orderId; orderTime; wareId; orderBy ]"
+	@View(name = "DetailOnly", members = 
+		  "order [ orderId; orderTime; wareId; orderBy ]"
 		+ "picker [ readCode; createTime; picker; oid ]"
 		+ "sender [ senderId; senderTime; senderBy ] details"
 	)
@@ -30,7 +31,7 @@ import java.util.*;
 public class OrderPicker implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Hidden
+	@Id //@Hidden
 	@TableGenerator(
 	    name="SequenceGenerator", table="SequenceGen", 
 	    pkColumnName="oid", valueColumnName="value", 

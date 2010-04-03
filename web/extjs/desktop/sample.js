@@ -247,6 +247,222 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
         }
         win.show();
     },
+    createWindow020502: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020502',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/senderLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020503: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020503',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/senderLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020504: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020504',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/senderLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020505: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020505',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/senderLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020602: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020602',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020603: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020603',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020604: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020604',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020605: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020605',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020702: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020702',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020703: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020703',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020704: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020704',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020705: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020705',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
     createWindow0404: function(src){
         var desktop = this.app.getDesktop();
         var win = desktop.getWindow('bogus' + src.windowId);
@@ -658,29 +874,29 @@ MyDesktop.BogusMenuModule2 = Ext.extend(MyDesktop.BogusModule, {
                               iconCls: 'bogus',
                               handler: this.createWindow020502,
                               scope: this,
-                              windowId: '020502'
+                              windowId: 'w020502'
                                    }, {
                               text: '瀏覽',
                               iconCls: 'bogus',
                               handler: this.createWindow020503,
                               scope: this,
-                              windowId: '020503'
+                              windowId: 'w020503'
                                    }, {
                               text: '修改',
                               iconCls: 'bogus',
                               handler: this.createWindow020504,
                               scope: this,
-                              windowId: '020504'
+                              windowId: 'w020504'
                                    }, {
                               text: '刪除',
                               iconCls: 'bogus',
                               handler: this.createWindow020505,
                               scope: this,
-                              windowId: '020505'
+                              windowId: 'w020505'
                                    }]
                            }
                 }, {
-                    text: '訂貨差異分析',
+                    text: '備貨單維護',
                     iconCls: 'bogus',
                     handler: this.createWindow0206,
                     scope: this,
@@ -691,17 +907,29 @@ MyDesktop.BogusMenuModule2 = Ext.extend(MyDesktop.BogusModule, {
                               iconCls: 'bogus',
                               handler: this.createWindow020602,
                               scope: this,
-                              windowId: '020602'
+                              windowId: 'w020602'
                                    }, {
                               text: '瀏覽',
                               iconCls: 'bogus',
                               handler: this.createWindow020603,
                               scope: this,
-                              windowId: '020603'
+                              windowId: 'w020603'
+                                   }, {
+                              text: '修改',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020604,
+                              scope: this,
+                              windowId: 'w020604'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020605,
+                              scope: this,
+                              windowId: 'w020605'
                                    }]
                            }
                 }, {
-                    text: '進銷存單',
+                    text: '上架單維護',
                     iconCls: 'bogus',
                     handler: this.createWindow0207,
                     scope: this,
@@ -712,13 +940,67 @@ MyDesktop.BogusMenuModule2 = Ext.extend(MyDesktop.BogusModule, {
                               iconCls: 'bogus',
                               handler: this.createWindow020702,
                               scope: this,
-                              windowId: '020702'
+                              windowId: 'w020702'
                                    }, {
                               text: '瀏覽',
                               iconCls: 'bogus',
                               handler: this.createWindow020703,
                               scope: this,
-                              windowId: '020703'
+                              windowId: 'w020703'
+                                   }, {
+                              text: '修改',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020704,
+                              scope: this,
+                              windowId: 'w020704'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020705,
+                              scope: this,
+                              windowId: 'w020705'
+                                   }]
+                           }
+                }, {
+                    text: '訂貨差異分析',
+                    iconCls: 'bogus',
+                    handler: this.createWindow0208,
+                    scope: this,
+                    windowId: '0208',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020802,
+                              scope: this,
+                              windowId: '020802'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020803,
+                              scope: this,
+                              windowId: '020803'
+                                   }]
+                           }
+                }, {
+                    text: '進銷存單',
+                    iconCls: 'bogus',
+                    handler: this.createWindow0209,
+                    scope: this,
+                    windowId: '0209',
+                    menu: { 
+                          items: [{
+                              text: '查詢',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020902,
+                              scope: this,
+                              windowId: '020902'
+                                   }, {
+                              text: '瀏覽',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020903,
+                              scope: this,
+                              windowId: '020903'
                                    }]
                            }
                 }]

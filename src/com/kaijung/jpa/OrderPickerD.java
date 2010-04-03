@@ -21,7 +21,7 @@ public class OrderPickerD implements Serializable {
 	@TableGenerator(
 	    name="SequenceGenerator", table="SequenceGen", 
 	    pkColumnName="oid", valueColumnName="value", 
-	    pkColumnValue="orderPicker.oid", initialValue=1, allocationSize=1
+	    pkColumnValue="orderPickerD.oid", initialValue=1, allocationSize=1
 	)
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;

@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>撥出基本資料</title>
+<link rel="stylesheet" type="text/css" href="../extjs/resources/css/ext-all.css" />
+<script type="text/javascript" src="../extjs/adapter/ext/ext-base.js"></script>
+<script type="text/javascript" src="../extjs/ext-all.js"></script>
+<script type="text/javascript" src="../extjs/miframe/miframe-min.js"></script>
+<!--<script type="text/javascript" src="actions.js"></script>-->
+<link rel="stylesheet" type="text/css" href="menus.css" />
+<link rel="stylesheet" type="text/css" href="examples.css" />
+<style type="text/css">
+html,body {
+	font: normal 12px verdana;
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+}
+
+p {
+	margin: 5px;
+}
+
+.settings {
+	background-image: url(../shared/icons/fam/folder_wrench.png);
+}
+
+.nav {
+	background-image: url(../shared/icons/fam/folder_go.png);
+}
+</style>
+<script type="text/javascript">
+   Ext.onReady( function(){
+         var viewport = new Ext.Viewport({
+              layout:'border',
+              items:[
+                  new Ext.BoxComponent({ // raw
+                      region:'north',
+                      el: 'north',
+                      height:2
+                  }),{
+                      region:'east',
+                      id:'east-panel',
+                      title:'撥出清單',
+                      split:true,
+                      width: '50%',
+                      minSize: 10,
+                      //maxSize: 400,
+                      collapsible: true,
+                      margins:'0 0 0 5',
+                      defaultType:'iframepanel',
+                      defaults:{
+                          loadMask:true
+                      },
+                      layoutConfig:{
+                          animate:false
+                      },
+                      items: [{
+                          id: 'east-panel-item',
+                          contentEl: 'frameEast',
+                          border:false,
+                          iconCls:'nav'
+                      }]
+                 ,bbar:[{
+                     text:'列印',
+                     handler:function(){
+                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                     }
+                 },{
+                     text:'PDF',
+                     handler:function(){
+                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                     }
+                 },{
+                     text:'EXCEL',
+                     handler:function(){
+                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                     }
+                 },{
+                     text:'列印撥出單',
+                     handler:function(){
+                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                     }
+                 },{
+                     text:'編輯',
+                     handler:function(){
+                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                     }
+                 },{
+                     text:'搜尋',
+                     handler:function(){
+                           Ext.get('frameWest').dom.contentDocument.getElementById('save').click();
+                     }
+                 },{
+                     text:'刪除',
+                     handler:function(){
+                           linkFrom ();
+                     }
+                 }]
+                  },{
+                      region:'center',
+                      id:'west-panel',
+                      title:'撥出明細',
+                      width: 200,
+                      minSize: '50%',
+                      //maxSize: 400,
+                      //split:true,  // 沒有 split 的話就無法拖移
+                      //collapsible: true,
+                      margins:'0 0 0 0',
+                      defaultType:'iframepanel',
+                      layoutConfig:{
+                          animate:true
+                      },
+                      items: [{
+                          id: 'west-panel-item',
+                          contentEl: 'frameWest',
+                          border:false,
+                          iconCls:'nav'
+                      }]
+                 ,bbar:[{
+                     text:'列印',
+                     handler:function(){
+                	        Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'CRUD.save');
+                     }
+                 },{
+                     text:'PDF',
+                     handler:function(){
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'CRUD.save');
+                     }
+                 },{
+                     text:'EXCEL',
+                     handler:function(){
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'CRUD.save');
+                     }
+                 },{
+                     text:'儲存',
+                     handler:function(){
+       	                 Ext.getDom('frameWest').contentWindow.updatePick() ;
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'CRUD.save');
+                     }
+                 },{
+                     text:'刪除',
+                     handler:function(){
+                	        Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete');
+                	        Ext.getDom('frameEast').contentWindow.location.reload();
+                	        Ext.getDom('frameWest').contentWindow.$.cookie("JSESSIONID",null);
+                	    	    Ext.getDom('frameEast').contentWindow.openxava.executeAction('KaiJung', 'OrderSenderListOnly', '', false, 'List.goPage', 'page=1');
+                     }
+                 }]
+                  }
+               ]
+          });
+        //initWestFrame();
+        //initEastFrame();
+
+       //Ext.get('frameEast').dom.src = '../xava/module_pickerDetail.jsp?application=KaiJung&module=OrderSenderDetailOnly';
+       /* http://localhost:8080/KaiJung/xava/module_pickerDetail.jsp?application=KaiJung&module=OrderSenderListOnly*/
+       //javascript:openxava.executeAction('KaiJung', 'OrderSenderListOnly', '', false, 'List.viewDetail', 'row=0')
+   });
+       
+</script>
+<!--<input id="ox_KaiJung_OrderSenderListOnly__Mode___detailAndFirst" class="" type="button" value="首筆明細" onclick="openxava.executeAction("KaiJung", "OrderSenderListOnly", "", false, "Mode.detailAndFirst")" title="F8 - 明細模式"/>-->
+</head>
+<body>
+<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/module_pickerList.jsp?application=KaiJung&module=OrderSenderListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="west"><iframe id="frameWest" name="frameWest" src="../xava/module_pickerDetail.jsp?application=KaiJung&module=OrderSenderDetailOnly"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="north">
+<p></p>
+</div>
+<div id="center2"></div>
+<div id="center1"></div>
+<div id="props-panel"	style="width: 200px; height: 200px; overflow: hidden;"></div>
+
+</body>
+</html>
+
