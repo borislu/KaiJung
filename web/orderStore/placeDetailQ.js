@@ -1,11 +1,11 @@
 function afterSave(){
     $.cookie("JSESSIONID",null);
-    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderPickerListOnly', '', false, 'List.goPage', 'page=1');
+    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderPlaceListOnly', '', false, 'List.goPage', 'page=1');
     parent.frames["frameEast"].window.location.reload();
 }
 function afterDel(){
-	 //alert("trying: "+ $("#ox_KaiJung_PickerDetailOnly__messages_table").length>0);
-	 if ($("#ox_KaiJung_OrderPickerDetailOnly__messages_table").length>0) {
+	 //alert("trying: "+ $("#ox_KaiJung_PlaceDetailOnly__messages_table").length>0);
+	 if ($("#ox_KaiJung_OrderPlaceDetailOnly__messages_table").length>0) {
 	     parent.frames["frameEast"].window.location.reload();
         $.cookie("JSESSIONID", null);
 	 }else {
@@ -16,27 +16,27 @@ function changeLink(){
     if( ($('a')==null) || ($('a').length < 1) ){
         setTimeout( 'changeLink()', 50 );  
     }else{
-        $('#ox_KaiJung_OrderPickerDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
-        $('#ox_KaiJung_OrderPickerDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
+        $('#ox_KaiJung_OrderPlaceDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
+        $('#ox_KaiJung_OrderPlaceDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
      }
 }
 function changeCss(){
     //$(document).ready(function(){
-    if( ($('#ox_KaiJung_OrderPickerDetailOnly__view')==null) || ($('#ox_KaiJung_OrderPickerDetailOnly__view').length < 1) ){
+    if( ($('#ox_KaiJung_OrderPlaceDetailOnly__view')==null) || ($('#ox_KaiJung_OrderPlaceDetailOnly__view').length < 1) ){
         setTimeout( 'changeCss()', 50 );  
     }else{
       	  //強制div的寬度，避免換行
-        $('#ox_KaiJung_OrderPickerDetailOnly__view').css('width','800px');
+        $('#ox_KaiJung_OrderPlaceDetailOnly__view').css('width','800px');
           //隱藏openxava預設的pk圖示
         $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
           //隱藏openxava預設的加號
-        $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
+        $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderPlaceDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
      }
 }
 function copyOrder(){
-    trs = $("tr[id^='ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_']"	);
+    trs = $("tr[id^='ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_']"	);
     trs.each(function(sn){
-//alert('pickerDetail.js: copyOrder: '+ $('#ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_'+ sn) );
+//alert('placeDetail.js: copyOrder: '+ $('#ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_'+ sn) );
         $(this).find('td').slice(19,24).each(//本揀貨單的尺寸數量(可編輯)
             function(i){
                var sval = trs.eq(sn).find('td').eq(i+5).find('input:first').val();
@@ -46,43 +46,49 @@ function copyOrder(){
     }); //trs.each
 }
 function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
-    var ids = ['q24', 'q26', 'q28', 'q30', 'q32'];
-    var idm = ['s24', 's26', 's28', 's30', 's32'];
-    var szs = ['3', '3', '3', '3', '3']; //var types = ['','','','','','','','','','','','','',''];
-	 var oid_th = $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'List.orderBy', 'property=oid,collection=details')\"]");
+    var ids = ['qware', 'qshelf', 'qx', 'qy'];
+    var idm = ['sware', 'sshelf', 'sx', 'sy', 'smemo', 'sgo'];
+    var szs = ['8', '6', '3', '3', '12', '0']; 
+    var types = ['','','','','','type="checkbox"'];
+	 var oid_th = $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderPlaceDetailOnly', '', false, 'List.orderBy', 'property=oid,collection=details')\"]");
     //alert('oid_th:'+ oid_th.text() );
-    oid_th.parent().parent().remove();//移除最後的orderPicker_oid欄位標題
-    trs = $("tr[id^='ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_']"	);
+    oid_th.parent().parent().remove();//移除最後的orderPlace_oid欄位標題
+    trs = $("tr[id^='ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_']"	);
     trs.each(function(sn){
         var bgcolor = 'F0F5F7';
            //將明細oid放入hidden input後移除原始的text
 		  var oid = $(this).find("td:last");
 		  oid_txt = oid.text().trim();
-//alert('pickerDetail.js: oid_txt: '+ oid_txt);
-        $(this).append('<input id="pickerd_oid_'+ sn + '" value="' + oid_txt + '" type="hidden"/>');//放在trs的迴圈內，只是想用trs的索引值，前後位置就不重要了。
-        //alert('pickerDetail.js: '+ $('#ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
+//alert('placeDetail.js: oid_txt: '+ oid_txt);
+        $(this).append('<input id="placed_oid_'+ sn + '" value="' + oid_txt + '" type="hidden"/>');//放在trs的迴圈內，只是想用trs的索引值，前後位置就不重要了。
+        //alert('placeDetail.js: '+ $('#ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
     	  if(sn%2==1){ bgcolor = 'D3DADD'; }//奇數列
-        $(this).find('td').slice(5, 10).each(//訂單的尺寸數量(惟讀)
+        $(this).find('td').slice(11, 15).each(//訂單的尺寸數量(惟讀)
             function(i){
-      	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" size="'+ szs[i] +'" readonly style="border:0;background:#'+ bgcolor +' none repeat scroll 0 0;">');
+         	    var data = $.trim(this.childNodes[0].data);
+                if(!data){ data = ''; }
+  	             //$(this).find(':first-child').remove();
+  	             this.removeChild(this.childNodes[0]);//移除原來的label資料
+      	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" value="' + data +'" size="'+ szs[i] +'" readonly style="border:0;background:#'+ bgcolor +' none repeat scroll 0 0;">');
                 }
            );
-        $(this).find('td').slice(19,24).each(//本揀貨單的尺寸數量(可編輯)
+        $(this).find('td').slice(22,28).each(//本揀貨單的尺寸數量(可編輯)
             function(i){
-        	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" size="'+ szs[i] +'"/>');
+ 	             this.removeChild(this.childNodes[0]);//移除原來的label資料
+        	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" '+ types[i] +' size="'+ szs[i] +'"/>');
                 }//
            );
-        oid.remove();//移除最後的orderPicker_oid欄位
+        oid.remove();//移除最後的orderPlace_oid欄位
     }); //trs.each
      // 用來將quantity的資料從訂貨單(json)取出，置入欄位中。
-//alert( 'pickerDetail.js: pickId: ' + $('input[name="ox_KaiJung_OrderPickerDetailOnly__oid"]').eq(1).val() );
-    pickId = $('input[name="ox_KaiJung_OrderPickerDetailOnly__oid"]').eq(1).val();
-    OrderPickerDwr.getOrderDByPick ( pickId, function(orderD_Set){ // argument: wareId , return: orderD_Set
-//alert( 'pickerDetail.js: length: '+ orderD_Set.length + ' pickId: ' + pickId );
+//alert( 'placeDetail.js: pickId: ' + $('input[name="ox_KaiJung_OrderPlaceDetailOnly__oid"]').eq(1).val() );
+    pickId = $('input[name="ox_KaiJung_OrderPlaceDetailOnly__oid"]').eq(1).val();
+    OrderPlaceDwr.getOrderDByPick ( pickId, function(orderD_Set){ // argument: wareId , return: orderD_Set
+//alert( 'placeDetail.js: length: '+ orderD_Set.length + ' pickId: ' + pickId );
     		for (var i=0; i < orderD_Set.length; i++) {
-//alert( 'pickerDetail.js: quantity: '+ orderD_Set[i].quantity );
+//alert( 'placeDetail.js: quantity: '+ orderD_Set[i].quantity );
     			var qtyobj = jQuery.parseJSON( orderD_Set[i].quantity );
-//alert( 'pickerDetail.js: qtyobj: '+ qtyobj.s24 );
+//alert( 'placeDetail.js: qtyobj: '+ qtyobj.s24 );
     			dwr.util.setValue( 'q24_'+ i , qtyobj.s24 );
     			dwr.util.setValue( 'q26_'+ i , qtyobj.s26 );
     			dwr.util.setValue( 'q28_'+ i , qtyobj.s28 );
@@ -90,21 +96,16 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
     			dwr.util.setValue( 'q32_'+ i , qtyobj.s32 );
     		}//for
      });
-     //顯示複製訂貨數量的checkbox
-    if( $('#copy').length < 1 ){
-    $('#ox_KaiJung_OrderPickerDetailOnly__collection_details___').find('tr:first td')
-      .append('<input id="copy" type="checkbox" onclick="copyOrder()"> 複製訂貨數量');
-      }
 }
 
 function updatePick(){
 //debug = 'debug: ';
-    trs = $("tr[id^='ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_']"	);
+    trs = $("tr[id^='ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_']"	);
     var sizes = ['s24','s26','s28','s30','s32']; //尺寸數量暫定5組
     trs.each(function(sn){
    	   var quantity = '{';
-		   var oid = $('#pickerd_oid_'+sn).val().trim(); 
-         //alert('pickerDetail.js: '+ $('#ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
+		   var oid = $('#placed_oid_'+sn).val().trim(); 
+         //alert('placeDetail.js: '+ $('#ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
 			for(j=1;j<=sizes.length;j++)
 			{
 				qtyVal = 0;
@@ -119,7 +120,7 @@ function updatePick(){
 			quantity = quantity.substring( 0, quantity.length-1 );//去除最後的逗號
 			quantity += '}';
 //debug += quantity;//會把迴圈內的所有都印出來
-			OrderPickerDwr.update(oid, quantity, 'memo');
+			OrderPlaceDwr.update(oid, quantity, 'memo');
     }); //trs.each
 //alert( debug );
 }

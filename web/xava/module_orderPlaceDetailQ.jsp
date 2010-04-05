@@ -68,7 +68,6 @@ Module.setStyle(style);
 <%@page import="org.openxava.web.servlets.Servlets"%><%@page import="org.openxava.util.Is"%>
 <html xmlns="http://www.w3.org/1999/xhtml" >
 
-
 <head>
 	<title><%=managerHome.getModuleDescription() %></title>
 	<link href="<%=request.getContextPath()%>/xava/style/<%=style.getCssFile()%>" rel="stylesheet" type="text/css"> 
@@ -98,7 +97,6 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/orderStore/placeList.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
@@ -111,16 +109,20 @@ Module.setStyle(style);
 			portalJQuery = jQuery;
 		}
 	</script>				
-	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>				
+	<!-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.2.min.js"></script> -->
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>			
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.cookie.js	"></script>			
 	<script type="text/javascript">
 		$ = jQuery;
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
-		}   
+		} 
 	</script>
+<script type='text/javascript' src='../dwr/interface/OrderPlaceDwr.js'></script>
+<script type='text/javascript' src='../orderStore/placeDetailQ.js'></script>
 <% if (!isPortlet) { %>
 </head>
-<body bgcolor="#ffffff" onLoad="changeLink()">
+<body bgcolor="#ffffff">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>

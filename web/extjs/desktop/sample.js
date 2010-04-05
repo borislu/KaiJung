@@ -454,6 +454,24 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
                 title: src.text,
                 width: 998,
                 height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayoutQ.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020706: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020706',
+                title: src.text,
+                width: 998,
+                height: 480,
                 html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/placeLayout.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
                 iconCls: 'bogus',
                 shim: false,
@@ -948,17 +966,23 @@ MyDesktop.BogusMenuModule2 = Ext.extend(MyDesktop.BogusModule, {
                               scope: this,
                               windowId: 'w020703'
                                    }, {
-                              text: '修改',
+                              text: '設定',
                               iconCls: 'bogus',
                               handler: this.createWindow020704,
                               scope: this,
                               windowId: 'w020704'
                                    }, {
-                              text: '刪除',
+                              text: '修改',
                               iconCls: 'bogus',
                               handler: this.createWindow020705,
                               scope: this,
                               windowId: 'w020705'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020706,
+                              scope: this,
+                              windowId: 'w020706'
                                    }]
                            }
                 }, {

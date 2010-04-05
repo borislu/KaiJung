@@ -26,11 +26,6 @@ public class OrderPlaceD implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	private int createBy;
-
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date createTime;
-
 //	private int itemid;
 	@ManyToOne @DescriptionsList(descriptionProperties = "name")
 	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
@@ -116,22 +111,6 @@ public class OrderPlaceD implements Serializable {
 
 	public void setOid(int oid) {
 		this.oid = oid;
-	}
-
-	public int getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(int createBy) {
-		this.createBy = createBy;
-	}
-
-	public Date getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
 	}
 
 	public int getPresetQty() {

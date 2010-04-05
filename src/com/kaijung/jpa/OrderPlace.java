@@ -16,7 +16,7 @@ import java.util.*;
 @Views( {
 	@View(name = "DetailOnly" 
 		, members = 
-		"header[ readCode, createTime ] details"
+		"header[ readCode, createTime, createBy ] details"
 	)
 })
 @Tab(name = "Latest", defaultOrder = "${oid} desc"
@@ -37,7 +37,7 @@ public class OrderPlace implements Serializable {
 	@OneToMany(mappedBy="orderPlace", cascade=CascadeType.REMOVE) //@AsEmbedded
 	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
 	+"sum, warehouse.name, shelf, x, y, rate," //加上可出貨天數
-	+"24,26,28,30,32, sum2, warehouse.name, shelf, x, y, createBy, remark, go"
+	+"24,26,28,30,32, sum2, warehouse.name, shelf, x, y, remark, go, oid"
 	)
 	private Collection<OrderPlaceD> details ;// = new ArrayList<OrderStoreD>(); 
 	
