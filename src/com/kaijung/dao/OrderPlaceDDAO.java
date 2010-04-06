@@ -30,65 +30,38 @@ public class OrderPlaceDDAO {
 	public OrderPlaceDDAO() {
 	}
 
-	public Collection <OrderPickerD> findAll( int orderPicker_oid ){ // 用揀貨單編號(單頭)查出明細檔
+	public Collection <Stock> getStocksByPlaceId( int placeid ){ // 用揀貨單編號(單頭)查出明細檔
 		Query query = XPersistence.getManager()
-		.createQuery("FROM OrderPickerD d where d.orderPicker_oid = :orderPicker_oid )"); //JPQL query
-		query.setParameter("orderPicker_oid", orderPicker_oid);
-
-		Collection pickDList = query.getResultList();
+		.createQuery("FROM Stock o WHERE o.item.oid IN (SELECT p.item.oid FROM OrderPlaceD p WHERE p.orderPlace.oid = :placeid ORDER BY p.oid DESC) )"); //JPQL query
+		query.setParameter("placeid", placeid);
+		//select * FROM Stock o WHERE o.itemid IN (SELECT p.itemid FROM OrderPlaceD p WHERE p.orderPlace_oid = '1' ORDER BY p.oid DESC)
+		Collection stocks = query.getResultList();
 		
-		logger.debug("OrderPickerDDAO.findAll pickDList: "+ pickDList);
+		logger.debug("OrderPlaceDDAO.getStocksByPlaceId stocks: "+ stocks);
 		
-		return pickDList; 
+		return stocks; 
 	}
 
-	public Collection <OrderStoreD> getOrderDByPick ( int pickId ){ // 用 揀貨單編號 查出 訂單明細檔
+	public Stock getStockByItem ( int itemid ){ // 用 商品編號 查出 該商品所在的某一貨架
 		Query query = XPersistence.getManager()
 		.createQuery(
-				"FROM OrderStoreD o WHERE o.oid IN" +
-				" (SELECT ops.orderDid FROM OrderPickSend ops WHERE ops.pickDid IN " +
-				" (FROM OrderPickerD d WHERE d.orderPicker.oid = :pickId ))"
+				"FROM Stock o WHERE o.item.oid = :itemid order by o.volume desc"
 			); //JPQL query
-		query.setParameter("pickId", pickId);
+		query.setParameter("itemid", itemid);
 
-		Collection ops = query.getResultList();
+		List <Stock> beans = query.getResultList() ;
+		logger.debug("OrderPlaceDDAO.getStockByItem beans: "+ beans);
 		
-		logger.debug("OrderPickerDDAO.findAll pickDList: "+ ops);
-		
-		return ops; 
+		return beans.get(0); 
 	}
 
-	public OrderPickSend getRelation ( int pickDid ){ // 用 揀貨單明細編號 查出和 訂單明細關連檔
-		Query query = XPersistence.getManager()
-		.createQuery("FROM OrderPickSend d where d.pickDid = :pickDid )"); //JPQL query
-		query.setParameter("pickDid", pickDid);
-
-		OrderPickSend ops = (OrderPickSend) query.getSingleResult();
-		
-		logger.debug("OrderPickerDDAO.findAll ops: "+ ops);
-		
-		return ops; 
-	}
-
-	public Collection <OrderPickSend> getRelations ( String pickId ){ // 用 揀貨單編號 查出 訂單明細關連檔
-		Query query = XPersistence.getManager()
-		.createQuery("FROM OrderPickSend d WHERE d.pickDid IN (FROM OrderPickerD where orderPicker.oid = :pickId )"); //JPQL query
-		query.setParameter("pickId", pickId);
-
-		Collection ops = query.getResultList();
-		
-		logger.debug("OrderPickerDDAO.getRelations pickDList: "+ ops);
-		
-		return ops; 
-	}
-
-//	public OrderPickerD getPickerD(int id) {
-//		for (Iterator<OrderPickerD> iterator = pickDList.iterator(); iterator.hasNext();) {
-//			OrderPickerD st = (OrderPickerD) iterator.next();
+//	public OrderPlaceD getPlaceD(int id) {
+//		for (Iterator<OrderPlaceD> iterator = pickDList.iterator(); iterator.hasNext();) {
+//			OrderPlaceD st = (OrderPlaceD) iterator.next();
 //			if (st.getOid() == id)
 //				return st;		
 //		}
-//		return new OrderPickerD();
+//		return new OrderPlaceD();
 //	}
 
 //	public boolean delete(OrderStoreD beanD){
@@ -163,17 +136,17 @@ public class OrderPlaceDDAO {
 //	}
 	
 	public int update(int oid, String quantity, String memo){ //更新揀貨單的揀貨數量
-		logger.debug("OrderPickerDDAO.update: " +
+		logger.debug("OrderPlaceDDAO.update: " +
 				"pickId: " + oid 
 				+ ", quantity: "	+ quantity
 				+ ", memo: "	+ memo
 				);
 
 		EntityManager em = XPersistence.getManager();
-		OrderPickerD bean = em.find ( OrderPickerD.class, oid );
-		logger.debug("OrderPickerD.update: orderPickerD: " + bean );
+		OrderPlaceD bean = em.find ( OrderPlaceD.class, oid );
+		logger.debug("OrderPlaceD.update: orderPlaceD: " + bean );
 		if( bean != null ){
-			bean.setQuantity(quantity);
+//			bean.setQuantity(quantity);
 			bean.setRemark(memo);
 			try {
 				em.merge( bean );

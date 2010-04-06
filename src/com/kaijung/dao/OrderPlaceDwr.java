@@ -39,12 +39,22 @@ public class OrderPlaceDwr {
 //			 logger.debug("OrderPlace.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
 //			 return new HashSet <OrderSuggestD>( cl );
 //		 }
-		 public Set <OrderStoreD> getOrderDByPick(String pickId){//以揀貨單的oid查出對應的訂貨明細關連檔
-			 logger.debug("OrderPlaceDwr.getOrderDByPick: pickId: "+ pickId );
-			 int intPickId = 0;
-			 try{ intPickId = Integer.parseInt(pickId); }catch(Exception e){};
-			 Collection <OrderStoreD> cl = new OrderPlaceDDAO().getOrderDByPick( intPickId );
-			 logger.debug("OrderPlaceDwr.getOrderDByPick: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
-			 return new HashSet <OrderStoreD>( cl );
+		 public HashSet <Stock> getStocksByPlaceId(String placeid){//商品代號取得該商品所在的庫存記錄(庫架、數量等)
+			 logger.debug("OrderPlaceDwr.getStockByItem: placeid: "+ placeid );
+			 int intPlaceId = 0;
+			 try{ intPlaceId = Integer.parseInt(placeid); }catch(Exception e){};
+			 Collection c = new OrderPlaceDDAO().getStocksByPlaceId( intPlaceId );
+			 HashSet <Stock> beans = new HashSet (c);
+			 logger.debug("OrderPlaceDwr.getStocksByPlaceId: beans: "+ beans );
+			 return beans;
+		 }
+		
+		 public Stock getStockByItem(String itemid){//商品代號取得該商品所在的庫存記錄(庫架、數量等)
+			 logger.debug("OrderPlaceDwr.getStockByItem: itemid: "+ itemid );
+			 int intItemId = 0;
+			 try{ intItemId = Integer.parseInt(itemid); }catch(Exception e){};
+			 Stock stock = new OrderPlaceDDAO().getStockByItem( intItemId );
+			 logger.debug("OrderPlaceDwr.getStockByItem: stock: "+ stock );
+			 return stock;
 		 }
 }

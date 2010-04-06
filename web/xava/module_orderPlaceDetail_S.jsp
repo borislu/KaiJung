@@ -119,7 +119,8 @@ Module.setStyle(style);
 		} 
 	</script>
 <script type='text/javascript' src='../dwr/interface/OrderPlaceDwr.js'></script>
-<script type='text/javascript' src='../orderStore/placeDetailQ.js'></script>
+<script type='text/javascript' src='../orderStore/placeDetail.js'></script>
+<script type='text/javascript' src='../orderStore/placeDetail_S.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">

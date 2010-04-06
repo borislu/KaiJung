@@ -72,9 +72,9 @@ public class Stock implements Serializable {
 
 	private String shelf;
 
-	private int status;
+	private String status;
 
-	private int volume;
+	private String quantity;
 
 //	private int wareId;
 	@ManyToOne @DescriptionsList(descriptionProperties = "name")
@@ -224,20 +224,12 @@ public class Stock implements Serializable {
 		this.shelf = shelf;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public int getVolume() {
-		return this.volume;
-	}
-
-	public void setVolume(int volume) {
-		this.volume = volume;
 	}
 
 	public int getX() {
@@ -270,6 +262,14 @@ public class Stock implements Serializable {
 
 	public void setWarehouse(Warehouse warehouse) {
 		this.warehouse = warehouse;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
 	}
 
 }

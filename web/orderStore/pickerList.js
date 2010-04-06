@@ -6,7 +6,7 @@ function changeLink(){        	    //alert('module_pickerList.jsp: after changeL
     	    function() {
         	    rowIndex = $(this).attr('href').substring(103);
         	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ; 
-        	    //$(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
+//        	    $(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
         	 }//function
 	  );
   }

@@ -7,19 +7,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import javax.persistence.*;
-
 import org.apache.commons.logging.*;
 import org.apache.commons.logging.impl.*;
 import org.openxava.hibernate.*;
 import org.openxava.jpa.*;
+//import org.zkforge.json.simple.*;
+//import org.zkforge.json.simple.parser.*;
 import org.zkoss.zk.ui.*;
-
 import com.kaijung.jpa.*;
-
 import common.*;
 
+import org.json.simple.*;
+import org.json.simple.parser.*;
 /*
  * author Boris.lds@gmail.com
  */
@@ -41,7 +41,38 @@ public class StockDAO {
 		logger.debug("StockDAO.getTotalStock beans: "+ beans);
 		
 		while( beans.hasNext() ){
-			acc += beans.next().getVolume();
+			String jsonQty = beans.next().getQuantity();
+
+
+			  JSONParser parser = new JSONParser();
+			  ContainerFactory containerFactory = new ContainerFactory(){
+			    public List creatArrayContainer() {
+			      return new LinkedList();
+			    }
+
+			    public Map createObjectContainer() {
+			      return new LinkedHashMap();
+			    }
+			                        
+			  };
+			                
+			  try{
+			    Map json = (Map)parser.parse(jsonQty, containerFactory);
+			    Iterator iter = json.entrySet().iterator();
+			    logger.debug("==iterate result==");
+			    while(iter.hasNext()){
+			      Map.Entry entry = (Map.Entry)iter.next();
+			      logger.debug(entry.getKey() + "=>" + entry.getValue());
+			    }
+			                        
+			    logger.debug("==toJSONString()==");
+			    logger.debug(JSONValue.toJSONString(json));
+			  }
+			  catch(Exception pe){
+				  logger.error(pe);
+			  }			
+			
+//			acc += ;
 		}
 		
 		return acc; 

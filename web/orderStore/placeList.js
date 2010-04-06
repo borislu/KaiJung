@@ -6,7 +6,7 @@ function changeLink(){        	    //alert('module_placeList.jsp: after changeLi
     	    function() {
         	    rowIndex = $(this).attr('href').substring(102);//javascript:openxava.executeAction('KaiJung', 'OrderPlaceListOnly', '', false, 'List.viewDetail', 'row=0')
         	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderPlaceDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ; 
-        	    $(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
+//        	    $(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
         	 }//function
 	  );
   }
@@ -108,7 +108,7 @@ openxava.refreshPage = function(result) {
 	openxava.resetRequesting(result); 
 	document.body.style.cursor='auto';
     /* Author: Boris
-     * OrderListOnly 清單頁用來更新明細的連結
+     * 更新連結明細的語法
       */
 	changeLink();
 }

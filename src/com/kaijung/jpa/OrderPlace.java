@@ -16,7 +16,7 @@ import java.util.*;
 @Views( {
 	@View(name = "DetailOnly" 
 		, members = 
-		"header[ readCode, createTime, createBy ] details"
+		"header[ readCode, createTime, createBy, oid ] details"
 	)
 })
 @Tab(name = "Latest", defaultOrder = "${oid} desc"

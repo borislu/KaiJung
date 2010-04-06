@@ -109,7 +109,6 @@ Module.setStyle(style);
 			portalJQuery = jQuery;
 		}
 	</script>				
-	<!-- <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-1.4.2.min.js"></script> -->
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-ui.js"></script>			
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery.cookie.js	"></script>			
 	<script type="text/javascript">
@@ -118,11 +117,14 @@ Module.setStyle(style);
 			jQuery = portalJQuery;    
 		} 
 	</script>
-<script type='text/javascript' src='../dwr/interface/OrderPlaceDwr.js'></script>
-<script type='text/javascript' src='../orderStore/placeDetail.js'></script>
+<!-- 	<script type='text/javascript' src='../dwr/engine.js'></script> -->
+<!-- <script type='text/javascript' src='../dwr/util.js'></script> -->
+<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
+<script type='text/javascript' src='../orderStore/orderStoreNew.js'></script>
+<script type='text/javascript' src='../orderStore/orderStoreDetail_R.js'></script>
 <% if (!isPortlet) { %>
 </head>
-<body bgcolor="#ffffff">
+<body bgcolor="#ffffff" onload="editable()">
 <%=style.getNoPortalModuleStartDecoration(managerHome.getModuleDescription())%>
 <% } %>	
 	<input id="xava_last_module_change" type="hidden" value=""/>
