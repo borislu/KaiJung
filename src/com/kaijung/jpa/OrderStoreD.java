@@ -24,13 +24,11 @@ import common.*;
 		@Tab(name = "Latest", properties = "item.barcode, item.articleno, item.color.name, isCustOrder, item.name, quantity, remark, status", defaultOrder = "${oid} desc") })
 public class OrderStoreD implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = Logger.getLogger(OrderStoreNewDAO.class);
+	private static Logger logger = Logger.getLogger(OrderStoreD.class);
 
-	@Id
+	@Id @Hidden @Column(length = 32)
 	@GeneratedValue(generator = "system-uuid")
-	@Hidden
 	@GenericGenerator(name = "system-uuid", strategy = "uuid")
-	@Column(length = 32)
 	private String oid;
 
 	// private String orderStore_oid;

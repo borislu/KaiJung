@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
+import org.openxava.calculators.*;
 
 import com.kaijung.calculators.*;
 
@@ -56,7 +57,7 @@ public class OrderPicker implements Serializable {
 	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Employee picker; // 揀貨人員
 
-   @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP) @DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date createTime;
 
 //	private int modifyBy;
@@ -64,7 +65,7 @@ public class OrderPicker implements Serializable {
 	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Employee modifier; // 修改人員
 
-   @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP) @DefaultValueCalculator(CurrentDateCalculator.class)
 	private Date modifyTime;
 
 	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
@@ -73,8 +74,7 @@ public class OrderPicker implements Serializable {
 		, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required,
 																			// 記錄流水號的表格
 	})
-	@ReadOnly
-	@DisplaySize(20)
+	@ReadOnly @DisplaySize(20)
 	private String readCode;
 
 	private String remark;

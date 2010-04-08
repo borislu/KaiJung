@@ -20,8 +20,8 @@ import common.*;
 /*
  * author Boris.lds@gmail.com 
  */
-public class OrderPickerDAO {
-	private static Logger logger = Logger.getLogger(OrderPickerDAO.class);
+public class OrderSenderDAO {
+	private static Logger logger = Logger.getLogger(OrderSenderDAO.class);
 
 	private List<OrderPicker> pickList ;
 	
@@ -29,7 +29,7 @@ public class OrderPickerDAO {
 //	private String user = "ldstw";
 //	private String pwd = "ldstw";
 
-	public OrderPickerDAO() {
+	public OrderSenderDAO() {
 //		try {
 //			Class.forName("com.mysql.jdbc.Driver");
 //		} catch (ClassNotFoundException e) {
@@ -94,12 +94,12 @@ public class OrderPickerDAO {
 //		return result;
 //	}
 
-//	public boolean insert(OrderStoreD beanD){
-//		XPersistence.getManager().persist( beanD );
-//		XPersistence.commit(); // 若 UUID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
-//		//XHibernate.commit();		
-//		return true;
-//	}
+	public boolean insert(OrderStoreD beanD){
+		XPersistence.getManager().persist( beanD );
+		XPersistence.commit(); // 若 UUID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
+		//XHibernate.commit();		
+		return true;
+	}
 
 	
 //	public boolean insert(OrderStoreD beanD){

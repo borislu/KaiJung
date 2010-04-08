@@ -3,6 +3,8 @@ package com.kaijung.jpa;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 
 /**
  * The persistent class for the OrderSenderD database table.
@@ -20,9 +22,13 @@ public class OrderSenderD implements Serializable {
 
 	private int expectedQty;
 
-	private int orderSender_oid;
+//	private int orderSender_oid;
+	@ManyToOne @JoinColumn(name = "orderSender_oid", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private OrderSender orderSender;
 
-	private int productId;
+	@ManyToOne
+	@JoinColumn(name = "itemid", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Item item;
 
 	private String remark;
 
@@ -46,9 +52,24 @@ public class OrderSenderD implements Serializable {
 
 	private String reserve9;
 
-	private int status;
+	private String status;
 
-    public OrderSenderD() {
+	@DisplaySize(6) @Transient
+	public String get24() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get26() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get28() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get30() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get32() { return ""; } // 尺寸，無資料庫對應
+
+	public OrderSenderD() {
     }
 
 	public int getOid() {
@@ -73,22 +94,6 @@ public class OrderSenderD implements Serializable {
 
 	public void setExpectedQty(int expectedQty) {
 		this.expectedQty = expectedQty;
-	}
-
-	public int getOrderSender_oid() {
-		return this.orderSender_oid;
-	}
-
-	public void setOrderSender_oid(int orderSender_oid) {
-		this.orderSender_oid = orderSender_oid;
-	}
-
-	public int getProductId() {
-		return this.productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
 	}
 
 	public String getRemark() {
@@ -179,12 +184,28 @@ public class OrderSenderD implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public OrderSender getOrderSender() {
+		return orderSender;
+	}
+
+	public void setOrderSender(OrderSender orderSender) {
+		this.orderSender = orderSender;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }

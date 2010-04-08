@@ -132,7 +132,9 @@ p {
                       },{
                           text:'送出訂單',
                           handler:function(){
-                                Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save');
+                          Ext.getDom('frameWest').contentWindow.submit();
+                          confirm('訂單已送出');
+                          Ext.getDom('frameWest').contentWindow.location.reload();
                           }
                       },{
                           text:'搜尋',
@@ -144,9 +146,18 @@ p {
                           handler:function(){
                                 //Ext.get('frameWest').dom.contentDocument.getElementById('allInsert').click();
                                 //Ext.get('frameWest').dom.contentDocument.getElementById('saveHead').click();
-                                Ext.getDom('frameWest').contentWindow.submitOSD();                                                              //見orderStoreNew.js orderStoreNew.jsp
+                                var barcodes = Ext.get('frameWest').dom.contentDocument.getElementsByName('barcode');
+                                var articlenos = Ext.get('frameWest').dom.contentDocument.getElementsByName('articleno');
+                                var colors = Ext.get('frameWest').dom.contentDocument.getElementsByName('color');
+                                for( i=0; i<barcodes.length; i++ ){
+                                    if( barcodes[i].value == '' || articlenos[i].value == '' || colors[i].value == '' ){
+                                        alert( '需有商品識別' );
+                                        return ;
+                                                }
+                                }//for
+                                Ext.getDom('frameWest').contentWindow.insert();  // 將明細寫入 OrderStoreD                                                            //見orderStoreNew.js orderStoreNew.jsp
                                 Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreHead', '', false, 'CRUD.save');//應該是Ajax 見orderStoreNew.jsp
-                                alert('新增完成');
+                                confirm('新增完成');
                                 Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //見orderStoreNew.jsp
                           }
                       },{

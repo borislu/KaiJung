@@ -31,7 +31,7 @@ import java.util.*;
 			+ "sender [ senderId; senderTime; senderBy ]"
 			+ "details"),
 })
-@Tab( name = "Latest", defaultOrder = "${oid} desc"
+@Tab( name = "Latest", defaultOrder = "${createTime} desc"
 		,properties="readCode, createTime, warehouse.name, orderman.name, totalQty, pickerId, pickerTime, pickerBy, senderId, senderTime, senderBy, inTime, remark, status" 
 )
 public class OrderStore implements Serializable {
@@ -114,45 +114,25 @@ public class OrderStore implements Serializable {
 	@Transient @ManyToOne
 	//@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 //	private Item item;
-	public Item getItem() { // calculated property 無資料庫對應
-		return null;
-	}
+	public Item getItem() { return null; } // calculated property 無資料庫對應
 
-	@DisplaySize(18)
-	@Transient
-	public String getPickerId() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(18) @Transient
+	public String getPickerId() { return ""; } // calculated property 無資料庫對應
 
-	@DisplaySize(11)
-	@Transient
-	public String getPickerTime() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(11) @Transient
+	public String getPickerTime() { return ""; } // calculated property 無資料庫對應
 
-	@DisplaySize(10)
-	@Transient
-	public String getPickerBy() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(10) @Transient
+	public String getPickerBy() { return ""; } // calculated property 無資料庫對應
 
-	@DisplaySize(18)
-	@Transient
-	public String getSenderId() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(18) @Transient
+	public String getSenderId() { return ""; } // calculated property 無資料庫對應
 
-	@DisplaySize(11)
-	@Transient
-	public String getSenderTime() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(11) @Transient
+	public String getSenderTime() { return ""; } // calculated property 無資料庫對應
 
-	@DisplaySize(10)
-	@Transient
-	public String getSenderBy() { // calculated property 無資料庫對應
-		return "";
-	}
+	@DisplaySize(10) @Transient
+	public String getSenderBy() { return ""; } // calculated property 無資料庫對應
 
 	public OrderStore() {
 	}

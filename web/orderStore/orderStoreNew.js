@@ -1,10 +1,10 @@
 //Last Coding By Jason
-function submitOSD(){
-//debug = 'debug: ';
+function insert(){//寫入明細檔，配合表頭的部份用openxava的功能寫入
+//debug = 'orderStoreNew.js insert: debug: ';
 	var headId = $('#ox_KaiJung_OrderStoreHead__oid').val();
 	for(i=1;i<=index;i++)
 	{
-//alert("orderStoreNew.js: submitOSD: row"+ i +" exist: "+ $('row'+i) + " headId: " + headId );
+//alert("orderStoreNew.js: insert: row"+ i +" exist: "+ $('row'+i) + " headId: " + headId );
 		if( $('row'+i) ){
 			var barcode = $('#barcode'+i).val(); 
 			var modifyid = $('#modifyid'+i).val(); 
@@ -30,11 +30,37 @@ function submitOSD(){
 			}
 			quantity = quantity.substring( 0, quantity.length-1 );
 			quantity += '}'
-//debug += quantity;//會把迴圈內的所有都印出來
-			OrderStoreNew.insert(barcode, quantity, modifyid, isCustOrder, memo, headId);
+//debug += quantity;//會把迴圈內的所有都印出來 $("select[@name='option_layout']")
+			OrderStoreNew.deleteDetails( headId);
+			OrderStoreNew.insert( barcode, quantity, modifyid, isCustOrder, memo, headId);//寫入OrderStoreD
 		}
 	}
 //alert( debug );
+}
+function insert2(){//寫入 OrderStore 和 OrderStoreD
+	var headId = $('#ox_KaiJung_OrderStoreHead__oid').val();
+	var warehouseId = $('#ox_KaiJung_OrderStoreHead__reference_editor_warehouse')
+	    .find('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"]').val(); 
+	//alert('orderStoreNew.js insert2: warehouse: '+ warehouseId);
+	OrderStoreNew.insert2(headId, warehouseId);//寫入OrderStore
+	insert();//寫入OrderStoreD
+}
+
+function submit (){
+	//從畫面上取得訂貨單編號
+	var headId = $('#ox_KaiJung_OrderStoreHead__oid').val();
+	OrderStoreNew.isSaved( headId, function( returnValue ){
+		alert('orderStoreNew.js submit: headId: '+ headId + ' exist: ' + returnValue );
+		if( ! returnValue ){
+			insert2();
+		}
+//		else{
+//			update();
+//		}
+	});
+	//先檢查此訂貨單編號是否已經存入DB,若無則寫入
+	//送出
+	OrderStoreNew.submit( headId );
 }
 
 function getByBarcode(el){

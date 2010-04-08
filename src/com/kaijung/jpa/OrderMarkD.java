@@ -2,6 +2,7 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -33,7 +34,10 @@ public class OrderMarkD implements Serializable {
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
 
-	private int orderMark_oid;
+//	private int orderMark_oid;
+	@ManyToOne 
+	@JoinColumn(name="orderMark_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private OrderPicker orderMark;
 
 	private int presetQty;
 
@@ -138,14 +142,6 @@ public class OrderMarkD implements Serializable {
 
 	public void setModifyTime(Date modifyTime) {
 		this.modifyTime = modifyTime;
-	}
-
-	public int getOrderMark_oid() {
-		return this.orderMark_oid;
-	}
-
-	public void setOrderMark_oid(int orderMark_oid) {
-		this.orderMark_oid = orderMark_oid;
 	}
 
 	public int getPresetQty() {
@@ -298,6 +294,14 @@ public class OrderMarkD implements Serializable {
 
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	public OrderPicker getOrderMark() {
+		return orderMark;
+	}
+
+	public void setOrderMark(OrderPicker orderMark) {
+		this.orderMark = orderMark;
 	}
 
 }

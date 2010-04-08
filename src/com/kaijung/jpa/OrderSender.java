@@ -2,12 +2,15 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.*;
 import org.openxava.annotations.*;
 
-import java.util.Date;
+import com.kaijung.calculators.*;
+
+import java.util.*;
 
 
 /**
@@ -16,29 +19,46 @@ import java.util.Date;
  */
 @Entity
 @Views({
-	@View(name = "DetailOnly" //, members=
-//	     "order [ readCode; createTime; warehouse; employee ]"
-//		 +"picker [ pickerId; pickerTime; pickerBy ]"
-//	    +"sender [ senderId; senderTime; senderBy ]"
+	@View(name = "DetailOnly" , members=
+	     "order [ orderId; orderTime; warehouse; orderBy  ]"
+		 +"picker [ pickerId; pickerTime; pickerBy ]"
+	    +"sender [ readCode; createTime; createBy ] details"
 	)
 })
-@Tab(name="Latest", 
-		defaultOrder="${oid} desc"
+@Tab(name="Latest", defaultOrder="${oid} desc"
+		,properties="orderId, orderTime, warehouse, orderBy, pickerId, pickerTime, pickerBy, status, remark" 
 )
 public class OrderSender implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @Hidden
-	@GeneratedValue(generator="system-uuid")
-	@GenericGenerator(name="system-uuid", strategy="uuid")
-	@Column(length=32)
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="orderSender.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	private int createBy; //揀貨人員
+	@OneToMany(mappedBy="orderSender", cascade=CascadeType.REMOVE) //@AsEmbedded
+	@ListProperties("item.articleno, item.price, item.color.sName, 24,26,28,30,32"
+	+ ",remark, status, oid"
+	)
+	private Collection<OrderSenderD> details ;// = new ArrayList<OrderStoreD>(); 
+
+	private int createBy; //撥出人員
 
    @Temporal( TemporalType.TIMESTAMP)
-	private Date createTime; //揀貨時間
+	private Date createTime; //撥出時間
 
+	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
+		@PropertyValue(name = "docType", value = "C") // Required, 由基本檔取出
+		, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
+		, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required, SeqGenOrderStore:記錄流水號的表格
+	})
+	@ReadOnly @DisplaySize(20)
+   private String readCode;
+   
    @Temporal( TemporalType.TIMESTAMP)
 	private Date logisticsTime;
 
@@ -69,11 +89,32 @@ public class OrderSender implements Serializable {
 
 	private String reserve9;
 
-	private int status;
+	private String status;
 
 	private int supplierAgentId;
 
-    public OrderSender() {
+	@DisplaySize(18) @Transient
+	public String getOrderId() { return ""; } // 訂貨單編號，無資料庫對應
+
+	@DisplaySize(11) @Transient
+	public String getOrderTime() { return ""; } // 訂貨日期，無資料庫對應
+
+	@DisplaySize(10) @Transient
+	public String getOrderBy() { return ""; } // 訂貨人員，無資料庫對應
+
+	@DisplaySize(10) @Transient
+	public String getWarehouse() { return ""; } // 訂貨專櫃，無資料庫對應
+
+	@DisplaySize(18) @Transient
+	public String getPickerId() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(11) @Transient
+	public String getPickerTime() { return ""; } // calculated property 無資料庫對應
+
+	@DisplaySize(10) @Transient
+	public String getPickerBy() { return ""; } // calculated property 無資料庫對應
+	
+	public OrderSender() {
     }
 
 	public int getOid() {
@@ -212,11 +253,11 @@ public class OrderSender implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -226,6 +267,22 @@ public class OrderSender implements Serializable {
 
 	public void setSupplierAgentId(int supplierAgentId) {
 		this.supplierAgentId = supplierAgentId;
+	}
+
+	public String getReadCode() {
+		return readCode;
+	}
+
+	public void setReadCode(String readCode) {
+		this.readCode = readCode;
+	}
+
+	public Collection<OrderSenderD> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Collection<OrderSenderD> details) {
+		this.details = details;
 	}
 
 }

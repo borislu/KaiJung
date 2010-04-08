@@ -13,7 +13,7 @@ import com.kaijung.jpa.*;
 
 import common.*;
 
-public class OrderStoreNewDAO {
+public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 	private final String url = "jdbc:mysql://localhost:3306/KaiJung?useUnicode=true&amp;characterEncoding=utf8";
 	private final String user = "ldstw";
 	private final String pwd = "ldstw";
@@ -28,9 +28,34 @@ public class OrderStoreNewDAO {
 		}
 	}
 
+	public boolean isSaved( String oid ){ //此訂貨單編號是否已儲存
+		EntityManager em = XPersistence.getManager();
+		Long count;
+		Boolean rtnVal = false;
+		Query query = null;
+		try {
+			query = em.createQuery("SELECT COUNT(*) FROM OrderStore o WHERE o.oid = :oid");
+			query.setParameter("oid", oid);
+			count = (Long) query.getSingleResult();
+			logger.debug("OrderStoreNewDAO.isSaved: count: "+ count);
+			if( count > 0 ){ rtnVal = true; }
+		} catch (Exception e) {
+			logger.error("OrderStoreNewDAO.isSaved: " + e);
+		}
+		return rtnVal;
+	}
+	
+	/* 寫入 OrderStore */
+	public int insert(OrderStore bean){
+		XPersistence.getManager().persist( bean );
+		XPersistence.commit(); // 若 UUID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
+		return 1;
+	}
+
+	/* 寫入 OrderStoreD (應該搬到OrderStoreDDAO)*/
 	public void insert(String oid, String barcode, String quantity,
 			String modifyid, String isCustOrder, String memo,
-			String orderStoreOid) {
+			String orderStoreOid) { 
 		logger.debug("OrderStoreNewDAO.insert: barcode: "+ barcode + ", quantity: " + quantity );
 		Connection conn = null;
 		int itemid = 0;
@@ -76,6 +101,17 @@ public class OrderStoreNewDAO {
 		}
 	}
 
+	public int deleteDetails ( String headid ){
+			logger.debug("OrderPlaceDDAO.deleteAll: headid: " + headid );
+//			XPersistence.getManager().remove(XPersistence.getManager().find(Seller.class, number));		
+
+			Query query = XPersistence.getManager()
+			.createQuery("DELETE FROM OrderStoreD d WHERE d.orderStore.oid = :headid "); //JPQL query
+			query.setParameter("headid", headid);
+			int rtn = query.executeUpdate();
+			XPersistence.commit(); 
+			return rtn; // 1:成功  0:失敗
+	}
 
 	public int update(String oid, String quantity, String modifyid, String isCustOrder, String memo) {
 		return new OrderStoreD().update( oid, quantity, modifyid, isCustOrder, memo );
@@ -148,6 +184,37 @@ public class OrderStoreNewDAO {
 	
 	public Collection<OrderStoreD> getDetailSet(String oid) {
 		return new OrderStoreD().getDetailSet(oid);
+	}
+	
+	/* 把原本儲存在本地端的訂單送出至伺服器，目前是模擬，所以直接寫入揀貨單 */
+	@SuppressWarnings("unchecked")
+	public int submit ( String orderid ){
+		Query query = XPersistence.getManager().createQuery(
+				"FROM OrderStoreD WHERE orderStore_oid = :orderid"
+			); //JPQL query
+		query.setParameter("orderid", orderid);
+		logger.debug("OrderStoreNewDAO.submit: orderid: "+ orderid );
+		List <OrderStoreD> orderStoreDs = query.getResultList();
+		logger.debug("OrderStoreNewDAO.submit: orderStoreDs: "+ orderStoreDs );
+		
+		OrderPicker orderPicker = new OrderPicker();
+		XPersistence.getManager().persist( orderPicker );
+		XPersistence.commit(); // 若 ID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
+		int pickId = orderPicker.getOid();
+		logger.debug("OrderStoreNewDAO.submit: orderPicker.oid: "+ pickId );
+		
+		for( int i=0; i<orderStoreDs.size(); i++ ){
+			OrderPickerD p = new OrderPickerD();
+			OrderStoreD d = (OrderStoreD) orderStoreDs.get(i);
+			p.setOrderPicker( orderPicker );
+			p.setItem	( d.getItem());
+			p.setQuantity( d.getQuantity());
+			XPersistence.getManager().persist( p );
+			XPersistence.commit(); // 若 ID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
+		}
+		
+//		OrderPickSend rel = new OrderPickSend();
+		return 1;
 	}
 
 }

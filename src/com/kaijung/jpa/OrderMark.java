@@ -2,7 +2,12 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
+
+import org.openxava.annotations.*;
+
+import com.kaijung.calculators.*;
+
+import java.util.*;
 
 
 /**
@@ -10,13 +15,28 @@ import java.util.Date;
  * 
  */
 @Entity
+@Views( {
+	@View(name = "DetailOnly" 
+		, members = 
+		"header[ readCode, priority, createTime, createBy, oid ] details"
+	)
+})
+@Tab(name = "Latest", defaultOrder = "${oid} desc"
+	,properties="readCode, createTime, createBy, status, remark" //details.realQty, 
+)
 public class OrderMark implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id @GeneratedValue(strategy=GenerationType.TABLE)
 	private int oid;
 
+	@OneToMany(mappedBy="orderMark", cascade=CascadeType.REMOVE) //@AsEmbedded
+//	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
+//	+"sum, warehouse.name, shelf, x, y, rate," //加上可出貨天數
+//	+"24,26,28,30,32, sum2, warehouse.name, shelf, x, y, remark, go, oid"
+//	)
+	private Collection<OrderMarkD> details ;// = new ArrayList<OrderStoreD>();
+	
 	private int createBy;
 
     @Temporal( TemporalType.TIMESTAMP)
@@ -33,6 +53,14 @@ public class OrderMark implements Serializable {
 	private int priority;
 
 	private String remark;
+	
+	@DefaultValueCalculator(value = ReadCodeGenerator.class, properties = {
+		@PropertyValue(name = "docType", value = "E") // Required, 由基本檔取出
+		, @PropertyValue(name = "wareId", value = "1") // Required, 改由 session 取出
+		, @PropertyValue(name = "tableName", value = "SeqGenOrderStore") // Required, SeqGenOrderStore:記錄流水號的表格
+	})
+	@ReadOnly @DisplaySize(20)
+	private String readCode;
 
 	private String reserve1;
 
@@ -209,6 +237,22 @@ public class OrderMark implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getReadCode() {
+		return readCode;
+	}
+
+	public void setReadCode(String readCode) {
+		this.readCode = readCode;
+	}
+
+	public Collection<OrderMarkD> getDetails() {
+		return details;
+	}
+
+	public void setDetails(Collection<OrderMarkD> details) {
+		this.details = details;
 	}
 
 }
