@@ -67,10 +67,10 @@ function orderStoreNew_refresh() { // 刷新頁面時執行
 					 	//	.find('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"] :first')
 					 	//	.attr('onchange','alert("select changed");');
 					 
-					 //alert( '123_1: '+ window.parent.frames[0] );//$("#frameEast",parent.document.body).attr('id')
-					 //alert( $('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"]').attr('name') );
+					 //alert( 'orderStoreNew.jsp: orderStoreNew_refresh: '+ window.parent.frames[0] );//$("#frameEast",parent.document.body).attr('id')
+					 
 					 	$('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"]')
-					 	.attr('onchange','window.parent.frames[0].beginLoad("2")');//beginLoad( $(this).find("option:selected").val() )
+					 	.attr('onchange','var s=$(\'select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"]\').find(\'option:selected\').val();   window.parent.frames[0].beginLoad(s)');//beginLoad( $(this).find("option:selected").val() )
  }else if( retry < 300 ){
      retry++;
      $('#ox_KaiJung_OrderStoreHead__view').css('width',divWidth );
