@@ -87,24 +87,28 @@ function selectAll(){
    }
 }
 
-function beginLoad( wareid ){ //orderStoreSuggest.jsp 在初始的時侯讀入建議訂單 
+function beginLoad( wareid ){ //orderStoreSuggest.jsp 在初始和切換專櫃時，讀入建議訂單 
 	//alert('in the beginLoad: wareid: '+ wareid);
+	$("#mainTable>tbody").find("tr:gt(1)").remove();// 先清除所有記錄(保留前2列標題) 
 	OrderStoreNew.findSuggestList ( wareid, function(orderSuggestD_Set){ // argument: wareId , return: orderSuggestD_Set
 		//alert('orderSuggestD_Set length: '+ orderSuggestD_Set.length );
 		//var debug = 'orderSuggestD_Set: ';
 		for (var i=0; i < orderSuggestD_Set.length; i++) {
 		//debug += ' , reason: ' + orderSuggestD_Set[i].reason ;
-			dwr.util.setValue( 'reason_'+ (i+1) , orderSuggestD_Set[i].reason );
-			dwr.util.setValue( 'articleno_'+ (i+1) , orderSuggestD_Set[i].item.articleno );
-			//dwr.util.setValue( 'color_'+ (i+1) , orderSuggestD_Set[i].item.color.sName );
+			$('<tr id="tr'+i+'" class="datarow"><td style="text-align: center;"><div align="center">'+i+'</div></td><td style="text-align: center;"><input id="reason_'+i+'" name="reason" value="" readonly class="reasonR"></td><td style="text-align: center;"><input id="stock_'+i+'" name="stock" value="" readonly class="stockR"></td><td style="text-align: center;"><input id="sales_'+i+'" name="sales" value="" readonly class="salesR"></td><td style="text-align: center;"><input id="articleno_'+i+'" name="articleno"  value="" readonly class="articlenoR"></td><td style="text-align: center;"><input id="color_'+i+'" name="color"   value="" readonly class="colorR"></td><td style="text-align: center;"><input id="size24_'+i+'" name="size24" value="" maxlength="3" class="orderSize"/>/121</td><td style="text-align: center;"><input id="size26_'+i+'" name="size26" value="" maxlength="3" class="orderSize"/>/132</td><td style="text-align: center;"><input id="size28_'+i+'" name="size28" value="" maxlength="3"  class="orderSize"/>/173</td><td style="text-align: center;"><input id="size30_'+i+'" name="size30" value="" maxlength="3"  class="orderSize"/>/184</td><td style="text-align: center;"><input id="size32_'+i+'" name="size32" value="" maxlength="3"  class="orderSize"/>/115</td><td style="text-align: center;"><input id="memo_'+i+'" name="memo" class="memo01" /></td><td style="text-align: center;"><input id="chk_'+i+'" name="chk" type="checkbox" checked/></td><td style="text-align: center;"><input id="barcode_'+i+'" name="barcode" value="" readonly class="barcodeR" style="visibility:hidden;"></td><td style="text-align: center;"><input id="price_'+i+'" name="price" value="" readonly class="barcodeR" style="visibility:hidden;"></td></tr>')
+				.insertAfter($("#mainTable>tbody>tr:eq(1)"));
+			
+			dwr.util.setValue( 'reason_'+ i , orderSuggestD_Set[i].reason );
+			dwr.util.setValue( 'articleno_'+ i , orderSuggestD_Set[i].item.articleno );
+			//dwr.util.setValue( 'color_'+ i , orderSuggestD_Set[i].item.color.sName );
 		//debug += ' , qtyobj json: ' + jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
 			var qtyobj = jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
 		//debug += ' , qtyobj: ' + qtyobj ;
-			dwr.util.setValue( 'size24_'+ (i+1) , qtyobj.s24 );
-			dwr.util.setValue( 'size26_'+ (i+1) , qtyobj.s26 );
-			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
-			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
-			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
+			dwr.util.setValue( 'size24_'+ i , qtyobj.s24 );
+			dwr.util.setValue( 'size26_'+ i , qtyobj.s26 );
+			dwr.util.setValue( 'size28_'+ i , qtyobj.s28 );
+			dwr.util.setValue( 'size30_'+ i , qtyobj.s30 );
+			dwr.util.setValue( 'size32_'+ i , qtyobj.s32 );
 		}//for
 		//alert( debug );
 	});
@@ -165,6 +169,7 @@ function beginLoad( wareid ){ //orderStoreSuggest.jsp 在初始的時侯讀入�
 32
         </td>
     </tr>
+    <!-- 
     <tr id="tr1" class="datarow">
       <td style="text-align: center;"><div align="center">1</div></td>
       <td style="text-align: center;"><input id="reason_1"   name="reason"  value="" readonly class="reasonR"></td>
@@ -198,133 +203,11 @@ function beginLoad( wareid ){ //orderStoreSuggest.jsp 在初始的時侯讀入�
       <td style="text-align: center;"><input id="chk_2"   name="chk" type="checkbox" checked/></td>
       <td style="text-align: center;"><input id="barcode_2"  name="barcode" value="" readonly class="barcodeR" style="visibility:hidden;"></td>
       <td style="text-align: center;"><input id="price_2"   name="price" value="" readonly class="barcodeR" style="visibility:hidden;"></td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">3</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">4</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">5</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">6</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">7</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">8</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">9</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <tr>
-      <td style="text-align: center;"><div align="center">10</div></td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-      <td style="text-align: center;">&nbsp;</td>
-    </tr>
-    <!--  <input type="button" id="initImport" value="IMPORE" onClick="javascript:beginLoad();" /> -->
+    </tr> -->
   </tbody>
   
   </table>
 </div>
-<!--<input type="button" id="append" onclick="javascript:batchOrder();"> --><!-- 隱藏按鈕，全部加入訂單 -->
 </form>
 </body>
 </html>
