@@ -174,8 +174,25 @@ public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 		return colorName;
 	}
 
+	@SuppressWarnings("unchecked")
 	public Collection<OrderSuggestD> findSuggestD(int wareId) {
-		return new OrderSuggestD().findSuggestD(wareId);
+				Query query = null;
+				Collection <OrderSuggestD> resultList = null;
+				try{
+					query = XPersistence.getManager().createQuery(
+//							"SELECT s FROM OrderSuggestD s, Item im"
+//							+ " WHERE s.item.oid = im.oid"
+//							);
+							"SELECT s FROM OrderSuggestD s, Item im"
+							+ " WHERE s.orderSuggest.warehouse.oid = :wareId"
+							);
+					query.setParameter( "wareId", wareId );
+					resultList = query.getResultList();
+			      logger.debug("OrderSuggestD.findSuggestD: result: "+ query.getResultList());
+				}catch( Exception e ){
+				    logger.error("OrderSuggestD.findSuggestD: "+ e );
+				}
+				return resultList;
 	}
 
 	public Collection<OrderStoreD> getOrderD(String headId) {

@@ -58,11 +58,16 @@ public class OrderStoreNew {
 			String colorName = osdn1DAO.getColorNameById(colorId);
 			return colorName;
 		}
+		@SuppressWarnings("unchecked")
 		public Set <OrderSuggestD> findSuggestList(int wareId){
 			 logger.debug("OrderStoreNew.findSuggestList: wareId: "+ wareId );
 			 Collection <OrderSuggestD> cl = new OrderStoreNewDAO().findSuggestD( wareId );
-			 logger.debug("OrderStoreNew.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
-			 return new HashSet <OrderSuggestD>( cl );
+			 HashSet set = null;
+			 if( cl != null ){
+				 set = new HashSet <OrderSuggestD>( cl );
+			 }
+			 logger.debug("OrderStoreNew.findSuggestList: HashSet: "+ set );
+			 return set;
 		}
 		public Set <OrderStoreD> getOrderD(String headId){//以主檔(單頭)的oid，查出所有的明細檔
 			 logger.debug("OrderStoreNew.getOrderD: headId: "+ headId );

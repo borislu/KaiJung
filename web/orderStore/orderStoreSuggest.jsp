@@ -12,7 +12,6 @@
 <script type='text/javascript' src='../dwr/engine.js'></script>
 <script type='text/javascript' src='../dwr/util.js'></script>
 <script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
-<script type='text/javascript' src='orderStoreNew.js'></script>
 <script type="text/javascript">
 var recordIndex;
 function batchOrder(){
@@ -87,6 +86,29 @@ function selectAll(){
      });          
    }
 }
+
+function beginLoad( wareid ){ //orderStoreSuggest.jsp 在初始的時侯讀入建議訂單 
+	alert('in the beginLoad: wareid: '+ wareid);
+	OrderStoreNew.findSuggestList ( wareid, function(orderSuggestD_Set){ // argument: wareId , return: orderSuggestD_Set
+		//alert('orderSuggestD_Set length: '+ orderSuggestD_Set.length );
+//var debug = 'orderSuggestD_Set: ';
+		for (var i=0; i < orderSuggestD_Set.length; i++) {
+//debug += ' , reason: ' + orderSuggestD_Set[i].reason ;
+			dwr.util.setValue( 'reason_'+ (i+1) , orderSuggestD_Set[i].reason );
+			dwr.util.setValue( 'articleno_'+ (i+1) , orderSuggestD_Set[i].item.articleno );
+			//dwr.util.setValue( 'color_'+ (i+1) , orderSuggestD_Set[i].item.color.sName );
+//debug += ' , qtyobj json: ' + jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
+			var qtyobj = jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
+//debug += ' , qtyobj: ' + qtyobj ;
+			dwr.util.setValue( 'size24_'+ (i+1) , qtyobj.s24 );
+			dwr.util.setValue( 'size26_'+ (i+1) , qtyobj.s26 );
+			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
+			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
+			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
+		}//for
+//alert( debug );
+	});
+}
 </script> 
 <style type="text/css">
 <!--
@@ -95,7 +117,7 @@ function selectAll(){
 </style>
 </head>
 
-<body onload="javascript:beginLoad();">
+<body onload="javascript:beginLoad(1);">
 <form id="form1" action="">
 <div><div>
   </div><table id="mainTable" border="1" bordercolor="#cccccc" cellpadding="0" cellspacing="0" width="818">
@@ -145,37 +167,37 @@ function selectAll(){
     </tr>
     <tr id="tr1" class="datarow">
       <td style="text-align: center;"><div align="center">1</div></td>
-      <td style="text-align: center;"><input id="reason_1"   name="reason_1"  value="銷貨補貨" readonly class="reasonR"></td>
-      <td style="text-align: center;"><input id="stock_1"   name="stock_1"  value="120" readonly class="stockR"></td>
-      <td style="text-align: center;"><input id="sales_1"   name="sales_1"  value="55" readonly class="salesR"></td>
-      <td style="text-align: center;"><input id="articleno_1"  name="articleno_1"  value="001-00001" readonly class="articlenoR"></td>
-      <td style="text-align: center;"><input id="color_1"   name="color_1"   value="BLUE" readonly class="colorR"></td>
-      <td style="text-align: center;"><input id="size24_1"   name="size24_1"  value="5" maxlength="3" class="orderSize"/>/121</td>
-      <td style="text-align: center;"><input id="size26_1"   name="size26_1"  value="6" maxlength="3" class="orderSize"/>/132</td>
-      <td style="text-align: center;"><input id="size28_1"   name="size28_1"  value="7" maxlength="3"  class="orderSize"/>/173</td>
-      <td style="text-align: center;"><input id="size30_1"   name="size30_1"  value="8" maxlength="3"  class="orderSize"/>/184</td>
-      <td style="text-align: center;"><input id="size32_1"   name="size32_1"  value="9" maxlength="3"  class="orderSize"/>/115</td>
-      <td style="text-align: center;"><input id="memo_1"   name="memo_1" class="memo01" /></td>
+      <td style="text-align: center;"><input id="reason_1"   name="reason"  value="" readonly class="reasonR"></td>
+      <td style="text-align: center;"><input id="stock_1"   name="stock"  value="" readonly class="stockR"></td>
+      <td style="text-align: center;"><input id="sales_1"   name="sales"  value="" readonly class="salesR"></td>
+      <td style="text-align: center;"><input id="articleno_1"  name="articleno"  value="" readonly class="articlenoR"></td>
+      <td style="text-align: center;"><input id="color_1"   name="color"   value="" readonly class="colorR"></td>
+      <td style="text-align: center;"><input id="size24_1"   name="size24"  value="" maxlength="3" class="orderSize"/>/121</td>
+      <td style="text-align: center;"><input id="size26_1"   name="size26"  value="" maxlength="3" class="orderSize"/>/132</td>
+      <td style="text-align: center;"><input id="size28_1"   name="size28"  value="" maxlength="3"  class="orderSize"/>/173</td>
+      <td style="text-align: center;"><input id="size30_1"   name="size30"  value="" maxlength="3"  class="orderSize"/>/184</td>
+      <td style="text-align: center;"><input id="size32_1"   name="size32"  value="" maxlength="3"  class="orderSize"/>/115</td>
+      <td style="text-align: center;"><input id="memo_1"   name="memo" class="memo01" /></td>
       <td style="text-align: center;"><input id="chk_1"   name="chk" type="checkbox" checked/></td>
-      <td style="text-align: center;"><input id="barcode_1"  name="barcode_1" value="bc1901" readonly class="barcodeR" style="visibility:hidden;"></td>
-      <td style="text-align: center;"><input id="price_1"   name="price_1" value="1000" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="barcode_1"  name="barcode" value="" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="price_1"   name="price" value="" readonly class="barcodeR" style="visibility:hidden;"></td>
     </tr>
     <tr id="tr2" class="datarow">
       <td style="text-align: center;"><div align="center">2</div></td>
-      <td style="text-align: center;"><input id="reason_2"   name="reason_2"  value="缺貨到貨" readonly class="reasonR"></td>
-      <td style="text-align: center;"><input id="stock_2"   name="stock_2"  value="120" readonly class="stockR"></td>
-      <td style="text-align: center;"><input id="sales_2"   name="sales_2"  value="55" readonly class="salesR"></td>
-      <td style="text-align: center;"><input id="articleno_2"  name="articleno_2"  value="001-00002" readonly class="articlenoR"></td>
-      <td style="text-align: center;"><input id="color_2"   name="color_2"   value="RED" readonly class="colorR"></td>
-      <td style="text-align: center;"><input id="size24_2"   name="size24_2"  value="11" maxlength="3" class="orderSize"/>/121</td>
-      <td style="text-align: center;"><input id="size26_2"   name="size26_2"  value="12" maxlength="3" class="orderSize"/>/132</td>
-      <td style="text-align: center;"><input id="size28_2"   name="size28_2"  value="13" maxlength="3"  class="orderSize"/>/173</td>
-      <td style="text-align: center;"><input id="size30_2"   name="size30_2"  value="14" maxlength="3"  class="orderSize"/>/184</td>
-      <td style="text-align: center;"><input id="size32_2"   name="size32_2"  value="15" maxlength="3"  class="orderSize"/>/115</td>
-      <td style="text-align: center;"><input id="memo_2"   name="memo_2" class="memo01" /></td>
+      <td style="text-align: center;"><input id="reason_2"   name="reason"  value="" readonly class="reasonR"></td>
+      <td style="text-align: center;"><input id="stock_2"   name="stock"  value="" readonly class="stockR"></td>
+      <td style="text-align: center;"><input id="sales_2"   name="sales"  value="" readonly class="salesR"></td>
+      <td style="text-align: center;"><input id="articleno_2"  name="articleno"  value="" readonly class="articlenoR"></td>
+      <td style="text-align: center;"><input id="color_2"   name="color"   value="" readonly class="colorR"></td>
+      <td style="text-align: center;"><input id="size24_2"   name="size24"  value="" maxlength="3" class="orderSize"/>/121</td>
+      <td style="text-align: center;"><input id="size26_2"   name="size26"  value="" maxlength="3" class="orderSize"/>/132</td>
+      <td style="text-align: center;"><input id="size28_2"   name="size28"  value="" maxlength="3"  class="orderSize"/>/173</td>
+      <td style="text-align: center;"><input id="size30_2"   name="size30"  value="" maxlength="3"  class="orderSize"/>/184</td>
+      <td style="text-align: center;"><input id="size32_2"   name="size32"  value="" maxlength="3"  class="orderSize"/>/115</td>
+      <td style="text-align: center;"><input id="memo_2"   name="memo" class="memo01" /></td>
       <td style="text-align: center;"><input id="chk_2"   name="chk" type="checkbox" checked/></td>
-      <td style="text-align: center;"><input id="barcode_2"  name="barcode_2" value="bc1902" readonly class="barcodeR" style="visibility:hidden;"></td>
-      <td style="text-align: center;"><input id="price_2"   name="price_2" value="450" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="barcode_2"  name="barcode" value="" readonly class="barcodeR" style="visibility:hidden;"></td>
+      <td style="text-align: center;"><input id="price_2"   name="price" value="" readonly class="barcodeR" style="visibility:hidden;"></td>
     </tr>
     <tr>
       <td style="text-align: center;"><div align="center">3</div></td>

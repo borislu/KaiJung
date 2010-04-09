@@ -68,42 +68,6 @@ public class OrderSuggestD implements Serializable {
 
 	private String suggestQty;
 
-	public Collection <OrderSuggestD> findSuggestD( int wareId ){
-			EntityManager em = XPersistence.getManager();
-			Query query = null;
-			Collection <OrderSuggestD> resultList = null;
-			try{
-				
-//				Query query = XPersistence.getManager().createQuery("from Carrier c where " +
-//						"c.warehouse.zoneNumber = :zone AND " + 
-//						"c.warehouse.number = :warehouseNumber AND " + 
-//						"NOT (c.number = :number) ");
-//					query.setParameter("zone", getWarehouse().getZoneNumber());
-//					query.setParameter("warehouseNumber", getWarehouse().getNumber());
-//					query.setParameter("number",  getNumber());
-
-				
-				query = em.createQuery(
-						"SELECT osd FROM OrderSuggestD AS osd, Item AS im"
-						+ " WHERE osd.item.oid = im.oid"
-//						+ " , Item as im"
-//						+ " , ItemColor as ic"
-//						+ " join osd.item.oid as o"
-//						+ " join o. as o"
-//						+ " where osd.item.oid = :item"
-//						+ " and osd.item.color.oid = :color"
-						);
-//				query.setParameter( "item", getItem().getOid() );
-//				query.setParameter( "item", 2 );
-//				query.setParameter( "color", 2 );
-				resultList = query.getResultList();
-		      logger.debug("OrderSuggestD.findSuggestD: result: "+ query.getResultList());
-			}catch( Exception e ){
-			    logger.error("OrderSuggestD.findSuggestD: "+ e );
-			}
-			return resultList;
-	}
-
 	public OrderSuggestD() {
     }
 

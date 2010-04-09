@@ -71,11 +71,15 @@ public class OrderSuggest implements Serializable {
 
 	private String reserve9;
 
-	private int status;
+	private String status;
 
-	private int wareId;
+//	private int wareId;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "wareId", referencedColumnName = "oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Warehouse warehouse;
 
-    public OrderSuggest() {
+
+   public OrderSuggest() {
     }
 
 	public int getCreateBy() {
@@ -206,20 +210,12 @@ public class OrderSuggest implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public int getWareId() {
-		return this.wareId;
-	}
-
-	public void setWareId(int wareId) {
-		this.wareId = wareId;
 	}
 
 	public Collection<OrderSuggestD> getDetails() {
@@ -228,6 +224,14 @@ public class OrderSuggest implements Serializable {
 
 	public void setDetails(Collection<OrderSuggestD> details) {
 		this.details = details;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
 	}
 
 }

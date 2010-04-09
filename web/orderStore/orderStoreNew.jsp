@@ -58,10 +58,19 @@ function orderStoreNew_refresh() { // 刷新頁面時執行
     	     oidObj.first().val(jQuery_uuid);
     	     oidObj.first().attr('id','ox_KaiJung_OrderStoreHead__oid');
     	     //alert('OrderStoreHead__oid: '+ $('#ox_KaiJung_OrderStoreHead__oid').val() );
-    	     $('#ox_KaiJung_OrderStoreHead__oid').hide();//$(this).css('visibility','hidden'); 
+    	     $('#ox_KaiJung_OrderStoreHead__oid').hide();//$(this).css('visibility','hidden');
      }else{
          setTimeout( 'orderStoreNew_refresh()', 500 );
        }
+     
+					 	//	$('#ox_KaiJung_OrderStoreHead__reference_editor_warehouse')
+					 	//	.find('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"] :first')
+					 	//	.attr('onchange','alert("select changed");');
+					 
+					 //alert( '123_1: '+ window.parent.frames[0] );//$("#frameEast",parent.document.body).attr('id')
+					 //alert( $('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"]').attr('name') );
+					 	$('select[name="ox_KaiJung_OrderStoreHead__warehouse___oid"]')
+					 	.attr('onchange','window.parent.frames[0].beginLoad("2")');//beginLoad( $(this).find("option:selected").val() )
  }else if( retry < 300 ){
      retry++;
      $('#ox_KaiJung_OrderStoreHead__view').css('width',divWidth );
@@ -171,9 +180,6 @@ function setAll(){
   $(this)[0].value=totalSum;
  });
  $("#sumTotal")[0].value = sum;
-//test
-
-//end test
 }
 </script>
 

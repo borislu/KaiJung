@@ -95,27 +95,6 @@ function getByArticleno(el){
     }
 
 
-function beginLoad(){ //orderStoreSuggest.jsp 在初始的時侯讀入建議訂單 
-	OrderStoreNew.findSuggestList ( 1, function(orderSuggestD_Set){ // argument: wareId , return: orderSuggestD_Set
-		//alert('orderSuggestD_Set length: '+ orderSuggestD_Set.length );
-//var debug = 'orderSuggestD_Set: ';
-		for (var i=0; i < orderSuggestD_Set.length; i++) {
-//debug += ' , reason: ' + orderSuggestD_Set[i].reason ;
-			dwr.util.setValue( 'reason_'+ (i+1) , orderSuggestD_Set[i].reason );
-			dwr.util.setValue( 'articleno_'+ (i+1) , orderSuggestD_Set[i].item.articleno );
-			//dwr.util.setValue( 'color_'+ (i+1) , orderSuggestD_Set[i].item.color.sName );
-//debug += ' , qtyobj json: ' + jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
-			var qtyobj = jQuery.parseJSON( orderSuggestD_Set[i].suggestQty );
-//debug += ' , qtyobj: ' + qtyobj ;
-			dwr.util.setValue( 'size24_'+ (i+1) , qtyobj.s24 );
-			dwr.util.setValue( 'size26_'+ (i+1) , qtyobj.s26 );
-			dwr.util.setValue( 'size28_'+ (i+1) , qtyobj.s28 );
-			dwr.util.setValue( 'size30_'+ (i+1) , qtyobj.s30 );
-			dwr.util.setValue( 'size32_'+ (i+1) , qtyobj.s32 );
-		}//for
-//alert( debug );
-	});
-}
 /*
 function getOrderD( headId ){ //module_orderStoreDetail.jsp 讀入所屬的訂單明細 
 	OrderStoreNew.getOrderD ( 1, function(orderStoreD_Set){ // argument: wareId , return: orderStoreD_Set
