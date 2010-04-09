@@ -38,7 +38,7 @@ public class OrderStoreNew {
 				}
 				dao.insert( orderStore);
 		}
-		public int submit( String headid ){
+		public int submit( String headid ){ // 訂單新增和修改共用
 			OrderStoreNewDAO dao = new OrderStoreNewDAO();
 			return dao.submit( headid );
 		}

@@ -50,7 +50,7 @@ function submit (){
 	//從畫面上取得訂貨單編號
 	var headId = $('#ox_KaiJung_OrderStoreHead__oid').val();
 	OrderStoreNew.isSaved( headId, function( returnValue ){
-		alert('orderStoreNew.js submit: headId: '+ headId + ' exist: ' + returnValue );
+		//alert('orderStoreNew.js submit: headId: '+ headId + ' exist: ' + returnValue );
 		if( ! returnValue ){
 			insert2();
 		}

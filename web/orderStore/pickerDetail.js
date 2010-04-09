@@ -31,6 +31,13 @@ function changeCss(){
         $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
           //隱藏openxava預設的加號
         $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
+        //隱藏openxava預設的明細第一欄
+//      alert('col: '+ $("#ox_KaiJung_OrderPickerDetailOnly__filter_link_details").parent().attr('class') );
+      $("#ox_KaiJung_OrderPickerDetailOnly__filter_link_details").parent().remove();//css('visibility','hidden');
+      $("tr[id^='ox_KaiJung_OrderPickerDetailOnly__xava_collectionTab_details_']").each(function (i) {
+     	 $(this).find('td:eq(0)').remove();
+      });//css('visibility','hidden');
+      $('#ox_KaiJung_OrderPickerDetailOnly__button_bar').remove();
      }
 }
 function copyOrder(){

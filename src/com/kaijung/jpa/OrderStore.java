@@ -21,14 +21,14 @@ import java.util.*;
 @Views( {
 		@View(members = "order [ readCode; createTime; warehouse; orderman ]"
 				+ "picker [ pickerId; pickerTime; pickerBy ]"
-				+ "sender [ senderId; senderTime; senderBy ]"
+				+ "sender [ senderId; senderTime; senderBy; oid ]"
 				+ "details"),
 		@View(name = "HeadOnly", members = "order [ readCode; createTime; warehouse; orderman ]"
 				+ "picker [ pickerId; pickerTime; pickerBy; ]"
 				+ "sender [ senderId; senderTime; senderBy; oid ]"),
 		@View(name = "DetailOnly", members = "order [ readCode; createTime; warehouse; orderman ]"
 			+ "picker [ pickerId; pickerTime; pickerBy ]"
-			+ "sender [ senderId; senderTime; senderBy ]"
+			+ "sender [ senderId; senderTime; senderBy; oid ]"
 			+ "details"),
 })
 @Tab( name = "Latest", defaultOrder = "${createTime} desc"

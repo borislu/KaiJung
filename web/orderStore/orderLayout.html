@@ -122,10 +122,12 @@ p {
                           iconCls:'nav'
                       }]
                  ,bbar:[{
-                          text:'刪除',
+                          text:'送出訂單',
                           handler:function(){
-                             Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete')
-                          }
+											                     Ext.getDom('frameWest').contentWindow.submit();
+											                     confirm('訂單已送出');
+											                     Ext.getDom('frameWest').contentWindow.location.reload();
+									                          }
                       },{
                           text:'儲存',
                           handler:function(){
@@ -136,6 +138,11 @@ p {
 										                          //Ext.getDom('frameWest').contentWindow.orderStoreNew_refresh();                                                  //orderStoreNew.jsp
                                         //}
                                    }
+                      },{
+                          text:'刪除',
+                          handler:function(){
+                             Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete')
+                          }
                       }]
                   }
                ]

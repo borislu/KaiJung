@@ -7,6 +7,11 @@ function dumpInputs(){//列印本頁的所有 input elements, 用來 Debug
 	);
 	alert( inputDebug );
 }
+function submit (){
+	//從畫面上取得訂貨單編號
+	var headId = $("input[name='ox_KaiJung_OrderStoreDetailOnly__oid']").val();
+	OrderStoreNew.submit( headId );
+}
 function afterSave(){
 	$.cookie("JSESSIONID",null);
 	parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderStoreListOnly', '', false, 'List.goPage', 'page=1');
@@ -78,7 +83,19 @@ function changeCss(){
  if( ($('#ox_KaiJung_OrderStoreDetailOnly__view')==null) || ($('#ox_KaiJung_OrderStoreDetailOnly__view').length < 1) ){
      setTimeout( 'changeCss()', 50 );  
  }else{
-     $('#ox_KaiJung_OrderStoreDetailOnly__view').css('width','800px');
+ 	   //強制div的寬度，避免換行
+     $('#ox_KaiJung_OrderStoreDetailOnly__view').css('width','1000px');
+       //隱藏openxava預設的pk圖示
+     $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
+       //隱藏openxava預設的加號
+     $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderStoreDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
+       //隱藏openxava預設的明細第一欄
+//     alert('col: '+ $("#ox_KaiJung_OrderStoreDetailOnly__filter_link_details").parent().attr('class') );
+     $("#ox_KaiJung_OrderStoreDetailOnly__filter_link_details").parent().remove();//css('visibility','hidden');
+     $("tr[id^='ox_KaiJung_OrderStoreDetailOnly__xava_collectionTab_details_']").each(function (i) {
+    	 $(this).find('td:eq(0)').remove();
+     });//css('visibility','hidden');
+     $('#ox_KaiJung_OrderStoreDetailOnly__button_bar').remove();
  }
 }
 
@@ -182,7 +199,7 @@ openxava.refreshPage = function(result) { // override OpenXava
 			}
 			catch (ex) {
 				changed = changed + " ERROR";
-				alert("Error refreshing part: " + id);
+				alert("Error refreshing part: "+ id);
 				errors = true;
 				break;
 			}			
