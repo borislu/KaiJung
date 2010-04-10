@@ -30,7 +30,7 @@ public class ReadCodeGenerator implements ICalculator{
 	
 	public Object calculate() throws Exception {
 		String mixId = getDateCode() + wareId ;
-		logger.debug(" mixId: "+ mixId );
+//		logger.debug("ReadCodeGenerator.calculate: mixId: "+ mixId );
 		int currNo = 0;
 
 		Object result = querySN( mixId );
@@ -58,6 +58,7 @@ public class ReadCodeGenerator implements ICalculator{
 			logger.debug( "ReadCodeGenerator.calculate: query2 return: "+ updated );
 		}
 		
+		logger.debug("ReadCodeGenerator.calculate: return: "+ docType + getDateCode() + "-" + wareId + "-" + currNo );
 		// 加上目前的流水號後回傳
 		return docType + getDateCode() + "-" + wareId + "-" + currNo ;
 	}

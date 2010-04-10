@@ -40,7 +40,16 @@ public class OrderStoreNew {
 		}
 		public int submit( String headid ){ // 訂單新增和修改共用
 			OrderStoreNewDAO dao = new OrderStoreNewDAO();
-			return dao.submit( headid );
+			int rtn = 0;
+			int empid = 1; //oid
+			String wareid = null;
+			try{
+				wareid = "1"; //oid
+				rtn = dao.submit( headid, empid, wareid );
+			}catch(Exception e){
+				logger.error(e);
+			}
+			return rtn;
 		}
 		public int update(String oid, String quantity, String modifyid, String isCustOrder, String memo){
 	      logger.debug("OrderStoreNew.update: quantity: "+ quantity);

@@ -14,9 +14,38 @@ public class OrderPickerDwr {
 	  
 		public void update(String oid, String quantity, String memo){
 		      logger.debug("OrderPickerDwr.update: quantity: "+ quantity);
-				OrderPickerDDAO dao = new OrderPickerDDAO();
-				dao.update(Integer.parseInt(oid), quantity, memo);
+				new OrderPickerDDAO().update(Integer.parseInt(oid), quantity, memo);
+		}
+		public int submit( String pickid ){ // 揀貨單送出
+			OrderPickerDAO dao = new OrderPickerDAO();
+			int rtn = 0;
+			int empid = 1; //oid
+			String wareid = null;
+			try{
+				wareid = "1"; //oid
+				rtn = dao.submit( pickid, empid, wareid );
+			}catch(Exception e){
+				logger.error(e);
 			}
+			return rtn;
+		}
+		public Set <OrderStoreD> getOrderDByPick (String pickId){//以揀貨單的oid查出對應的訂貨明細關連檔
+			 logger.debug("OrderPickerDwr.getOrderDByPick: pickId: "+ pickId );
+			 int intPickId = 0;
+			 try{ intPickId = Integer.parseInt(pickId); }catch(Exception e){};
+			 Collection <OrderStoreD> cl = new OrderPickerDDAO().getOrderDByPick( intPickId );
+			 logger.debug("OrderPickerDwr.getOrderDByPick: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
+			 return new HashSet <OrderStoreD>( cl );
+		}
+		public Set <OrderPickerD> getPickerDByPick (String pickId){//以揀貨單的oid查出對應的訂貨明細關連檔
+			 logger.debug("OrderPickerDwr.getPickerDByPick: pickId: "+ pickId );
+			 int intPickId = 0;
+			 try{ intPickId = Integer.parseInt(pickId); }catch(Exception e){};
+			 Collection <OrderPickerD> cl = new OrderPickerDDAO().getPickerDByPick( intPickId );
+			 logger.debug("OrderPickerDwr.getPickerDByPick: Collection: "+ new HashSet <OrderPickerD>( cl ).toString() );
+			 return new HashSet <OrderPickerD>( cl );
+		}
+		
 //			public int update(String oid, String quantity, String modifyid, String isCustOrder, String memo){
 //			      logger.debug("OrderPicker.update: quantity: "+ quantity);
 //					OrderPickerDAO osdnDAO = new OrderPickerDAO();
@@ -39,12 +68,4 @@ public class OrderPickerDwr {
 //				 logger.debug("OrderPicker.findSuggestList: Collection: "+ new HashSet <OrderSuggestD>( cl ).toString() );
 //				 return new HashSet <OrderSuggestD>( cl );
 //			 }
-			 public Set <OrderStoreD> getOrderDByPick(String pickId){//以揀貨單的oid查出對應的訂貨明細關連檔
-				 logger.debug("OrderPickerDwr.getOrderDByPick: pickId: "+ pickId );
-				 int intPickId = 0;
-				 try{ intPickId = Integer.parseInt(pickId); }catch(Exception e){};
-				 Collection <OrderStoreD> cl = new OrderPickerDDAO().getOrderDByPick( intPickId );
-				 logger.debug("OrderPickerDwr.getOrderDByPick: Collection: "+ new HashSet <OrderStoreD>( cl ).toString() );
-				 return new HashSet <OrderStoreD>( cl );
-			 }
 }

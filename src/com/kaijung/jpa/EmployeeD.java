@@ -40,7 +40,7 @@ public class EmployeeD implements Serializable {
 	@Hidden
 	private String reserve5;
 
-	private int status;
+	private String status;
 
 	private int type;
 
@@ -119,11 +119,11 @@ public class EmployeeD implements Serializable {
 		this.reserve5 = reserve5;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

@@ -35,7 +35,7 @@ public class Employee implements Serializable {
 
 	private String idcardNo;
 
-	private int loginId;
+	private String loginId;
 
 	private String memo;
 
@@ -63,7 +63,7 @@ public class Employee implements Serializable {
 	@Hidden
 	private String reserve9;
 	@ReadOnly
-	private int status;
+	private String status;
 
     public Employee() {
     }
@@ -92,11 +92,11 @@ public class Employee implements Serializable {
 		this.idcardNo = idcardNo;
 	}
 
-	public int getLoginId() {
+	public String getLoginId() {
 		return this.loginId;
 	}
 
-	public void setLoginId(int loginId) {
+	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
 
@@ -196,11 +196,11 @@ public class Employee implements Serializable {
 		this.reserve9 = reserve9;
 	}
 
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 

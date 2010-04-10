@@ -164,6 +164,13 @@ p {
                          Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
+                     text:'送出',
+                     handler:function(){
+   	                     Ext.getDom('frameWest').contentWindow.updatePick() ;
+       	                 Ext.getDom('frameWest').contentWindow.submit() ;
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderPickerDetailOnly', '', false, 'CRUD.save');
+                     }
+                 },{
                      text:'儲存',
                      handler:function(){
        	                 Ext.getDom('frameWest').contentWindow.updatePick() ;

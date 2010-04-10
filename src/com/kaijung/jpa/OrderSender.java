@@ -46,7 +46,10 @@ public class OrderSender implements Serializable {
 	)
 	private Collection<OrderSenderD> details ;// = new ArrayList<OrderStoreD>(); 
 
-	private int createBy; //撥出人員
+//	private int createBy; //撥出人員
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee sender; // 撥出人員
 
    @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime; //撥出時間
@@ -62,7 +65,10 @@ public class OrderSender implements Serializable {
    @Temporal( TemporalType.TIMESTAMP)
 	private Date logisticsTime;
 
-	private int modifyBy;
+//	private int modifyBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee modifier; // 撥出人員
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
@@ -125,14 +131,6 @@ public class OrderSender implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(int createBy) {
-		this.createBy = createBy;
-	}
-
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -147,14 +145,6 @@ public class OrderSender implements Serializable {
 
 	public void setLogisticsTime(Date logisticsTime) {
 		this.logisticsTime = logisticsTime;
-	}
-
-	public int getModifyBy() {
-		return this.modifyBy;
-	}
-
-	public void setModifyBy(int modifyBy) {
-		this.modifyBy = modifyBy;
 	}
 
 	public Date getModifyTime() {
@@ -283,6 +273,22 @@ public class OrderSender implements Serializable {
 
 	public void setDetails(Collection<OrderSenderD> details) {
 		this.details = details;
+	}
+
+	public Employee getSender() {
+		return sender;
+	}
+
+	public void setSender(Employee sender) {
+		this.sender = sender;
+	}
+
+	public Employee getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(Employee modifier) {
+		this.modifier = modifier;
 	}
 
 }

@@ -7,8 +7,10 @@ import java.lang.System;
 
 import javax.persistence.*;
 
+import org.openxava.calculators.*;
 import org.openxava.jpa.*;
 
+import com.kaijung.calculators.*;
 import com.kaijung.jpa.*;
 
 import common.*;
@@ -205,16 +207,31 @@ public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 	
 	/* 把原本儲存在本地端的訂單送出至伺服器，目前是模擬，所以直接寫入揀貨單 */
 	@SuppressWarnings("unchecked")
-	public int submit ( String orderid ){
+	public int submit ( String orderid, int empid, String wareid ) throws Exception{
 		Query query = XPersistence.getManager().createQuery(
-				"FROM OrderStoreD WHERE orderStore_oid = :orderid"
+				"FROM OrderStoreD WHERE orderStore.oid = :orderid"
 			); //JPQL query
 		query.setParameter("orderid", orderid);
 		logger.debug("OrderStoreNewDAO.submit: orderid: "+ orderid );
 		List <OrderStoreD> orderStoreDs = query.getResultList();
 		logger.debug("OrderStoreNewDAO.submit: orderStoreDs: "+ orderStoreDs );
 		
+		ReadCodeGenerator rg = new ReadCodeGenerator();//設定揀貨單的可讀碼
+		rg.setDocType("B");
+		rg.setTableName("SeqGenOrderStore");
+		rg.setWareId( wareid);
+		
+		Employee user = new Employee();
+		user.setOid(empid);
+		
+		java.util.Date today = new java.util.Date();
+		
 		OrderPicker orderPicker = new OrderPicker();
+		orderPicker.setPicker( user);
+		orderPicker.setModifier( user);
+		orderPicker.setModifyTime( today);
+		orderPicker.setCreateTime( today);
+		orderPicker.setReadCode( (String)rg.calculate() );
 		XPersistence.getManager().persist( orderPicker );
 		XPersistence.commit(); // 若 ID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
 		int pickId = orderPicker.getOid();
@@ -225,12 +242,18 @@ public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 			OrderStoreD d = (OrderStoreD) orderStoreDs.get(i);
 			p.setOrderPicker( orderPicker );
 			p.setItem	( d.getItem());
-			p.setQuantity( d.getQuantity());
+//			p.setQuantity( d.getQuantity());
 			XPersistence.getManager().persist( p );
 			XPersistence.commit(); // 若 ID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
 		}
 		
-//		OrderPickSend rel = new OrderPickSend();
+		OrderPickSend rel = new OrderPickSend();
+		rel.setOrderDid( orderid);
+		rel.setPickDid( pickId);
+		rel.setWareId( Integer.parseInt( wareid));
+		XPersistence.getManager().persist( rel );
+		XPersistence.commit(); // 若 ID 重複，會有例外: org.hibernate.PersistentObjectException: detached entity passed to persist: com.kaijung.jpa.OrderStoreD
+		
 		return 1;
 	}
 

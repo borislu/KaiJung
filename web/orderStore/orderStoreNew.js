@@ -58,7 +58,6 @@ function submit (){
 //			update();
 //		}
 	});
-	//先檢查此訂貨單編號是否已經存入DB,若無則寫入
 	//送出
 	OrderStoreNew.submit( headId );
 }

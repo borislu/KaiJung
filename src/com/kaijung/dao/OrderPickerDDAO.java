@@ -45,17 +45,30 @@ public class OrderPickerDDAO {
 	public Collection <OrderStoreD> getOrderDByPick ( int pickId ){ // 用 揀貨單編號 查出 訂單明細檔
 		Query query = XPersistence.getManager()
 		.createQuery(
-				"FROM OrderStoreD o WHERE o.oid IN" +
-				" (SELECT ops.orderDid FROM OrderPickSend ops WHERE ops.pickDid IN " +
-				" (FROM OrderPickerD d WHERE d.orderPicker.oid = :pickId ))"
-			); //JPQL query
+				"FROM OrderStoreD o WHERE o.orderStore.oid IN" +
+				" (SELECT ops.orderDid FROM OrderPickSend ops WHERE ops.pickDid = :pickId )"
+			); //SELECT * FROM OrderStoreD AS o WHERE o.orderStore_oid IN (SELECT ops.orderDid FROM OrderPickSend AS ops WHERE ops.pickDid = '43' )
 		query.setParameter("pickId", pickId);
 
-		Collection ops = query.getResultList();
+		Collection c = query.getResultList();
 		
-		logger.debug("OrderPickerDDAO.findAll pickDList: "+ ops);
+		logger.debug("OrderPickerDDAO.getOrderDByPick OrderStoreD Collection: "+ c);
 		
-		return ops; 
+		return c; 
+	}
+
+	public Collection <OrderPickerD> getPickerDByPick ( int pickId ){ // 用 揀貨單編號 查出 訂單明細檔
+		Query query = XPersistence.getManager()
+		.createQuery(
+				"FROM OrderPickerD o WHERE o.orderPicker.oid = :pickId )"
+			); //SELECT * FROM OrderStoreD AS o WHERE o.orderStore_oid IN (SELECT ops.orderDid FROM OrderPickSend AS ops WHERE ops.pickDid = '43' )
+		query.setParameter("pickId", pickId);
+
+		Collection c = query.getResultList();
+		
+		logger.debug("OrderPickerDDAO.getPickerDByPick pickDList: "+ c);
+		
+		return c; 
 	}
 
 	public OrderPickSend getRelation ( int pickDid ){ // 用 揀貨單明細編號 查出和 訂單明細關連檔

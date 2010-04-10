@@ -18,9 +18,9 @@ public class OrderSenderD implements Serializable {
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private int oid;
 
-	private int comfirmQty;
+	private String comfirmQty;
 
-	private int expectedQty;
+	private String expectedQty;
 
 //	private int orderSender_oid;
 	@ManyToOne @JoinColumn(name = "orderSender_oid", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
@@ -80,19 +80,19 @@ public class OrderSenderD implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getComfirmQty() {
+	public String getComfirmQty() {
 		return this.comfirmQty;
 	}
 
-	public void setComfirmQty(int comfirmQty) {
+	public void setComfirmQty(String comfirmQty) {
 		this.comfirmQty = comfirmQty;
 	}
 
-	public int getExpectedQty() {
+	public String getExpectedQty() {
 		return this.expectedQty;
 	}
 
-	public void setExpectedQty(int expectedQty) {
+	public void setExpectedQty(String expectedQty) {
 		this.expectedQty = expectedQty;
 	}
 
