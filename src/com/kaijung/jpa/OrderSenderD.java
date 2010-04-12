@@ -14,8 +14,13 @@ import org.openxava.annotations.*;
 public class OrderSenderD implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="orderSenderD.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
 	private String comfirmQty;
@@ -68,6 +73,12 @@ public class OrderSenderD implements Serializable {
 
 	@DisplaySize(6) @Transient
 	public String get32() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getSum() { return ""; } // 數量，無資料庫對應
+
+	@DisplaySize(8) @Transient
+	public String getCargo() { return ""; } // 箱號，無資料庫對應
 
 	public OrderSenderD() {
     }

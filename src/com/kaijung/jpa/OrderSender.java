@@ -22,7 +22,7 @@ import java.util.*;
 	@View(name = "DetailOnly" , members=
 	     "order [ orderId; orderTime; warehouse; orderBy  ]"
 		 +"picker [ pickerId; pickerTime; pickerBy ]"
-	    +"sender [ readCode; createTime; createBy ] details"
+	    +"sender [ readCode; createTime; sender; oid ] details"
 	)
 })
 @Tab(name="Latest", defaultOrder="${oid} desc"
@@ -42,7 +42,7 @@ public class OrderSender implements Serializable {
 
 	@OneToMany(mappedBy="orderSender", cascade=CascadeType.REMOVE) //@AsEmbedded
 	@ListProperties("item.articleno, item.price, item.color.sName, 24,26,28,30,32"
-	+ ",remark, status, oid"
+	+ ", item.itemUnit.name, sum, cargo, remark, status, oid"
 	)
 	private Collection<OrderSenderD> details ;// = new ArrayList<OrderStoreD>(); 
 

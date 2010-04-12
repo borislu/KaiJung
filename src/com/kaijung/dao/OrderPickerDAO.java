@@ -73,7 +73,7 @@ public class OrderPickerDAO {
 		Query query = XPersistence.getManager().createQuery(
 				"FROM OrderPickerD WHERE orderPicker.oid = :pickid"
 			); //JPQL query
-		query.setParameter("pickid", pickid);
+		query.setParameter("pickid", Integer.parseInt( pickid));
 		logger.debug("OrderPickerDAO.submit: pickid: "+ pickid );
 		List <OrderPickerD> orderPickerDs = query.getResultList();
 		logger.debug("OrderPickerDAO.submit: orderPickerDs: "+ orderPickerDs );

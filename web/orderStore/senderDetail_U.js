@@ -1,8 +1,7 @@
 function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
-    var ids = ['qware', 'qshelf', 'qx', 'qy'];
-    var idm = ['sware', 'sshelf', 'sx', 'sy', 'smemo', 'sgo'];
-    var szs = ['8', '6', '3', '3', '12', '0']; 
-    var types = ['','','','','','type="checkbox"'];
+    var ids = ['q24', 'q26', 'q28', 'q30', 'q32'];
+    var idm = ['s24', 's26', 's28', 's30', 's32'];
+    var szs = ['3', '3', '3', '3', '3']; //var types = ['','','','','','','','','','','','','',''];
 	 var oid_th = $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'List.orderBy', 'property=oid,collection=details')\"]");
     //alert('oid_th:'+ oid_th.text() );
     oid_th.parent().parent().remove();//移除最後的orderSender_oid欄位標題
@@ -16,31 +15,26 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
         $(this).append('<input id="senderd_oid_'+ sn + '" value="' + oid_txt + '" type="hidden"/>');//放在trs的迴圈內，只是想用trs的索引值，前後位置就不重要了。
         //alert('senderDetail.js: '+ $('#ox_KaiJung_OrderSenderDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
     	  if(sn%2==1){ bgcolor = 'D3DADD'; }//奇數列
-        $(this).find('td').slice(11, 15).each(//訂單的尺寸數量(惟讀)
-            function(i){
-         	    var data = $.trim(this.childNodes[0].data);
-                if(!data){ data = ''; }
-  	             //$(this).find(':first-child').remove();
-  	             this.removeChild(this.childNodes[0]);//移除原來的label資料
-      	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" value="' + data +'" size="'+ szs[i] +'" readonly style="border:0;background:#'+ bgcolor +' none repeat scroll 0 0;">');
-                }
-           );
-        $(this).find('td').slice(22,28).each(//本揀貨單的尺寸數量(可編輯)
-            function(i){
- 	             this.removeChild(this.childNodes[0]);//移除原來的label資料
-        	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" '+ types[i] +' size="'+ szs[i] +'"/>');
-                }//
-           );
+          $(this).find('td').slice(4, 9).each(//訂單的尺寸數量(惟讀)
+              function(i){
+        	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" size="'+ szs[i] +'" readonly style="border:0;background:#'+ bgcolor +' none repeat scroll 0 0;">');
+                  }
+             );
+//          $(this).find('td').slice(18,23).each(//本揀貨單的尺寸數量(可編輯)
+//              function(i){
+//          	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" size="'+ szs[i] +'"/>');
+//                  }//
+//             );
         oid.remove();//移除最後的orderSender_oid欄位
     }); //trs.each
      // 用來將quantity的資料從訂貨單(json)取出，置入欄位中。
 //alert( 'senderDetail.js: senderId: ' + $('input[name="ox_KaiJung_OrderSenderDetailOnly__oid"]').eq(1).val() );
-    var senderid = $('input[name="ox_KaiJung_OrderSenderDetailOnly__oid"]').eq(1).val();
-    OrderSenderDwr.getDetailByHeadId ( senderid, function(orderD_Set){ // argument: wareId , return: orderD_Set
-//alert( 'senderDetail.js: length: '+ orderD_Set.length + ' senderId: ' + senderId );
-    		for (var i=0; i < orderD_Set.length; i++) {
-//alert( 'senderDetail.js: quantity: '+ orderD_Set[i].quantity );
-    			var qtyobj = jQuery.parseJSON( orderD_Set[i].quantity );
+    var senderid = $('input[name="ox_KaiJung_OrderSenderDetailOnly__oid"]').eq(0).val();
+    OrderSenderDwr.getDetailByHeadId ( senderid, function(sendD_Set){ // argument: wareId , return: sendD_Set
+//alert( 'senderDetail.js: length: '+ sendD_Set.length + ' senderid: ' + senderid );
+    		for (var i=0; i < sendD_Set.length; i++) {
+//alert( 'senderDetail.js: quantity: '+ sendD_Set[i].expectedQty );
+    			var qtyobj = jQuery.parseJSON( sendD_Set[i].expectedQty );
 //alert( 'senderDetail.js: qtyobj: '+ qtyobj.s24 );
     			dwr.util.setValue( 'q24_'+ i , qtyobj.s24 );
     			dwr.util.setValue( 'q26_'+ i , qtyobj.s26 );

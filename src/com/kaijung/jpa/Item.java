@@ -142,7 +142,10 @@ public class Item implements Serializable {
 
 	private int typeid;
 
-	private int unitid;
+//	private int unitid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "unitid", referencedColumnName = "oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private ItemUnit itemUnit;
 
 	private String vatgroup;
 
@@ -513,14 +516,6 @@ public class Item implements Serializable {
 		this.typeid = typeid;
 	}
 
-	public int getUnitid() {
-		return this.unitid;
-	}
-
-	public void setUnitid(int unitid) {
-		this.unitid = unitid;
-	}
-
 	public String getVatgroup() {
 		return this.vatgroup;
 	}
@@ -559,6 +554,14 @@ public class Item implements Serializable {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+
+	public ItemUnit getItemUnit() {
+		return itemUnit;
+	}
+
+	public void setItemUnit(ItemUnit itemUnit) {
+		this.itemUnit = itemUnit;
 	}
 
 }

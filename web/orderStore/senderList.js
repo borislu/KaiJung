@@ -1,76 +1,17 @@
-/* 所有 上架明細 的共用功能  */
-function afterSave(){
-    $.cookie("JSESSIONID",null);
-    parent.frames["frameEast"].openxava.executeAction('KaiJung', 'OrderSenderListOnly', '', false, 'List.goPage', 'page=1');
-    parent.frames["frameEast"].window.location.reload();
+function changeLink(){        	    //alert('module_pickerList.jsp: after changeLink');  
+  if( $('a').length < 1 ){
+      setTimeout( 'changeLink()', 50 );
+  }else{
+	  $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderSenderListOnly\', \'\', false, \'List.viewDetail\'']").each(
+    	    function() {
+        	    rowIndex = $(this).attr('href').substring(103);
+        	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ;
+//        	    $(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
+        	 }//function
+	  );
+  }
 }
-function afterDel(){
-	 //alert("trying: "+ $("#ox_KaiJung_SenderDetailOnly__messages_table").length>0);
-	 if ($("#ox_KaiJung_OrderSenderDetailOnly__messages_table").length>0) {
-	     parent.frames["frameEast"].window.location.reload();
-        $.cookie("JSESSIONID", null);
-	 }else {
-		     setTimeout("afterDel()", 50);
-	 }
-}
-function changeLink(){
-    if( ($('a')==null) || ($('a').length < 1) ){
-        setTimeout( 'changeLink()', 50 );  
-    }else{
-        $('#ox_KaiJung_OrderSenderDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
-        $('#ox_KaiJung_OrderSenderDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
-     }
-}
-function changeCss(){
-    //$(document).ready(function(){
-    if( ($('#ox_KaiJung_OrderSenderDetailOnly__view')==null) || ($('#ox_KaiJung_OrderSenderDetailOnly__view').length < 1) ){
-        setTimeout( 'changeCss()', 50 );  
-    }else{
-      	  //強制div的寬度，避免換行
-        $('#ox_KaiJung_OrderSenderDetailOnly__view').css('width','1000px');
-          //隱藏openxava預設的pk圖示
-        $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
-          //隱藏openxava預設的加號
-        $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderSenderDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
-        //隱藏openxava預設的明細第一欄
-//      alert('col: '+ $("#ox_KaiJung_OrderSenderDetailOnly__filter_link_details").parent().attr('class') );
-      $("#ox_KaiJung_OrderSenderDetailOnly__filter_link_details").parent().remove();//css('visibility','hidden');
-      $("tr[id^='ox_KaiJung_OrderSenderDetailOnly__xava_collectionTab_details_']").each(function (i) {
-     	 $(this).find('td:eq(0)').remove();
-      });//css('visibility','hidden');
-      $('#ox_KaiJung_OrderSenderDetailOnly__button_bar').remove();
-     }
-}
-
-function updatePick(){
-//debug = 'debug: ';
-    trs = $("tr[id^='ox_KaiJung_OrderSenderDetailOnly__xava_collectionTab_details_']"	);
-    var sizes = ['s24','s26','s28','s30','s32']; //尺寸數量暫定5組
-    trs.each(function(sn){
-   	   var quantity = '{';
-		   var oid = $('#senderd_oid_'+sn).val().trim(); 
-         //alert('senderDetail.js: '+ $('#ox_KaiJung_OrderSenderDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
-			for(j=1;j<=sizes.length;j++)
-			{
-				qtyVal = 0;
-				if( $('#'+ sizes[sn] +'_'+ sn) ){
-					qtyVal = $('#'+ sizes[j] +'_'+ sn).val();
-					if( qtyVal == '' || qtyVal == null ){
-						qtyVal = '0';
-					}
-				}
-				quantity += '\"'+ sizes[j-1] + '\":' + qtyVal + ',';
-			}
-			quantity = quantity.substring( 0, quantity.length-1 );//去除最後的逗號
-			quantity += '}';
-//debug += quantity;//會把迴圈內的所有都印出來
-			OrderSenderDwr.update(oid, quantity, 'memo');
-    }); //trs.each
-//alert( debug );
-}
-
-
-openxava.refreshPage = function(result) { // override OpenXava
+openxava.refreshPage = function(result) {
 	var changed = "";	
 	if (result.error != null) {		
 		openxava.systemError(result);
@@ -167,9 +108,8 @@ openxava.refreshPage = function(result) { // override OpenXava
 	openxava.resetRequesting(result); 
 	document.body.style.cursor='auto';
     /* Author: Boris
+     * OrderListOnly 清單頁用來更新明細的連結
       */
-	changeCss();
 	changeLink();
-	editable();
 }
 
