@@ -37,7 +37,7 @@ public class OrderMarkD implements Serializable {
 //	private int orderMark_oid;
 	@ManyToOne 
 	@JoinColumn(name="orderMark_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
-	private OrderPicker orderMark;
+	private OrderMark orderMark;
 
 	private String presetQty;
 
@@ -277,14 +277,6 @@ public class OrderMarkD implements Serializable {
 		this.y = y;
 	}
 
-	public OrderPicker getOrderMark() {
-		return orderMark;
-	}
-
-	public void setOrderMark(OrderPicker orderMark) {
-		this.orderMark = orderMark;
-	}
-
 	public Warehouse getWarehouse() {
 		return warehouse;
 	}
@@ -315,6 +307,14 @@ public class OrderMarkD implements Serializable {
 
 	public void setCreateBy(int createBy) {
 		this.createBy = createBy;
+	}
+
+	public void setOrderMark(OrderMark orderMark) {
+		this.orderMark = orderMark;
+	}
+
+	public OrderMark getOrderMark() {
+		return orderMark;
 	}
 
 }

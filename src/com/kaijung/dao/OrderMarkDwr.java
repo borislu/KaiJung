@@ -7,21 +7,23 @@ import common.*;
 import java.util.*;
 
 public class OrderMarkDwr {
-		private static Logger logger = Logger.getLogger(OrderMarkDwr.class);
-	  
-		public void update(String oid, String quantity, String memo){
-	      logger.debug("OrderMarkDwr.update: quantity: "+ quantity);
-			OrderMarkDDAO dao = new OrderMarkDDAO();
-			dao.update(Integer.parseInt(oid), quantity, memo);
-		}
-		@SuppressWarnings("unchecked")
-		public HashSet <ImportD> getImportByBarcode(String barcode){//以條碼(=商品代號)取得該商品的進貨記錄
-			 logger.debug("OrderMarkDwr.getImportByBarcode: barcode: "+ barcode );
-			 Collection c = new OrderMarkDDAO().getImportByBarcode( barcode );
-			 HashSet <ImportD> beans = new HashSet (c);
-			 logger.debug("OrderMarkDwr.getImportByBarcode: beans: "+ beans );
-			 return beans;
-		 }
+	private static Logger logger = Logger.getLogger(OrderMarkDwr.class);
+  
+	public void update(String oid, String quantity, String memo){
+      logger.debug("OrderMarkDwr.update: quantity: "+ quantity);
+		OrderMarkDDAO dao = new OrderMarkDDAO();
+		dao.update(Integer.parseInt(oid), quantity, memo);
+	}
+	@SuppressWarnings("unchecked")
+	public HashSet <OrderMarkD> getMarksById(String markid){//以備貨單編號找出備貨單明細
+		 logger.debug("OrderMarkDwr.getMarksById: markid: "+ markid );
+		 int markId = 0;
+		 if( markid !=null){ markId = Integer.parseInt( markid); }
+		 Collection c = new OrderMarkDDAO().getMarksById( markId );
+		 HashSet <OrderMarkD> beans = new HashSet (c);
+		 logger.debug("OrderMarkDwr.getMarksById: beans: "+ beans );
+		 return beans;
+	 }
 		 
 	public Item getByBarcode(String barcode){//以條碼找出商品
 		return new ItemDAO().getItemByBarcode(barcode);

@@ -49,6 +49,7 @@
     <convert match="com.kaijung.jpa.ItemType" converter="bean" javascript="ItemType"></convert>
     <convert match="com.kaijung.jpa.Mall" converter="bean" javascript="Mall"></convert>
     <convert match="com.kaijung.jpa.OrderMark" converter="bean" javascript="OrderMark"></convert>
+    <convert match="com.kaijung.jpa.OrderMarkD" converter="bean" javascript="OrderMarkD"></convert>
     <convert match="com.kaijung.jpa.OrderPickerD" converter="bean" javascript="OrderPickerD"></convert>
     <convert match="com.kaijung.jpa.OrderPickSend" converter="bean" javascript="OrderPickSend"></convert>
     <convert match="com.kaijung.jpa.OrderPlace" converter="bean" javascript="OrderPlace"></convert>

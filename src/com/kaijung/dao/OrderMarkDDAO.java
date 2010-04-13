@@ -21,7 +21,7 @@ import com.kaijung.jpa.*;
 import common.*;
 
 /*
- * author Boris@de-lian.com 
+ * author Boris.lds@gmail.com
  */
 @SuppressWarnings("unchecked")
 public class OrderMarkDDAO {
@@ -30,14 +30,13 @@ public class OrderMarkDDAO {
 	public OrderMarkDDAO() {
 	}
 
-	public Collection <ImportD> getImportByBarcode( String barcode ){ // 未完成
+	public Collection <OrderMarkD> getMarksById( int markid ){ //以備貨單編號找出備貨單明細
 		Query query = XPersistence.getManager()
-		.createQuery("FROM ImportD o WHERE o.import1.oid IN (SELECT p.item.oid FROM OrderMarkD p WHERE p.orderMark.oid = :markid ORDER BY p.oid DESC) )"); //JPQL query
-		query.setParameter("barcode", barcode);
-		//select * FROM Stock o WHERE o.itemid IN (SELECT p.itemid FROM OrderMarkD p WHERE p.orderMark_oid = '1' ORDER BY p.oid DESC)
+		.createQuery("FROM OrderMarkD o WHERE o.orderMark.oid = :markid"); //JPQL query
+		query.setParameter("markid", markid );
 		Collection details = query.getResultList();
 		
-		logger.debug("OrderMarkDDAO.getImportByBarcode details: "+ details);
+		logger.debug("OrderMarkDDAO.getMarksById details: "+ details);
 		
 		return details; 
 	}

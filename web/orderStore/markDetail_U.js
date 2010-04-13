@@ -12,7 +12,7 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
            //將明細oid放入hidden input後移除原始的text
 		  var oid = $(this).find("td:last");
 		  oid_txt = oid.text().trim();
-        //alert('markDetail_R.js: oid_txt: '+ oid_txt);
+		  //alert('markDetail_U.js: oid_txt: '+ oid_txt);
         $(this).append('<input id="markd_oid_'+ sn + '" value="' + oid_txt + '" type="hidden"/>');//放在trs的迴圈內，只是想用trs的索引值，前後位置就不重要了。
         //alert('markDetail.js: '+ $('#ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
     	  if(sn%2==1){ bgcolor = 'D3DADD'; }//奇數列

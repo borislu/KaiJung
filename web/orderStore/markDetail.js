@@ -12,12 +12,32 @@ function afterDel(){
 		     setTimeout("afterDel()", 50);
 	 }
 }
+//function clickFilter(){//把過濾的icon放到上面
+////	if( $('#ox_KaiJung_OrderMarkDetailOnly__filter_link_details').length > 0){
+//	alert( $('#ox_KaiJung_OrderMarkDetailOnly__tr_list_filter_details').css('display') );
+//	    if( $('#ox_KaiJung_OrderMarkDetailOnly__tr_list_filter_details').css('display') == 'none' ){
+//	    	  $("ox_KaiJung_OrderMarkDetailOnly__filter_link_details").remove();
+//	        $("#ox_KaiJung_OrderMarkDetailOnly__collection_details___ td").first()
+//	          .append("<a id=\"ox_KaiJung_OrderMarkDetailOnly__filter_link_details\" title=\"顯示過濾器\" href=\"javascript:openxava.manageFilterRow('KaiJung', 'OrderMarkDetailOnly', 'details', 'xava_collectionTab_details')\">" +
+//	          "<img id=\"ox_KaiJung_OrderMarkDetailOnly__filter_image_list\" border=\"0\" align=\"middle\" src=\"/KaiJung/xava/images/show-filter.gif\"/></a>");
+//	    }else{
+//	   	  $("ox_KaiJung_OrderMarkDetailOnly__filter_link_details").remove();
+//	        $("#ox_KaiJung_OrderMarkDetailOnly__collection_details___ td").first()
+//	          .append("<a id=\"ox_KaiJung_OrderMarkDetailOnly__filter_link_details\" title=\"隱藏過濾器\" href=\"javascript:openxava.manageFilterRow('KaiJung', 'OrderMarkDetailOnly', 'details', 'xava_collectionTab_details')\">" +
+//	          "<img id=\"ox_KaiJung_OrderMarkDetailOnly__filter_image_list\" border=\"0\" align=\"middle\" src=\"/KaiJung/xava/images/hide-filter.gif\"/></a>");
+//	     }
+////	}
+//}
 function changeLink(){
     if( ($('a')==null) || ($('a').length < 1) ){
         setTimeout( 'changeLink()', 50 );  
     }else{
         $('#ox_KaiJung_OrderMarkDetailOnly__CRUD___save').attr('onclick','javascript:afterSave();');
         $('#ox_KaiJung_OrderMarkDetailOnly__CRUD___delete').attr('onclick','javascript:afterDel();');
+          //強制隱藏過濾器
+	    if( ! $('#ox_KaiJung_OrderMarkDetailOnly__tr_list_filter_details').css('display') == 'none' ){
+	    	  $('#ox_KaiJung_OrderMarkDetailOnly__tr_list_filter_details').css('display','none');
+	    }//if
      }
 }
 function changeCss(){
