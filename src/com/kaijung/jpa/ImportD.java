@@ -12,47 +12,65 @@ import javax.persistence.*;
 public class ImportD implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
-	private int idid;
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="importD.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
+	private int oid;
 
-	private int importid;
+	private String cartonno;
 
-	private int productid;
+//	private int importOid;
+	@ManyToOne 
+	@JoinColumn(name="import_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Import import1;
+
+	private int itemid;
+
+	private String memo;
 
 	private int quantity;
 
-	private String remark;
-
-	private int status;
+	private String status;
 
 	private int unitid;
 
     public ImportD() {
     }
 
-	public int getIdid() {
-		return this.idid;
+	public int getOid() {
+		return this.oid;
 	}
 
-	public void setIdid(int idid) {
-		this.idid = idid;
+	public void setOid(int oid) {
+		this.oid = oid;
 	}
 
-	public int getImportid() {
-		return this.importid;
+	public String getCartonno() {
+		return this.cartonno;
 	}
 
-	public void setImportid(int importid) {
-		this.importid = importid;
+	public void setCartonno(String cartonno) {
+		this.cartonno = cartonno;
 	}
 
-	public int getProductid() {
-		return this.productid;
+	public int getItemid() {
+		return this.itemid;
 	}
 
-	public void setProductid(int productid) {
-		this.productid = productid;
+	public void setItemid(int itemid) {
+		this.itemid = itemid;
+	}
+
+	public String getMemo() {
+		return this.memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 	public int getQuantity() {
@@ -63,19 +81,11 @@ public class ImportD implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public String getRemark() {
-		return this.remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public int getStatus() {
+	public String getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -85,6 +95,14 @@ public class ImportD implements Serializable {
 
 	public void setUnitid(int unitid) {
 		this.unitid = unitid;
+	}
+
+	public Import getImport1() {
+		return import1;
+	}
+
+	public void setImport1(Import import1) {
+		this.import1 = import1;
 	}
 
 }

@@ -3,6 +3,8 @@ package com.kaijung.jpa;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 import java.util.Date;
 
 
@@ -14,36 +16,34 @@ import java.util.Date;
 public class OrderMarkD implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="orderMarkD.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
 	private String batchNo;
 
-	private int createBy;
-
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date createTime;
-
-	private int itemid;
+//	private int itemid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Item item;
 
 	private String markingNo;
-
-	private int modifyBy;
-
-    @Temporal( TemporalType.TIMESTAMP)
-	private Date modifyTime;
 
 //	private int orderMark_oid;
 	@ManyToOne 
 	@JoinColumn(name="orderMark_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderPicker orderMark;
 
-	private int presetQty;
+	private String presetQty;
 
 	private int priority;
 
-	private int realQty;
+	private String realQty;
 
 	private String remark;
 
@@ -71,13 +71,42 @@ public class OrderMarkD implements Serializable {
 
 	private String status;
 
-	private int wareid;
+//	private int wareid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="wareid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Warehouse warehouse;
 
+	private int createBy;
+	
+   @Temporal( TemporalType.TIMESTAMP)
+	private Date createTime;
+	
 	private int x;
 
 	private int y;
 
-    public OrderMarkD() {
+	@DisplaySize(6) @Transient
+	public String get24() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get26() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get28() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get30() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String get32() { return ""; } // 尺寸，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum() { return ""; } // 小計，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getSum2() { return ""; } // 小計，無資料庫對應
+
+   public OrderMarkD() {
     }
 
 	public int getOid() {
@@ -96,30 +125,6 @@ public class OrderMarkD implements Serializable {
 		this.batchNo = batchNo;
 	}
 
-	public int getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(int createBy) {
-		this.createBy = createBy;
-	}
-
-	public Date getCreateTime() {
-		return this.createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public int getItemid() {
-		return this.itemid;
-	}
-
-	public void setItemid(int itemid) {
-		this.itemid = itemid;
-	}
-
 	public String getMarkingNo() {
 		return this.markingNo;
 	}
@@ -128,27 +133,11 @@ public class OrderMarkD implements Serializable {
 		this.markingNo = markingNo;
 	}
 
-	public int getModifyBy() {
-		return this.modifyBy;
-	}
-
-	public void setModifyBy(int modifyBy) {
-		this.modifyBy = modifyBy;
-	}
-
-	public Date getModifyTime() {
-		return this.modifyTime;
-	}
-
-	public void setModifyTime(Date modifyTime) {
-		this.modifyTime = modifyTime;
-	}
-
-	public int getPresetQty() {
+	public String getPresetQty() {
 		return this.presetQty;
 	}
 
-	public void setPresetQty(int presetQty) {
+	public void setPresetQty(String presetQty) {
 		this.presetQty = presetQty;
 	}
 
@@ -160,11 +149,11 @@ public class OrderMarkD implements Serializable {
 		this.priority = priority;
 	}
 
-	public int getRealQty() {
+	public String getRealQty() {
 		return this.realQty;
 	}
 
-	public void setRealQty(int realQty) {
+	public void setRealQty(String realQty) {
 		this.realQty = realQty;
 	}
 
@@ -272,14 +261,6 @@ public class OrderMarkD implements Serializable {
 		this.status = status;
 	}
 
-	public int getWareid() {
-		return this.wareid;
-	}
-
-	public void setWareid(int wareid) {
-		this.wareid = wareid;
-	}
-
 	public int getX() {
 		return this.x;
 	}
@@ -302,6 +283,38 @@ public class OrderMarkD implements Serializable {
 
 	public void setOrderMark(OrderPicker orderMark) {
 		this.orderMark = orderMark;
+	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public int getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(int createBy) {
+		this.createBy = createBy;
 	}
 
 }

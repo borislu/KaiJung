@@ -18,34 +18,46 @@ import java.util.*;
 @Views( {
 	@View(name = "DetailOnly" 
 		, members = 
-		"header[ readCode, priority, createTime, createBy, oid ] details"
+		"header[ readCode, priority, createTime, creater, oid ] details"
 	)
 })
 @Tab(name = "Latest", defaultOrder = "${oid} desc"
-	,properties="readCode, createTime, createBy, status, remark" //details.realQty, 
+	,properties="readCode, createTime, creater.name, status, remark" //details.realQty, 
 )
 public class OrderMark implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy=GenerationType.TABLE)
+	@Id //@Hidden
+	@TableGenerator(
+	    name="SequenceGenerator", table="SequenceGen", 
+	    pkColumnName="oid", valueColumnName="value", 
+	    pkColumnValue="orderMark.oid", initialValue=1, allocationSize=1
+	)
+	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
 	@OneToMany(mappedBy="orderMark", cascade=CascadeType.REMOVE) //@AsEmbedded
-//	@ListProperties("item.articleno, item.price, item.color.name, 24,26,28,30,32,"
-//	+"sum, warehouse.name, shelf, x, y, rate," //加上可出貨天數
-//	+"24,26,28,30,32, sum2, warehouse.name, shelf, x, y, remark, go, oid"
-//	)
+	@ListProperties("item.articleno, item.color.name, item.price, 24,26,28,30,32"
+	+", sum, priority, 24,26,28,30,32, sum2"//, createBy"
+	+", warehouse.name, shelf, x, y, createTime, remark, status, oid"
+	)
 	private Collection<OrderMarkD> details ;// = new ArrayList<OrderStoreD>();
 	
-	private int createBy;
+//	private int createBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee creater; // 備貨主管
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date expectedTime;
 
-	private int modifyBy;
+//	private int modifyBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee modifier; // 備貨人員
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
@@ -95,14 +107,6 @@ public class OrderMark implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(int createBy) {
-		this.createBy = createBy;
-	}
-
 	public Date getCreateTime() {
 		return this.createTime;
 	}
@@ -117,14 +121,6 @@ public class OrderMark implements Serializable {
 
 	public void setExpectedTime(Date expectedTime) {
 		this.expectedTime = expectedTime;
-	}
-
-	public int getModifyBy() {
-		return this.modifyBy;
-	}
-
-	public void setModifyBy(int modifyBy) {
-		this.modifyBy = modifyBy;
 	}
 
 	public Date getModifyTime() {
@@ -253,6 +249,22 @@ public class OrderMark implements Serializable {
 
 	public void setDetails(Collection<OrderMarkD> details) {
 		this.details = details;
+	}
+
+	public Employee getCreater() {
+		return creater;
+	}
+
+	public void setCreater(Employee creater) {
+		this.creater = creater;
+	}
+
+	public Employee getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(Employee modifier) {
+		this.modifier = modifier;
 	}
 
 }

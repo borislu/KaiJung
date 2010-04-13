@@ -17,6 +17,9 @@
     <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
     <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
 
+	   <create creator="new" javascript="OrderMarkDwr">
+      <param name="class" value="com.kaijung.dao.OrderMarkDwr" />
+    </create>
 	   <create creator="new" javascript="OrderPickerDwr">
       <param name="class" value="com.kaijung.dao.OrderPickerDwr" />
     </create>

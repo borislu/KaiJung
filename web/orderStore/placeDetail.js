@@ -32,6 +32,12 @@ function changeCss(){
         $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
           //隱藏openxava預設的加號
         $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderPlaceDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
+          //隱藏明細的第一欄的明細按鈕
+        $("#ox_KaiJung_OrderPlaceDetailOnly__filter_link_details").parent().remove();//css('visibility','hidden');
+        $("tr[id^='ox_KaiJung_OrderPlaceDetailOnly__xava_collectionTab_details_']").each(function (i) {
+       	 $(this).find('td:eq(0)').remove();
+        });//css('visibility','hidden');
+        $('#ox_KaiJung_OrderPlaceDetailOnly__button_bar').remove();
      }
 }
 

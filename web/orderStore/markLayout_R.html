@@ -136,7 +136,7 @@ p {
                  },{
                      text:'儲存',
                      handler:function(){
-       	                 Ext.getDom('frameWest').contentWindow.updatePick() ;
+       	                 Ext.getDom('frameWest').contentWindow.updateMark() ;
                          Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
@@ -163,8 +163,8 @@ p {
 <!--<input id="ox_KaiJung_OrderMarkerListOnly__Mode___detailAndFirst" class="" type="button" value="首筆明細" onclick="openxava.executeAction("KaiJung", "OrderMarkerListOnly", "", false, "Mode.detailAndFirst")" title="F8 - 明細模式"/>-->
 </head>
 <body>
-<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/module_pickerList.jsp?application=KaiJung&module=OrderMarkerListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
-<div id="west"><iframe id="frameWest" name="frameWest" src="../xava/module_pickerDetail.jsp?application=KaiJung&module=OrderMarkerDetailOnly"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/module_markList.jsp?application=KaiJung&module=OrderMarkListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="west"><iframe id="frameWest" name="frameWest" src="../xava/module_markDetail_R.jsp?application=KaiJung&module=OrderMarkDetailOnly"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
 <div id="north">
 <p></p>
 </div>

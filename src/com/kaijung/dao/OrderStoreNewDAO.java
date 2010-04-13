@@ -120,7 +120,7 @@ public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 	}
 	
 	// 用條碼去找出貨號顏色價錢
-	public Item getItemByBarcode(String barcode) throws SQLException {
+	public Item getItemByBarcode(String barcode) throws SQLException { // 應使用 ItemDAO.getItemByBarcode
 		EntityManager em = XPersistence.getManager();
 		Query query = null;
 		Item result = null;

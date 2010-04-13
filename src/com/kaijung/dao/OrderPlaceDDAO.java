@@ -30,7 +30,7 @@ public class OrderPlaceDDAO {
 	public OrderPlaceDDAO() {
 	}
 
-	public Collection <Stock> getStocksByPlaceId( int placeid ){ // 用揀貨單編號(單頭)查出明細檔
+	public Collection <Stock> getStocksByPlaceId( int placeid ){ // 用上架單編號(單頭)查出明細檔
 		Query query = XPersistence.getManager()
 		.createQuery("FROM Stock o WHERE o.item.oid IN (SELECT p.item.oid FROM OrderPlaceD p WHERE p.orderPlace.oid = :placeid ORDER BY p.oid DESC) )"); //JPQL query
 		query.setParameter("placeid", placeid);

@@ -16,11 +16,11 @@ import java.util.*;
 @Views( {
 	@View(name = "DetailOnly" 
 		, members = 
-		"header[ readCode, createTime, createBy, oid ] details"
+		"header[ readCode, createTime, creater, oid ] details"
 	)
 })
 @Tab(name = "Latest", defaultOrder = "${oid} desc"
-	,properties="readCode, createTime, createBy, status, remark, status2" //details.realQty, 
+	,properties="readCode, createTime, creater.name, status, remark, status2" //details.realQty, 
 )
 public class OrderPlace implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -41,12 +41,18 @@ public class OrderPlace implements Serializable {
 	)
 	private Collection<OrderPlaceD> details ;// = new ArrayList<OrderStoreD>(); 
 	
-	private int createBy;
+//	private int createBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "createBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee creater; // 上架人員
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date createTime;
 
-	private int modifyBy;
+//	private int modifyBy;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name = "modifyBy", referencedColumnName = "oid") // name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Employee modifier; // 上架人員
 
     @Temporal( TemporalType.TIMESTAMP)
 	private Date modifyTime;
@@ -91,28 +97,12 @@ public class OrderPlace implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(int createBy) {
-		this.createBy = createBy;
-	}
-
 	public Date getCreateTime() {
 		return this.createTime;
 	}
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public int getModifyBy() {
-		return this.modifyBy;
-	}
-
-	public void setModifyBy(int modifyBy) {
-		this.modifyBy = modifyBy;
 	}
 
 	public Date getModifyTime() {
@@ -241,6 +231,22 @@ public class OrderPlace implements Serializable {
 
 	public void setDetails(Collection<OrderPlaceD> details) {
 		this.details = details;
+	}
+
+	public Employee getCreater() {
+		return creater;
+	}
+
+	public void setCreater(Employee creater) {
+		this.creater = creater;
+	}
+
+	public Employee getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(Employee modifier) {
+		this.modifier = modifier;
 	}
 
 }

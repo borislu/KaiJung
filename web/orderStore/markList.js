@@ -2,9 +2,9 @@ function changeLink(){        	    //alert('module_markList.jsp: after changeLin
   if( $('a').length < 1 ){
       setTimeout( 'changeLink()', 50 );
   }else{
-	  $("a[href^='javascript:openxava.executeAction(\'KaiJung\', \'OrderMarkListOnly\', \'\', false, \'List.viewDetail\'']").each(
+	  $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderMarkListOnly', '', false, 'List.viewDetail'\"]").each(
     	    function() {
-        	    rowIndex = $(this).attr('href').substring(103);
+        	    rowIndex = $(this).attr('href').substring(101);
         	    this.href="javascript:parent.frames['frameWest'].openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'List.viewDetail', 'row=" + rowIndex ; 
         	    //$(this).attr('onclick', 'javascript:parent.frames["frameWest"].editable();');
         	 }//function

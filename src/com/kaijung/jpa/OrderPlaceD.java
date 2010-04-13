@@ -36,9 +36,9 @@ public class OrderPlaceD implements Serializable {
 	@JoinColumn(name="orderPlace_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private OrderPlace orderPlace;
 
-	private int presetQty;
+	private String presetQty;
 
-	private int realQty;
+	private String realQty;
 
 	private String remark;
 
@@ -113,19 +113,19 @@ public class OrderPlaceD implements Serializable {
 		this.oid = oid;
 	}
 
-	public int getPresetQty() {
+	public String getPresetQty() {
 		return this.presetQty;
 	}
 
-	public void setPresetQty(int presetQty) {
+	public void setPresetQty(String presetQty) {
 		this.presetQty = presetQty;
 	}
 
-	public int getRealQty() {
+	public String getRealQty() {
 		return this.realQty;
 	}
 
-	public void setRealQty(int realQty) {
+	public void setRealQty(String realQty) {
 		this.realQty = realQty;
 	}
 
