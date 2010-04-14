@@ -86,6 +86,12 @@ public class OrderMarkD implements Serializable {
 	private int y;
 
 	@DisplaySize(6) @Transient
+	public String getBatNo() { return ""; } // 批號，無資料庫對應
+
+	@DisplaySize(6) @Transient
+	public String getCartNo() { return ""; } // 箱號，無資料庫對應
+
+	@DisplaySize(6) @Transient
 	public String get24() { return ""; } // 尺寸，無資料庫對應
 
 	@DisplaySize(6) @Transient

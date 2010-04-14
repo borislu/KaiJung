@@ -28,6 +28,9 @@ function afterDel(){
 //	     }
 ////	}
 //}
+function createRecord(){
+//	$("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']");
+}
 function changeLink(){
     if( ($('a')==null) || ($('a').length < 1) ){
         setTimeout( 'changeLink()', 50 );  
@@ -50,13 +53,18 @@ function changeCss(){
           //隱藏openxava預設的pk圖示
         $("img[src$='key.gif']").each(function(){ $(this).css('visibility','hidden'); });
           //隱藏openxava預設的加號
-        $("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
+        //$("a[href=\"javascript:openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'Collection.new', 'viewObject=xava_view_details')\"]").css('visibility','hidden');
           //去除明細的第一欄
         $("#ox_KaiJung_OrderMarkDetailOnly__filter_link_details").parent().remove();//css('visibility','hidden');
         $("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']").each(function (i) {
           $(this).find('td:eq(0)').remove();
         });//css('visibility','hidden');
         $('#ox_KaiJung_OrderMarkDetailOnly__button_bar').remove();
+           //增加一列的按鈕
+//        $("#ox_KaiJung_OrderMarkDetailOnly__collection_details___ td").first()
+//        .append("<a id=\"newRecord\" title=\"新增記錄\" href=\"javascript:openxava.manageFilterRow('KaiJung', 'OrderMarkDetailOnly', 'details', 'xava_collectionTab_details')\">" +
+//        "<img id=\"ox_KaiJung_OrderMarkDetailOnly__filter_image_list\" border=\"0\" align=\"middle\" src=\"/KaiJung/xava/images/create_new.gif\"/></a>");
+
      }
 }
 function copyOrder(){

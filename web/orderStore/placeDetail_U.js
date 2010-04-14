@@ -25,7 +25,7 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
       	       $(this).append('<input id="'+ ids[i] +'_'+ sn + '" value="' + data +'" size="'+ szs[i] +'" readonly style="border:0;background:#'+ bgcolor +' none repeat scroll 0 0;">');
                 }
            );
-        $(this).find('td').slice(22,28).each(//本揀貨單的尺寸數量(可編輯)
+        $(this).find('td').slice(22,28).each(//本上架單的尺寸數量(可編輯)
             function(i){
  	             this.removeChild(this.childNodes[0]);//移除原來的label資料
         	       $(this).append('<input id="'+ idm[i] +'_'+ sn + '" '+ types[i] +' size="'+ szs[i] +'"/>');

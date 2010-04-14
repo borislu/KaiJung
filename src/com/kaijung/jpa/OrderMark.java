@@ -37,8 +37,8 @@ public class OrderMark implements Serializable {
 	private int oid;
 
 	@OneToMany(mappedBy="orderMark", cascade=CascadeType.REMOVE) //@AsEmbedded
-	@ListProperties("item.articleno, item.color.name, item.price, 24,26,28,30,32"
-	+", sum, priority, 24,26,28,30,32, sum2"//, createBy"
+	@ListProperties("batNo, cartNo, item.articleno, item.color.name, item.price, 24,26,28,30,32"
+	+", sum, priority, 24,26,28,30,32, sum2, createBy"
 	+", warehouse.name, shelf, x, y, createTime, remark, status, oid"
 	)
 	private Collection<OrderMarkD> details ;// = new ArrayList<OrderStoreD>();
