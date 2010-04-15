@@ -21,7 +21,9 @@ public class ImportD implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	private String cartonno;
+	private String cartno;
+	
+	private String batno;
 
 //	private int importOid;
 	@ManyToOne 
@@ -49,12 +51,20 @@ public class ImportD implements Serializable {
 		this.oid = oid;
 	}
 
-	public String getCartonno() {
-		return this.cartonno;
+	public String getCartno() {
+		return cartno;
 	}
 
-	public void setCartonno(String cartonno) {
-		this.cartonno = cartonno;
+	public void setCartno(String cartno) {
+		this.cartno = cartno;
+	}
+
+	public String getBatno() {
+		return batno;
+	}
+
+	public void setBatno(String batno) {
+		this.batno = batno;
 	}
 
 	public int getItemid() {

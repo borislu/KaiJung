@@ -117,10 +117,15 @@ Module.setStyle(style);
 		if (typeof portalJQuery != "undefined") {  
 			jQuery = portalJQuery;    
 		} 
-	</script><!--  -->
+	</script>
+<!-- Boris 修改開始 -->
 <script type='text/javascript' src='../dwr/interface/OrderMarkDwr.js'></script>
 <script type='text/javascript' src='../orderStore/markDetail.js'></script>
 <script type='text/javascript' src='../orderStore/markDetail_U.js'></script>
+<script src="../js/shortcut.js"></script>
+<script type="text/javascript" language="javascript" src="../js/barcode.js" charset="utf-8"></script>
+<!-- Boris 修改結束 -->
+
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff">

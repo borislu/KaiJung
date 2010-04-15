@@ -36,7 +36,7 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
     }); //trs.each
      // 用來將quantity的資料從備貨單(json)取出，置入欄位中。
 //alert( 'markDetail.js: markId: ' + $('input[name="ox_KaiJung_OrderMarkDetailOnly__oid"]').eq(1).val() );
-    markId = $('input[name="ox_KaiJung_OrderMarkDetailOnly__oid"]').eq(1).val();
+    markId = $('input[name="ox_KaiJung_OrderMarkDetailOnly__oid"]').eq(1).val();//備貨單編號(單頭)
     OrderMarkDwr.getMarksById ( markId, function(markD_Set){ // argument: wareId , return: markD_Set
 //alert( 'markDetail.js: length: '+ markD_Set.length + ' markId: ' + markId );
     		for (var i=0; i < markD_Set.length; i++) {//迴圈數=tr的個數
@@ -48,6 +48,7 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
     			dwr.util.setValue( 'qsz28_'+ i , qtyobj.s28 );
     			dwr.util.setValue( 'qsz30_'+ i , qtyobj.s30 );
     			dwr.util.setValue( 'qsz32_'+ i , qtyobj.s32 );
+    		    //小計
     		   var sum = 0;
     		   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是尺寸數量，i是列索引
 //    		    	 alert( 'sum: '+ sum );
@@ -56,11 +57,17 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
     		   $('#sum_'+ i).val( sum );
     		}//for
      });
-     //小計
      //顯示複製進貨數量的checkbox
     if( $('#copy').length < 1 ){
         $('#ox_KaiJung_OrderMarkDetailOnly__collection_details___').find('tr:first td')
           .append('<input id="copy" type="checkbox" onclick="copyOrder()"> 複製進貨數量');
       }
+     //小計2
+    $("input[id^=\"ssz\"]").each( function(i){//開頭ssz是可編輯的尺寸數量
+    	  $(this).bind("keydown", sum2);
+    });//each
 }
-
+function getByBarcode( barcode ){
+	OrderMarkDwr.getByBarcode ( barcode, function(item){ 
+	});
+}//getByBarcode

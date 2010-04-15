@@ -25,14 +25,15 @@ public class OrderMarkD implements Serializable {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
 	private int oid;
 
-	private String batchNo;
+//	private String importDid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="importDid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private ImportD importD;
 
 //	private int itemid;
 	@ManyToOne @DescriptionsList(descriptionProperties = "name")
 	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Item item;
-
-	private String markingNo;
 
 //	private int orderMark_oid;
 	@ManyToOne 
@@ -123,20 +124,12 @@ public class OrderMarkD implements Serializable {
 		this.oid = oid;
 	}
 
-	public String getBatchNo() {
-		return this.batchNo;
+	public ImportD getImportD() {
+		return importD;
 	}
 
-	public void setBatchNo(String batchNo) {
-		this.batchNo = batchNo;
-	}
-
-	public String getMarkingNo() {
-		return this.markingNo;
-	}
-
-	public void setMarkingNo(String markingNo) {
-		this.markingNo = markingNo;
+	public void setImportD(ImportD importD) {
+		this.importD = importD;
 	}
 
 	public String getPresetQty() {

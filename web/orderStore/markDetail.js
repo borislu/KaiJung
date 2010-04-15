@@ -60,24 +60,28 @@ function changeCss(){
           $(this).find('td:eq(0)').remove();
         });//css('visibility','hidden');
         $('#ox_KaiJung_OrderMarkDetailOnly__button_bar').remove();
-           //增加一列的按鈕
-//        $("#ox_KaiJung_OrderMarkDetailOnly__collection_details___ td").first()
-//        .append("<a id=\"newRecord\" title=\"新增記錄\" href=\"javascript:openxava.manageFilterRow('KaiJung', 'OrderMarkDetailOnly', 'details', 'xava_collectionTab_details')\">" +
-//        "<img id=\"ox_KaiJung_OrderMarkDetailOnly__filter_image_list\" border=\"0\" align=\"middle\" src=\"/KaiJung/xava/images/create_new.gif\"/></a>");
-
      }
 }
-function copyOrder(){
+function copyOrder(){//新增和修改才會用到
     trs = $("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']"	);
     trs.each(function(sn){
 //alert('markDetail.js: copyOrder: '+ $('#ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_'+ sn) );
-        $(this).find('td').slice(19,24).each(//本備貨單的尺寸數量(可編輯)
+        $(this).find('td').slice(13,18).each(//本備貨單的尺寸數量(可編輯)
             function(i){
-               var sval = trs.eq(sn).find('td').eq(i+5).find('input:first').val();
+               var sval = trs.eq(sn).find('td').eq(i+6).find('input:first').val();
             	$(this).find('input:first').val( sval );
                 }//
            );
     }); //trs.each
+}
+function sum2(){//新增和修改才會用到
+	$("tr[id^=\"ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_\"]").each(function(i){
+	   var sum2 = 0;
+	   $("input[id^=\"ssz\"][id$=\""+ i +"\"]").each( function(){//開頭ssz是尺寸數量，i是列索引
+	       sum2 += parseInt ( $(this).val(), 10 );
+	    });
+	   $('#sum2_'+ i).val( sum2 );
+	});
 }
 function updateMark(){//按鈕呼叫(markLayout_R.html)
 //debug = 'debug: ';
