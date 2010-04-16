@@ -3,6 +3,8 @@ package com.kaijung.jpa;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.openxava.annotations.*;
+
 
 /**
  * The persistent class for the ImportD database table.
@@ -30,11 +32,14 @@ public class ImportD implements Serializable {
 	@JoinColumn(name="import_oid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private Import import1;
 
-	private int itemid;
+//	private int itemid;
+	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+	@JoinColumn(name="itemid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+	private Item item;
 
 	private String memo;
 
-	private int quantity;
+	private String quantity;
 
 	private String status;
 
@@ -67,14 +72,6 @@ public class ImportD implements Serializable {
 		this.batno = batno;
 	}
 
-	public int getItemid() {
-		return this.itemid;
-	}
-
-	public void setItemid(int itemid) {
-		this.itemid = itemid;
-	}
-
 	public String getMemo() {
 		return this.memo;
 	}
@@ -83,11 +80,11 @@ public class ImportD implements Serializable {
 		this.memo = memo;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return this.quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 
@@ -113,6 +110,14 @@ public class ImportD implements Serializable {
 
 	public void setImport1(Import import1) {
 		this.import1 = import1;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
 	}
 
 }

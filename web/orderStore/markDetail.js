@@ -66,10 +66,10 @@ function copyOrder(){//新增和修改才會用到
     trs = $("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']"	);
     trs.each(function(sn){
 //alert('markDetail.js: copyOrder: '+ $('#ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_'+ sn) );
-        $(this).find('td').slice(13,18).each(//本備貨單的尺寸數量(可編輯)
+        $(this).find("input[id^=\"ssz\"]").each(//本備貨單的尺寸數量(可編輯)
             function(i){
                var sval = trs.eq(sn).find('td').eq(i+6).find('input:first').val();
-            	$(this).find('input:first').val( sval );
+            	$(this).val( sval );
                 }//
            );
     }); //trs.each
@@ -213,5 +213,6 @@ openxava.refreshPage = function(result) { // override OpenXava
 	changeCss();
 	changeLink();
 	editable();
+//	changeLink2();//將openxava預設的新增按鈕，改成新增一列
 }
 

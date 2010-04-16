@@ -40,6 +40,8 @@
     <convert match="com.kaijung.jpa.District" converter="bean" javascript="District"></convert>    
     <convert match="com.kaijung.jpa.Employee" converter="bean" javascript="Employee"></convert>    
     <convert match="com.kaijung.jpa.EmployeeD" converter="bean" javascript="EmployeeD"></convert>    
+    <convert match="com.kaijung.jpa.Import" converter="bean" javascript="Import"></convert>    
+    <convert match="com.kaijung.jpa.ImportD" converter="bean" javascript="ImportD"></convert>    
     <convert match="com.kaijung.jpa.Item" converter="bean" javascript="Item"></convert>    
     <convert match="com.kaijung.jpa.ItemBrand" converter="bean" javascript="ItemBrand"></convert>
     <convert match="com.kaijung.jpa.ItemClass" converter="bean" javascript="ItemClass"></convert>
@@ -47,6 +49,7 @@
     <convert match="com.kaijung.jpa.ItemPrice" converter="bean" javascript="ItemPrice"></convert>
     <convert match="com.kaijung.jpa.ItemTheme" converter="bean" javascript="ItemTheme"></convert>
     <convert match="com.kaijung.jpa.ItemType" converter="bean" javascript="ItemType"></convert>
+    <convert match="com.kaijung.jpa.ItemUnit" converter="bean" javascript="ItemUnit"></convert>
     <convert match="com.kaijung.jpa.Mall" converter="bean" javascript="Mall"></convert>
     <convert match="com.kaijung.jpa.OrderMark" converter="bean" javascript="OrderMark"></convert>
     <convert match="com.kaijung.jpa.OrderMarkD" converter="bean" javascript="OrderMarkD"></convert>

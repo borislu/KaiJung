@@ -6,8 +6,8 @@ import common.*;
 
 import java.util.*;
 
-public class OrderMarkDwr {
-	private static Logger logger = Logger.getLogger(OrderMarkDwr.class);
+public class ItemDwr {
+	private static Logger logger = Logger.getLogger(ItemDwr.class);
   
 	public void update(String oid, String quantity, String memo){
       logger.debug("OrderMarkDwr.update: quantity: "+ quantity);
@@ -23,13 +23,9 @@ public class OrderMarkDwr {
 		 HashSet <OrderMarkD> beans = new HashSet (c);
 		 logger.debug("OrderMarkDwr.getMarksById: beans: "+ beans );
 		 return beans;
-	}
+	 }
 		 
-	public ImportD getImportDByBarcode(String barcode){//以條碼找出對應的進貨明細
-		return new ImportDDAO().getByBarcode(barcode);
-	}
-	
-	public Item getItemByBarcode(String barcode){//以條碼找出商品
+	public Item getByBarcode(String barcode){//以條碼找出商品
 		return new ItemDAO().getByBarcode(barcode);
 	}
 //	public Item getByArticleno(String articleno) throws SQLException{//以貨號找出商品

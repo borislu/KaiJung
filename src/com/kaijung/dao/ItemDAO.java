@@ -33,18 +33,18 @@ public class ItemDAO {
 	}
 
 	// 用條碼去找出貨號顏色價錢
-	public Item getItemByBarcode(String barcode) {
+	public Item getByBarcode(String barcode) {
 		EntityManager em = XPersistence.getManager();
 		Query query = null;
 		Item result = null;
 		try {
-			logger.debug("ItemDAO.getItemByBarcode: barcode: "+ barcode);
+			logger.debug("ItemDAO.getByBarcode: barcode: "+ barcode);
 			query = em.createQuery("SELECT i FROM Item AS i"
 					+ " WHERE i.barcode = '" + barcode + "'");
-			result = (Item) query.setMaxResults(1).getSingleResult();
-			logger.debug("ItemDAO.getItemByBarcode: result: "+ result);
+			result = (Item) query.getSingleResult();
+			logger.debug("ItemDAO.getByBarcode: result: "+ result);
 		} catch (Exception e) {
-			logger.error("ItemDAO.getItemByBarcode: " + e);
+			logger.error("ItemDAO.getByBarcode: " + e);
 		}
 		return result;
 	}

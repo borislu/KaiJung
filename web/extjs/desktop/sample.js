@@ -364,7 +364,7 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
                 title: src.text,
                 width: 998,
                 height: 480,
-                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/markLayout_U.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/markLayout_S.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
                 iconCls: 'bogus',
                 shim: false,
                 animCollapse: false,
@@ -379,6 +379,24 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
         if (!win) {
             win = desktop.createWindow({
                 id: 'w020605',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../orderStore/markLayout_U.html" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020606: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020606',
                 title: src.text,
                 width: 998,
                 height: 480,
@@ -933,17 +951,23 @@ MyDesktop.BogusMenuModule2 = Ext.extend(MyDesktop.BogusModule, {
                               scope: this,
                               windowId: 'w020603'
                                    }, {
-                              text: '修改',
+                              text: '設定',
                               iconCls: 'bogus',
                               handler: this.createWindow020604,
                               scope: this,
                               windowId: 'w020604'
                                    }, {
-                              text: '刪除',
+                              text: '備貨',
                               iconCls: 'bogus',
                               handler: this.createWindow020605,
                               scope: this,
                               windowId: 'w020605'
+                                   }, {
+                              text: '刪除',
+                              iconCls: 'bogus',
+                              handler: this.createWindow020606,
+                              scope: this,
+                              windowId: 'w020606'
                                    }]
                            }
                 }, {
