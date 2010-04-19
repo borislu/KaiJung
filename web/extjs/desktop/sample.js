@@ -499,6 +499,42 @@ MyDesktop.BogusModule = Ext.extend(Ext.app.Module, {
         }
         win.show();
     },
+    createWindow020802: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020802',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../xava/module_orderDiffList.jsp?application=KaiJung&module=OrderDiffListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
+    createWindow020803: function(src){
+        var desktop = this.app.getDesktop();
+        var win = desktop.getWindow('bogus' + src.windowId);
+        if (!win) {
+            win = desktop.createWindow({
+                id: 'w020803',
+                title: src.text,
+                width: 998,
+                height: 480,
+                html: '<iframe id="frameLayout" name="frameLayout" src="../../xava/module_orderDiffList.jsp?application=KaiJung&module=OrderDiffListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe>',
+                iconCls: 'bogus',
+                shim: false,
+                animCollapse: false,
+                constrainHeader: true
+            });
+        }
+        win.show();
+    },
     createWindow0404: function(src){
         var desktop = this.app.getDesktop();
         var win = desktop.getWindow('bogus' + src.windowId);

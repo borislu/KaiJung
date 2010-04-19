@@ -1,15 +1,30 @@
+var len;
+var rowIndex = 0;
 function changeLink(){        	    //alert('module_markList.jsp: after changeLink');  
   if( $('a').length < 1 ){
       setTimeout( 'changeLink()', 50 );
   }else{
-	  $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderMarkListOnly', '', false, 'List.viewDetail'\"]").each(
+	  $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderDiffListOnly', '', false, 'List.viewDetail'\"]").each(
     	    function() {
-        	    $(this).attr('href','#') ;
-        	    $(this).find('img').attr('src','/KaiJung/xava/images/edit_disable.gif');
+        	    this.href="#" ;
+        	    $(this).find('img').attr('src','/KaiJung/xava/images/edit_none.gif');
         	 }//function
 	  );
-  }
+	  
+	  len = $('#ox_KaiJung_OrderDiffListOnly__list>tbody>tr:first>th').length ;//標題列數
+	  
+	  $('#nodata').remove(); // 移除「目前沒有資料」
+  }//else
 }
+
+function newRow (){
+	$('#ox_KaiJung_OrderDiffListOnly__list>tbody').append("<tr id='tr_"+ rowIndex +"'>");
+	for( i=0; i<len; i++ ){
+		$('#tr_' + rowIndex).append("<td id='td_"+ i +"' class='liferay-xava-cell-wrapper' style='vertical-align: middle;'><input id='inp_"+ rowIndex +"_"+ i +"' size='3'>");
+	}
+	rowIndex ++;
+}
+
 openxava.refreshPage = function(result) {
 	var changed = "";	
 	if (result.error != null) {		
@@ -110,5 +125,6 @@ openxava.refreshPage = function(result) {
      * OrderListOnly 清單頁用來更新明細的連結
       */
 	changeLink();
+	newRow();
 }
 
