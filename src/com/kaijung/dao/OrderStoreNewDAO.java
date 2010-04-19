@@ -161,7 +161,7 @@ public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 		Connection conn = null;
 		Statement stmt = null;
 		String colorName = null;
-		;
+
 		conn = DriverManager.getConnection(url, user, pwd);
 		stmt = conn.createStatement();
 

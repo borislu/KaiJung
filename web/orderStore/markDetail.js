@@ -28,6 +28,26 @@ function afterDel(){
 //	     }
 ////	}
 //}
+
+/*
+Generate fragment of random numbers
+*/
+jQuery_uuid_default_prefix = '';
+function jQuery_uuidlet () {
+ return(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+};
+/*
+Generates random uuid
+*/
+function jQuery_uuid (p) {
+ if (typeof(p) == 'object' && typeof(p.prefix) == 'string') {
+  jQuery_uuid_default_prefix = p.prefix;
+ } else {
+  p = p || jQuery_uuid_default_prefix || '';
+  return(p+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet()+jQuery_uuidlet());
+ }
+}
+
 function createRecord(){
 //	$("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']");
 }
@@ -48,6 +68,8 @@ function changeCss(){
     if( ($('#ox_KaiJung_OrderMarkDetailOnly__view')==null) || ($('#ox_KaiJung_OrderMarkDetailOnly__view').length < 1) ){
         setTimeout( 'changeCss()', 50 );  
     }else{
+    	  //產生備貨單號 uuid
+     	  $("input[name='ox_KaiJung_OrderMarkDetailOnly__oid']").val(jQuery_uuid);
       	  //強制div的寬度，避免換行
         $('#ox_KaiJung_OrderMarkDetailOnly__view').css('width','800px');
           //隱藏openxava預設的pk圖示
@@ -83,33 +105,6 @@ function sum2(){//新增和修改才會用到
 	   $('#sum2_'+ i).val( sum2 );
 	});
 }
-function updateMark(){//按鈕呼叫(markLayout_R.html)
-//debug = 'debug: ';
-    trs = $("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']"	);
-    var sizes = ['s24','s26','s28','s30','s32']; //尺寸數量暫定5組
-    trs.each(function(sn){
-   	   var quantity = '{';
-		   var oid = $('#markd_oid_'+sn).val().trim(); 
-         //alert('markDetail.js: '+ $('#ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_'+ sn +' td:gt(1)' ) );
-			for(j=1;j<=sizes.length;j++)
-			{
-				qtyVal = 0;
-				if( $('#'+ sizes[sn] +'_'+ sn) ){
-					qtyVal = $('#'+ sizes[j] +'_'+ sn).val();
-					if( qtyVal == '' || qtyVal == null ){
-						qtyVal = '0';
-					}
-				}
-				quantity += '\"'+ sizes[j-1] + '\":' + qtyVal + ',';
-			}
-			quantity = quantity.substring( 0, quantity.length-1 );//去除最後的逗號
-			quantity += '}';
-//debug += quantity;//會把迴圈內的所有都印出來
-			OrderMarkDwr.update(oid, quantity, 'memo');
-    }); //trs.each
-//alert( debug );
-}
-
 
 openxava.refreshPage = function(result) { // override OpenXava
 	var changed = "";	

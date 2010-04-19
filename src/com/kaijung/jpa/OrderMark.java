@@ -28,13 +28,13 @@ public class OrderMark implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id //@Hidden
-	@TableGenerator(
-	    name="SequenceGenerator", table="SequenceGen", 
-	    pkColumnName="oid", valueColumnName="value", 
-	    pkColumnValue="orderMark.oid", initialValue=1, allocationSize=1
-	)
-	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
-	private int oid;
+//	@TableGenerator(
+//	    name="SequenceGenerator", table="SequenceGen", 
+//	    pkColumnName="oid", valueColumnName="value", 
+//	    pkColumnValue="orderMark.oid", initialValue=1, allocationSize=1
+//	)
+//	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
+	private String oid;
 
 	@OneToMany(mappedBy="orderMark", cascade=CascadeType.REMOVE) //@AsEmbedded
 	@ListProperties("importD.batno, importD.cartno, item.articleno, item.color.name, item.price, 24,26,28,30,32"
@@ -99,11 +99,11 @@ public class OrderMark implements Serializable {
     public OrderMark() {
     }
 
-	public int getOid() {
+	public String getOid() {
 		return this.oid;
 	}
 
-	public void setOid(int oid) {
+	public void setOid(String oid) {
 		this.oid = oid;
 	}
 

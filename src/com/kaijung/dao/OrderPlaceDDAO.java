@@ -152,7 +152,7 @@ public class OrderPlaceDDAO {
 				em.merge( bean );
 				XPersistence.commit();
 			} catch (Exception e) {
-				logger.error("OrderStoreD.update: " + e);
+				logger.error("OrderPlaceD.update: " + e);
 			}
 			return 1; // 1:成功
 		}

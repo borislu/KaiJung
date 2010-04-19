@@ -43,11 +43,11 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
 //alert( 'markDetail.js: quantity: '+ markD_Set[i].quantity );
     			var qtyobj = jQuery.parseJSON( markD_Set[i].presetQty );
 //alert( 'markDetail.js: qtyobj: '+ qtyobj.s24 );
-    			dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );
-    			dwr.util.setValue( 'qsz26_'+ i , qtyobj.s26 );
-    			dwr.util.setValue( 'qsz28_'+ i , qtyobj.s28 );
-    			dwr.util.setValue( 'qsz30_'+ i , qtyobj.s30 );
-    			dwr.util.setValue( 'qsz32_'+ i , qtyobj.s32 );
+    			dwr.util.setValue( 'qsz24_'+ i , qtyobj.ssz24 );
+    			dwr.util.setValue( 'qsz26_'+ i , qtyobj.ssz26 );
+    			dwr.util.setValue( 'qsz28_'+ i , qtyobj.ssz28 );
+    			dwr.util.setValue( 'qsz30_'+ i , qtyobj.ssz30 );
+    			dwr.util.setValue( 'qsz32_'+ i , qtyobj.ssz32 );
     		    //小計
     		   var sum = 0;
     		   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是尺寸數量，i是列索引
@@ -67,35 +67,27 @@ function editable(){ //將ox原先提供的惟讀模式改成可編輯模式
     	  $(this).bind("keydown", sum2);
     });//each
 }
-//function getByBarcode( barcode ){
-//	newRowId ++;
-//	OrderMarkDwr.getItemByBarcode ( barcode, function(item){ //Dwr
-//		//產生新的一列
-//		newRow( newRowId );
-//		dwr.util.setValue( 'article_'+ newRowId , item.articleno );
-//		dwr.util.setValue( 'color_'+ newRowId , item.color.oid );
-//		dwr.util.setValue( 'price_'+ newRowId , item.price.oid );
-//	});
-//	OrderMarkDwr.getImportDByBarcode ( barcode, function(importD){ //Dwr
-//		dwr.util.setValue( 'batno_'+ newRowId , importD.batno );
-//		dwr.util.setValue( 'cartno_'+ newRowId , importD.cartno );
-//		var qtyobj = jQuery.parseJSON( importD.quantity );
-//		dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );
-//		dwr.util.setValue( 'qsz26_'+ i , qtyobj.s26 );
-//		dwr.util.setValue( 'qsz28_'+ i , qtyobj.s28 );
-//		dwr.util.setValue( 'qsz30_'+ i , qtyobj.s30 );
-//		dwr.util.setValue( 'qsz32_'+ i , qtyobj.s32 );
-//	    //小計
-//	   var sum = 0;
-//	   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是尺寸數量，i是列索引
-////		    	 alert( 'sum: '+ sum );
-//	       sum += parseInt ( $(this).val(), 10 );
-//	    });
-//	   $('#sum_'+ i).val( sum );
-//	});
-//}//getByBarcode
-//function newRow( rowid ){
-//    $(
-//    	'<tr id="ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_' + rowid + '" class="portlet-section-body results-row null" style="border-bottom: 1px solid;" onmouseout="this.className = \'portlet-section-body results-row null\';" onmouseover="this.className = \'portlet-section-body-hover results-row hover null\';"><td class="liferay-xava-cell-wrapper" style=""><input type="checkbox" onclick="openxava.onSelectElement(\'KaiJung\',\'OrderMarkDetailOnly\',\'null\',\'row=0,viewObject=xava_view_details\',this.checked,\'ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_0\',false,\'selected-row\',\'portlet-section-body results-row\',\'\',\'border-bottom: 1px solid;\',\'\',false)" value="xava_collectionTab_details_selected:'+ rowid +'" name="ox_KaiJung_OrderMarkDetailOnly__xava_selected"/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="batno_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="cartno_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="article_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="color_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle; text-align: right;"><input id="price_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="5" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="qsz24_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="qsz26_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="qsz28_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="qsz30_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="qsz32_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="sum_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="6" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle; text-align: right;"><input id="priority_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="ssz24_' + rowid + '" style="border: 0pt none ; background: rgb(255, 255, 255) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="ssz26_' + rowid + '" style="border: 0pt none ; background: rgb(255, 255, 255) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="ssz28_' + rowid + '" style="border: 0pt none ; background: rgb(255, 255, 255) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="ssz30_' + rowid + '" style="border: 0pt none ; background: rgb(255, 255, 255) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="ssz32_' + rowid + '" style="border: 0pt none ; background: rgb(255, 255, 255) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" size="3" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="sum2_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="6" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle; text-align: right;"><input id="creater_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="ware_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="shelf_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle; text-align: right;"><input id="x_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="4" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle; text-align: right;"><input id="y_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="4" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="createTime_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="10" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="memo_' + rowid + '" style="border: 0pt none ; background: rgb(255, 255, 255) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" size="20" value=""/></td><td class="liferay-xava-cell-wrapper" style="vertical-align: middle;"><input id="status_' + rowid + '" style="border: 0pt none ; background: rgb(240, 245, 247) none repeat scroll 0pt 0pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" readonly="" size="8" value=""/></td><input id="markd_oid_' + rowid + '" type="hidden" value=""/></tr>'
-//   ).insertAfter($("#ox_KaiJung_OrderMarkDetailOnly__tr_list_filter_details"));//在過濾列之後 新增一列
-//}
+
+function updateMark(){//按鈕呼叫(markLayout_?.html)
+//debug = 'debug: ';
+    trs = $("tr[id^='ox_KaiJung_OrderMarkDetailOnly__xava_collectionTab_details_']"	);
+//	    var sizes = ['s24','s26','s28','s30','s32']; //尺寸數量暫定5組
+    trs.each(function(sn){
+   	   var quantity = '{';
+		   var oid = $('input[name="ox_KaiJung_OrderMarkDetailOnly__oid"]').val().trim(); 
+         //alert( 'oid: '+ oid );
+		   $(this).find("input[id^=\"ssz\"]").each( function(i){//開頭ssz是可編輯的尺寸數量
+				var qtyVal = $(this).val();
+				if( qtyVal == '' ){
+					qtyVal = '0';
+				}
+				quantity += '\"'+ $(this).attr('id') + '\":' + qtyVal + ','; // ex. "ssz":12
+		   });//each
+			quantity = quantity.substring( 0, quantity.length-1 );//去除最後的逗號
+			quantity += '}';
+//debug += quantity;//會把迴圈內的所有都印出來
+			OrderMarkDwr.update(oid, quantity, 'memo');
+    }); //trs.each
+//alert( debug );
+}
+

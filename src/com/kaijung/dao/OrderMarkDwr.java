@@ -9,17 +9,20 @@ import java.util.*;
 public class OrderMarkDwr {
 	private static Logger logger = Logger.getLogger(OrderMarkDwr.class);
   
+	public void insert(String oid, String quantity, String memo){//只有寫入明細，單頭是用 openxava 的預設方式寫入
+      logger.debug("OrderMarkDwr.insert: quantity: "+ quantity);
+		OrderMarkDDAO dao = new OrderMarkDDAO();
+		dao.insert( oid, quantity, memo );
+	}
 	public void update(String oid, String quantity, String memo){
       logger.debug("OrderMarkDwr.update: quantity: "+ quantity);
 		OrderMarkDDAO dao = new OrderMarkDDAO();
-		dao.update(Integer.parseInt(oid), quantity, memo);
+		dao.update(oid, quantity, memo);
 	}
 	@SuppressWarnings("unchecked")
 	public HashSet <OrderMarkD> getMarksById(String markid){//以備貨單編號找出備貨單明細
 		 logger.debug("OrderMarkDwr.getMarksById: markid: "+ markid );
-		 int markId = 0;
-		 if( markid !=null){ markId = Integer.parseInt( markid); }
-		 Collection c = new OrderMarkDDAO().getMarksById( markId );
+		 Collection c = new OrderMarkDDAO().getMarksById( markid );
 		 HashSet <OrderMarkD> beans = new HashSet (c);
 		 logger.debug("OrderMarkDwr.getMarksById: beans: "+ beans );
 		 return beans;

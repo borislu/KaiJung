@@ -121,31 +121,33 @@ p {
                  ,bbar:[{
                      text:'列印',
                      handler:function(){
-                	        Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerDetailOnly', '', false, 'CRUD.save');
+                	        Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'PDF',
                      handler:function(){
-                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerDetailOnly', '', false, 'CRUD.save');
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'EXCEL',
                      handler:function(){
-                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerDetailOnly', '', false, 'CRUD.save');
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'CRUD.save');
                      }
                  },{
                      text:'儲存',
                      handler:function(){
+                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '', false, 'CRUD.save');
        	                 Ext.getDom('frameWest').contentWindow.updateMark() ;
-                         Ext.get('frameWest').dom.contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerDetailOnly', '', false, 'CRUD.save');
+             	           Ext.getDom('frameWest').contentWindow.location.reload();
+               	         Ext.getDom('frameEast').contentWindow.location.reload();
                      }
                  },{
                      text:'刪除',
                      handler:function(){
-                	        Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete');
+                	        Ext.getDom('frameWest').contentWindow.openxava.executeAction('KaiJung', 'OrderMarkDetailOnly', '刪除此筆記錄: 你確定嗎?', false, 'CRUD.delete');
                 	        Ext.getDom('frameEast').contentWindow.location.reload();
                 	        Ext.getDom('frameWest').contentWindow.$.cookie("JSESSIONID",null);
-                	    	    Ext.getDom('frameEast').contentWindow.openxava.executeAction('KaiJung', 'OrderMarkerListOnly', '', false, 'List.goPage', 'page=1');
+                	    	    Ext.getDom('frameEast').contentWindow.openxava.executeAction('KaiJung', 'OrderMarkListOnly', '', false, 'List.goPage', 'page=1');
                      }
                  }]
                   }
@@ -154,16 +156,16 @@ p {
         //initWestFrame();
         //initEastFrame();
 
-       //Ext.get('frameEast').dom.src = '../xava/module_pickerDetail.jsp?application=KaiJung&module=OrderMarkerDetailOnly';
-       /* http://localhost:8080/KaiJung/xava/module_pickerDetail.jsp?application=KaiJung&module=OrderMarkerListOnly*/
-       //javascript:openxava.executeAction('KaiJung', 'OrderMarkerListOnly', '', false, 'List.viewDetail', 'row=0')
+       //Ext.get('frameEast').dom.src = '../xava/module_pickerDetail.jsp?application=KaiJung&module=OrderMarkDetailOnly';
+       /* http://localhost:8080/KaiJung/xava/module_pickerDetail.jsp?application=KaiJung&module=OrderMarkListOnly*/
+       //javascript:openxava.executeAction('KaiJung', 'OrderMarkListOnly', '', false, 'List.viewDetail', 'row=0')
    });
        
 </script>
-<!--<input id="ox_KaiJung_OrderMarkerListOnly__Mode___detailAndFirst" class="" type="button" value="首筆明細" onclick="openxava.executeAction("KaiJung", "OrderMarkerListOnly", "", false, "Mode.detailAndFirst")" title="F8 - 明細模式"/>-->
+<!--<input id="ox_KaiJung_OrderMarkListOnly__Mode___detailAndFirst" class="" type="button" value="首筆明細" onclick="openxava.executeAction("KaiJung", "OrderMarkListOnly", "", false, "Mode.detailAndFirst")" title="F8 - 明細模式"/>-->
 </head>
 <body>
-<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/module_markList.jsp?application=KaiJung&module=OrderMarkListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
+<div id="east"><iframe id="frameEast" name="frameEast"	src="../xava/module_markList_S.jsp?application=KaiJung&module=OrderMarkListOnly" frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
 <div id="west"><iframe id="frameWest" name="frameWest" src="../xava/module_markDetail_S.jsp?application=KaiJung&module=OrderMarkDetailOnly"	frameborder="0" height="100%" scrolling="auto" width="100%"></iframe></div>
 <div id="north">
 <p></p>
