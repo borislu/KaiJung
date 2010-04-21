@@ -78,6 +78,16 @@ public class OrderStoreNew {
 			 logger.debug("OrderStoreNew.findSuggestList: HashSet: "+ set );
 			 return set;
 		}
+		
+		public Set <OrderStore> selectAll( String none ){//查出所有的主檔
+			 Collection <OrderStore> cl = new OrderStoreNewDAO().selectAll( none );
+			 return new HashSet <OrderStore>( cl );
+		}
+		public Set <OrderStoreD> selectAllDetails( String none ){//查出所有的明細檔(訂貨差異分析會用到)
+			 Collection <OrderStoreD> cl = new OrderStoreDDAO().selectAll( none );
+			 logger.debug("OrderStoreNew.selectAllDetails: cl: "+ cl );
+			 return new HashSet <OrderStoreD>( cl );
+		}
 		public Set <OrderStoreD> getOrderD(String headId){//以主檔(單頭)的oid，查出所有的明細檔
 			 logger.debug("OrderStoreNew.getOrderD: headId: "+ headId );
 			 Collection <OrderStoreD> cl = new OrderStoreNewDAO().getOrderD( headId );

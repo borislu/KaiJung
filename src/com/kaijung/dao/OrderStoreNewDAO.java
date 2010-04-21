@@ -54,6 +54,15 @@ public class OrderStoreNewDAO { // 應為 OrderStoreDAO
 		return 1;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List selectAll( String none ){
+		List<OrderStore> list = XPersistence.getManager()
+		.createQuery(
+		"FROM OrderStore)") //JPQL query
+		.getResultList();
+		return list;
+	}
+
 	/* 寫入 OrderStoreD (應該搬到OrderStoreDDAO)*/
 	public void insert(String oid, String barcode, String quantity,
 			String modifyid, String isCustOrder, String memo,

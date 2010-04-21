@@ -1,4 +1,4 @@
-var len;
+var len;//總欄數
 var rowIndex = 0;
 function changeLink(){        	    //alert('module_markList.jsp: after changeLink');  
   if( $('a').length < 1 ){
@@ -11,18 +11,47 @@ function changeLink(){        	    //alert('module_markList.jsp: after changeLin
         	 }//function
 	  );
 	  
-	  len = $('#ox_KaiJung_OrderDiffListOnly__list>tbody>tr:first>th').length ;//標題列數
+	  len = $('#ox_KaiJung_OrderDiffListOnly__list>tbody>tr:first>th').length ;//標題欄數
 	  
 	  $('#nodata').remove(); // 移除「目前沒有資料」
   }//else
 }
 
 function newRow (){
-	$('#ox_KaiJung_OrderDiffListOnly__list>tbody').append("<tr id='tr_"+ rowIndex +"'>");
+	$('#ox_KaiJung_OrderDiffListOnly__list>tbody').append("<tr id='tr_"+ rowIndex +"' class='portlet-section-body results-row null'>");
 	for( i=0; i<len; i++ ){
-		$('#tr_' + rowIndex).append("<td id='td_"+ i +"' class='liferay-xava-cell-wrapper' style='vertical-align: middle;'><input id='inp_"+ rowIndex +"_"+ i +"' size='3'>");
+		$('#tr_' + rowIndex).append("<td id='td_"+ i +"' class='liferay-xava-cell-wrapper' style='vertical-align: middle;'><input id='inp_"+ rowIndex +"_"+ i +"' size='3' readonly>");
 	}
 	rowIndex ++;
+}
+
+function load(){//讀取訂單和對應的統計資料
+    OrderStoreNew.selectAllDetails ( 'none', function(orderD_Set){ 
+    		for (var i=0; i < orderD_Set.length; i++) {//迴圈數=tr的個數
+    			//alert( 'orderD_Set[i]: '+ orderD_Set[i].constructor );
+				//alert( 'orderD_Set[i]: '+ orderD_Set[i].quantity );
+				//alert( typeof orderD_Set[i].quantity );
+    			var qtyobj = jQuery.parseJSON( orderD_Set[i].quantity );
+				var array = eval( '('+ orderD_Set[i].quantity +')' ); // 將 string 轉成 json object
+				//alert( $.dump( array ) );
+				for (var key in array){
+					//alert('key: '+ key);
+	    			alert( eval ( qtyobj.s24 ) );
+				}
+    			dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );
+    			dwr.util.setValue( 'qsz26_'+ i , qtyobj.s26 );
+    			dwr.util.setValue( 'qsz28_'+ i , qtyobj.s28 );
+    			dwr.util.setValue( 'qsz30_'+ i , qtyobj.s30 );
+    			dwr.util.setValue( 'qsz32_'+ i , qtyobj.s32 );
+    		    //小計
+    		   var sum = 0;
+    		   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是庫位尺寸及數量，i是列索引
+//    	    		    	 alert( 'sum: '+ sum );
+    		       sum += parseInt ( $(this).val(), 10 );
+    		    });
+    		   $('#sum_'+ i).val( sum );
+    		}//for
+    });
 }
 
 openxava.refreshPage = function(result) {
@@ -126,5 +155,6 @@ openxava.refreshPage = function(result) {
       */
 	changeLink();
 	newRow();
+	load();
 }
 

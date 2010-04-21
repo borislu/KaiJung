@@ -14,9 +14,6 @@
       <param name="class" value="org.openxava.web.dwr.Tab"/>
     </create>
     
-    <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
-    <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
-
 	   <create creator="new" javascript="OrderMarkDwr">
       <param name="class" value="com.kaijung.dao.OrderMarkDwr" />
     </create>
@@ -32,6 +29,10 @@
 	   <create creator="new" javascript="OrderStoreNew">
       <param name="class" value="com.kaijung.dao.OrderStoreNew" />
     </create>
+    
+    <convert converter="bean" match="org.openxava.web.dwr.Result"/>    
+    <convert converter="bean" match="org.openxava.web.dwr.StrokeAction"/>
+
     <convert match="com.kaijung.jpa.Area" converter="bean" javascript="Area"></convert>    
     <convert match="com.kaijung.jpa.Brand" converter="bean" javascript="Brand"></convert>    
     <convert match="com.kaijung.jpa.Country" converter="bean" javascript="Country"></convert>    

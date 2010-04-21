@@ -4,7 +4,7 @@ function changeLink(){        	    //alert('module_markList.jsp: after changeLin
   }else{
 	  $("a[href^=\"javascript:openxava.executeAction('KaiJung', 'OrderMarkListOnly', '', false, 'List.viewDetail'\"]").each(
     	    function() {
-        	    $(this).attr('href','#') ;
+        	    $(this).removeAttr('href') ;
         	    $(this).find('img').attr('src','/KaiJung/xava/images/edit_disable.gif');
         	 }//function
 	  );

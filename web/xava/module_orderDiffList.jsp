@@ -98,7 +98,6 @@ Module.setStyle(style);
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Module.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/interface/Tab.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/xava/js/openxava.js'></script>
-	<script type='text/javascript' src='<%=request.getContextPath()%>/orderStore/orderDiffList.js'></script>
 	<% if (style.isNeededToIncludeCalendar()) { %>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/calendar.js"></script>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/xava/editors/calendar/lang/calendar-<%=Locales.getCurrent().getLanguage()%>.js"></script>	
@@ -118,6 +117,10 @@ Module.setStyle(style);
 			jQuery = portalJQuery;    
 		}   
 	</script>
+	<script type='text/javascript' src='../js/jquery.dump.js'></script>
+	<script type='text/javascript' src='../js/jsonArray.js'></script>
+	<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
+	<script type='text/javascript' src='<%=request.getContextPath()%>/orderStore/orderDiffList.js'></script>
 <% if (!isPortlet) { %>
 </head>
 <body bgcolor="#ffffff" onLoad="changeLink()">

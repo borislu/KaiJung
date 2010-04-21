@@ -69,12 +69,12 @@ function getByBarcode(el){
     if( barcode ){
         barcode_val = barcode.val();
 //alert("barcode="+ barcode_val);
-				OrderStoreNew.getByBarcode ( barcode_val, function(item){
+			OrderStoreNew.getByBarcode ( barcode_val, function(item){
 //alert( "OrderStoreNew.js: getByBarcode: articleno: "+ item.articleno + " , price: " + item.price);
-					dwr.util.setValue( 'articleno'+ sn , item.articleno );
-					dwr.util.setValue( 'price'+ sn , item.price );
-					dwr.util.setValue( 'color'+ sn , item.color.sName );
-				});
+				dwr.util.setValue( 'articleno'+ sn , item.articleno );
+				dwr.util.setValue( 'price'+ sn , item.price );
+				dwr.util.setValue( 'color'+ sn , item.color.sName );
+			});
     }
 }
 function getByArticleno(el){
