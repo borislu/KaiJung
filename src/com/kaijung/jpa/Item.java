@@ -43,7 +43,7 @@ public class Item implements Serializable {
 	private int brandid;
 
 //	private int colorid;
-	@ManyToOne @DescriptionsList(descriptionProperties="sName") 
+	@ManyToOne @DescriptionsList(descriptionProperties="sname") 
 	@JoinColumn(name="colorid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
 	private ItemColor color;
 

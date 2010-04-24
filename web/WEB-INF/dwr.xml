@@ -14,6 +14,9 @@
       <param name="class" value="org.openxava.web.dwr.Tab"/>
     </create>
     
+	   <create creator="new" javascript="OrderDiffDwr">
+      <param name="class" value="com.kaijung.dao.OrderDiffDwr" />
+    </create>
 	   <create creator="new" javascript="OrderMarkDwr">
       <param name="class" value="com.kaijung.dao.OrderMarkDwr" />
     </create>
@@ -52,6 +55,8 @@
     <convert match="com.kaijung.jpa.ItemType" converter="bean" javascript="ItemType"></convert>
     <convert match="com.kaijung.jpa.ItemUnit" converter="bean" javascript="ItemUnit"></convert>
     <convert match="com.kaijung.jpa.Mall" converter="bean" javascript="Mall"></convert>
+    <convert match="com.kaijung.jpa.OrderDiff" converter="bean" javascript="OrderDiff"></convert>
+    <convert match="com.kaijung.jpa.OrderDiffBean" converter="bean" javascript="OrderDiffBean"></convert>
     <convert match="com.kaijung.jpa.OrderMark" converter="bean" javascript="OrderMark"></convert>
     <convert match="com.kaijung.jpa.OrderMarkD" converter="bean" javascript="OrderMarkD"></convert>
     <convert match="com.kaijung.jpa.OrderPickerD" converter="bean" javascript="OrderPickerD"></convert>

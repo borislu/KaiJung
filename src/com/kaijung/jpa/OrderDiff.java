@@ -14,6 +14,13 @@ import java.util.*;
  * 訂貨差異分析(無對應資料庫表格)
  * 
  */
+@SqlResultSetMapping(name="detailsAndOrder", 
+	entities={
+		@EntityResult ( entityClass = OrderStore.class), 
+		@EntityResult ( entityClass = OrderStoreD.class)
+	}
+)
+
 @Entity
 //@Views( {
 //	@View(members = 

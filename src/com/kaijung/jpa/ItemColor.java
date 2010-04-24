@@ -15,14 +15,14 @@ import java.util.Date;
 @Entity
 @Views({
 	@View(members=
-	    "colorCode, sName, name; modifyBy, modifyTime; createBy, createTime"
+	    "colorCode, sname, name; modifyBy, modifyTime; createBy, createTime"
 	)
 })
 @Tabs({
-	@Tab(properties="colorCode, sName, name, modifyBy, modifyTime, createBy, createTime", 
+	@Tab(properties="colorCode, sname, name, modifyBy, modifyTime, createBy, createTime", 
 		defaultOrder="${modifyTime} desc"
 	),
-	@Tab(name="Latest", properties="colorCode, sName, name, modifyBy, modifyTime, createBy, createTime", 
+	@Tab(name="Latest", properties="colorCode, sname, name, modifyBy, modifyTime, createBy, createTime", 
 		defaultOrder="${modifyTime} desc"
 	)
 })
@@ -67,9 +67,9 @@ public class ItemColor implements Serializable {
 
 	private String reserve5;
 	@DisplaySize(5)
-	private String sName;
+	private String sname;
 
-    public ItemColor() {
+	public ItemColor() {
     }
 
 	public int getOid() {
@@ -168,14 +168,6 @@ public class ItemColor implements Serializable {
 		this.reserve5 = reserve5;
 	}
 
-	public String getSName() {
-		return this.sName;
-	}
-
-	public void setSName(String sName) {
-		this.sName = sName;
-	}
-
 	public Date getCreateTime() {
 		return createTime;
 	}
@@ -192,12 +184,12 @@ public class ItemColor implements Serializable {
 		this.modifyTime = modifyTime;
 	}
 
-	public String getsName() {
-		return sName;
+   public String getSname() {
+		return sname;
 	}
 
-	public void setsName(String sName) {
-		this.sName = sName;
+	public void setSname(String sname) {
+		this.sname = sname;
 	}
 
 }

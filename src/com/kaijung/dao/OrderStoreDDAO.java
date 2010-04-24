@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import javax.persistence.*;
+
 import org.apache.commons.logging.*;
 import org.apache.commons.logging.impl.*;
 import org.openxava.hibernate.*;
@@ -41,6 +44,19 @@ public class OrderStoreDDAO {
 		return list;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<OrderStoreD> getListByWareid( int wareid ){
+		
+		Query query = XPersistence.getManager()
+		.createQuery("SELECT d FROM OrderStoreD d, OrderStore o" 
+				+" WHERE d.orderStore.oid = o.oid" 
+				+" AND d.orderStore.warehouse.oid = :wareid" 
+		); //JPQL query
+		query.setParameter("wareid", wareid );
+		List<OrderStoreD> list = query.getResultList();
+		logger.debug( "OrderDiffDAO.getOrderDetails: OrderStoreD: "+ (OrderStoreD)list.get( 0 ) );
+		return list;
+	}
 	
 
 }

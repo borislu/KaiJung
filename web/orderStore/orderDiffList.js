@@ -26,27 +26,35 @@ function newRow (){
 }
 
 function load(){//讀取訂單和對應的統計資料
-    OrderStoreNew.selectAllDetails ( 'none', function(orderD_Set){ 
-    		for (var i=0; i < orderD_Set.length; i++) {//迴圈數=tr的個數
-    			//alert( 'orderD_Set[i]: '+ orderD_Set[i].constructor );
-				//alert( 'orderD_Set[i]: '+ orderD_Set[i].quantity );
-				//alert( typeof orderD_Set[i].quantity );
-    			var qtyobj = jQuery.parseJSON( orderD_Set[i].quantity );
-				var array = eval( '('+ orderD_Set[i].quantity +')' ); // 將 string 轉成 json object
-				//alert( $.dump( array ) );
-				for (var key in array){
+//    OrderStoreNew.selectAllDetails ( 'none', function(diff_set){ 
+    OrderDiffDwr.getOrderDiff ( '1', function(diff_set){ 
+    		for (var i=0; i < diff_set.length; i++) {//迴圈數=tr的個數
+				newRow();//填入資料前，新增一列空白列
+				
+    			$('#inp_' + i + '_2' ).val( diff_set[i].wareName ); //專櫃
+    			$('#inp_' + i + '_3' ).val( diff_set[i].articleno ); //貨號
+    			$('#inp_' + i + '_4' ).val( diff_set[i].colorName ); //顏色
+    			
+//alert( 'diff_set[i].constructor: '+ diff_set[i].constructor );
+				//alert( 'diff_set[i]: '+ diff_set[i].quantity );
+				//alert( typeof diff_set[i].quantity );
+    			var qtyobj = jQuery.parseJSON( diff_set[i].orderQty );
+				//alert( 'qtyobj: '+ $.dump( qtyobj ) );
+				var qtyarr = eval( '('+ diff_set[i].orderQty +')' ); // 將 string 轉成 json object, 以取得 keys
+				//alert( 'qtyarr: '+ $.dump( qtyarr ) );
+				
+				var arrSize = 0;
+				for (var key in qtyarr){ // 尺寸數量
+	    			arrSize ++;
 					//alert('key: '+ key);
-	    			alert( eval ( qtyobj.s24 ) );
+	    			//alert( eval ( 'qtyobj.' + key ) );
+	    			$('#inp_' + i + '_' + ( arrSize +4 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 4 是要跳過 尺寸數量 之前的幾個欄位
+	    			  .val( eval ( 'qtyobj.' + key ) );
 				}
-    			dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );
-    			dwr.util.setValue( 'qsz26_'+ i , qtyobj.s26 );
-    			dwr.util.setValue( 'qsz28_'+ i , qtyobj.s28 );
-    			dwr.util.setValue( 'qsz30_'+ i , qtyobj.s30 );
-    			dwr.util.setValue( 'qsz32_'+ i , qtyobj.s32 );
+    			//dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );//需要知道 json 的 key 才能使用的方法，現已不用
     		    //小計
     		   var sum = 0;
     		   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是庫位尺寸及數量，i是列索引
-//    	    		    	 alert( 'sum: '+ sum );
     		       sum += parseInt ( $(this).val(), 10 );
     		    });
     		   $('#sum_'+ i).val( sum );
@@ -154,7 +162,6 @@ openxava.refreshPage = function(result) {
      * OrderListOnly 清單頁用來更新明細的連結
       */
 	changeLink();
-	newRow();
 	load();
 }
 

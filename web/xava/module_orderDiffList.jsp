@@ -118,8 +118,8 @@ Module.setStyle(style);
 		}   
 	</script>
 	<script type='text/javascript' src='../js/jquery.dump.js'></script>
-	<script type='text/javascript' src='../js/jsonArray.js'></script>
-	<script type='text/javascript' src='../dwr/interface/OrderStoreNew.js'></script>
+	<!-- <script type='text/javascript' src='../js/jsonArray.js'></script> -->
+	<script type='text/javascript' src='../dwr/interface/OrderDiffDwr.js'></script>
 	<script type='text/javascript' src='<%=request.getContextPath()%>/orderStore/orderDiffList.js'></script>
 <% if (!isPortlet) { %>
 </head>
