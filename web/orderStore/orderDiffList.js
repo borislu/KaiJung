@@ -27,7 +27,7 @@ function newRow (){
 
 function load(){//讀取訂單和對應的統計資料
 //    OrderStoreNew.selectAllDetails ( 'none', function(diff_set){ 
-    OrderDiffDwr.getOrderDiff ( '1', function(diff_set){ 
+    OrderDiffDwr.getOrderDiff ( '100', function(diff_set){ 
     		for (var i=0; i < diff_set.length; i++) {//迴圈數=tr的個數
 				newRow();//填入資料前，新增一列空白列
 				

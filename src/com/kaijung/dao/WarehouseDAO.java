@@ -51,6 +51,23 @@ public class WarehouseDAO {
 		}
 		return warehouse.getName();
 	}
+
+	public boolean isExisted( int oid ){ //此庫位(專櫃)是否存在
+		EntityManager em = XPersistence.getManager();
+		Long count;
+		Boolean rtnVal = false;
+		Query query = null;
+		try {
+			query = em.createQuery("SELECT COUNT(*) FROM Warehouse o WHERE o.oid = :oid");
+			query.setParameter("oid", oid);
+			count = (Long) query.getSingleResult();
+			logger.debug("WarehouseDAO.isSaved: count: "+ count);
+			if( count > 0 ){ rtnVal = true; }
+		} catch (Exception e) {
+			logger.error("WarehouseDAO.isSaved: " + e);
+		}
+		return rtnVal;
+	}
 	
 	public boolean insert(OrderStoreD beanD){
 		XPersistence.getManager().persist( beanD );
