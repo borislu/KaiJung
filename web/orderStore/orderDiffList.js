@@ -46,9 +46,11 @@ function load(){//讀取訂單和對應的統計資料
 				var arrSize = 0;
 				for (var key in qtyarr){ // 尺寸數量
 	    			arrSize ++;
+				}
+				for (o=0; o<arrSize; o++){ // 訂貨尺寸數量
 					//alert('key: '+ key);
 	    			//alert( eval ( 'qtyobj.' + key ) );
-	    			$('#inp_' + i + '_' + ( arrSize +4 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 4 是要跳過 尺寸數量 之前的幾個欄位
+	    			$('#inp_' + i + '_' + ( o + arrSize*2 +5 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
 	    			  .val( eval ( 'qtyobj.' + key ) );
 				}
     			//dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );//需要知道 json 的 key 才能使用的方法，現已不用
