@@ -37,27 +37,42 @@ function load(){//讀取訂單和對應的統計資料
     			
     			var stockQty = eval( '('+ diff_set[i].stockQty +')' ); // 將 string 轉成 json object, 以取得 keys
 //alert( 'diff_set[i].constructor: '+ diff_set[i].constructor );
-				//alert( 'diff_set[i]: '+ diff_set[i].quantity );
 				//alert( typeof diff_set[i].quantity );
     			var orderQty0 = jQuery.parseJSON( diff_set[i].orderQty );//訂貨尺寸數量
 				//alert( 'orderQty0: '+ $.dump( orderQty0 ) );
 				var orderQty = eval( '('+ diff_set[i].orderQty +')' ); // 將 string 轉成 json object, 以取得 keys
 				//alert( 'orderQty: '+ $.dump( orderQty ) );
+				var sendQty = eval( '('+ diff_set[i].sendQty +')' ); // 將 string 轉成 json object, 以取得 keys
+//alert( 'diff_set[i]: stockQty: '+ diff_set[i].stockQty +', orderQty: '+ diff_set[i].orderQty + ', sendQty: ' + diff_set[i].sendQty );
 				
 				var arrSize = 0;
 				for (var key in orderQty){ // 計算尺寸數量總數
 	    			arrSize ++;
 				}
-				for (k=0; k<arrSize; k++){ // 庫存尺寸數量
+				
+				var k=0;
+				for (var key in stockQty){ // 庫存尺寸數量
+					k++;
 	    			$('#inp_' + i + '_' + ( k + 5 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
 	    			  .val( eval ( 'stockQty.' + key ) );
 				}
-				for (o=0; o<arrSize; o++){ // 訂貨尺寸數量
+				var o=0;
+				for (var key in orderQty){ // 訂貨尺寸數量
 					//alert('key: '+ key);
 	    			//alert( eval ( 'orderQty0.' + key ) );
+					o++;
 	    			$('#inp_' + i + '_' + ( o + arrSize*2 +5 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'orderQty0.' + key ) );
+	    			  .val( eval ( 'orderQty.' + key ) );
 				}
+				var s=0;
+				for (var key in sendQty){ // 出貨尺寸數量
+					//alert('key: '+ key);
+	    			//alert( eval ( 'orderQty0.' + key ) );
+					s++;
+	    			$('#inp_' + i + '_' + ( s + arrSize*3 +7 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
+	    			  .val( eval ( 'sendQty.' + key ) );
+				}
+				
     			//dwr.util.setValue( 'qsz24_'+ i , orderQty0.s24 );//需要知道 json 的 key 才能使用的方法，現已不用
     		    //小計
     		   var sum = 0;

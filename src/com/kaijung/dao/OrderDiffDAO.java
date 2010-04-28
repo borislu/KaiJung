@@ -38,9 +38,11 @@ public class OrderDiffDAO {
 		
 		Query query = XPersistence.getManager()
 		.createQuery(
-		"SELECT d, k"
-		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k" 
-		+" WHERE d.orderStore.oid = o.oid "
+		"SELECT d, k, sd"
+		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k, OrderSender s, OrderSenderD sd, OrderPickSend ops" 
+		+" WHERE d.orderStore.oid = o.oid"
+		+" AND ops.orderDid = d.oid"
+		+" AND ops.sendDid = sd.oid"
 		+ wareCond
 		+" AND d.item.oid = i.oid" 
 		+" AND d.item.oid = k.item.oid" 
@@ -80,6 +82,7 @@ public class OrderDiffDAO {
 			OrderStoreD orderD = (OrderStoreD) objAry[0];
 			OrderStore order = orderD.getOrderStore();
 			Stock stock = (Stock) objAry[1];
+			OrderSenderD senderD = (OrderSenderD) objAry[2];
 			
 			diff.setWareName( order.getWarehouse().getName() );
 			diff.setArticleno( orderD.getItem().getArticleno() );
@@ -87,6 +90,7 @@ public class OrderDiffDAO {
 			diff.setOrderQty( orderD.getQuantity() );
 			diff.setIsCustOrder( orderD.getIsCustOrder() );
 			diff.setStockQty( stock.getQuantity() ) ;
+			diff.setSendQty( senderD.getComfirmQty() );
 			list.add( diff );
 	    }
 
