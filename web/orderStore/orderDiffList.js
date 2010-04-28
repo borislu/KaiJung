@@ -35,25 +35,30 @@ function load(){//讀取訂單和對應的統計資料
     			$('#inp_' + i + '_3' ).val( diff_set[i].articleno ); //貨號
     			$('#inp_' + i + '_4' ).val( diff_set[i].colorName ); //顏色
     			
+    			var stockQty = eval( '('+ diff_set[i].stockQty +')' ); // 將 string 轉成 json object, 以取得 keys
 //alert( 'diff_set[i].constructor: '+ diff_set[i].constructor );
 				//alert( 'diff_set[i]: '+ diff_set[i].quantity );
 				//alert( typeof diff_set[i].quantity );
-    			var qtyobj = jQuery.parseJSON( diff_set[i].orderQty );
-				//alert( 'qtyobj: '+ $.dump( qtyobj ) );
-				var qtyarr = eval( '('+ diff_set[i].orderQty +')' ); // 將 string 轉成 json object, 以取得 keys
-				//alert( 'qtyarr: '+ $.dump( qtyarr ) );
+    			var orderQty0 = jQuery.parseJSON( diff_set[i].orderQty );//訂貨尺寸數量
+				//alert( 'orderQty0: '+ $.dump( orderQty0 ) );
+				var orderQty = eval( '('+ diff_set[i].orderQty +')' ); // 將 string 轉成 json object, 以取得 keys
+				//alert( 'orderQty: '+ $.dump( orderQty ) );
 				
 				var arrSize = 0;
-				for (var key in qtyarr){ // 尺寸數量
+				for (var key in orderQty){ // 計算尺寸數量總數
 	    			arrSize ++;
+				}
+				for (k=0; k<arrSize; k++){ // 庫存尺寸數量
+	    			$('#inp_' + i + '_' + ( k + 5 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
+	    			  .val( eval ( 'stockQty.' + key ) );
 				}
 				for (o=0; o<arrSize; o++){ // 訂貨尺寸數量
 					//alert('key: '+ key);
-	    			//alert( eval ( 'qtyobj.' + key ) );
+	    			//alert( eval ( 'orderQty0.' + key ) );
 	    			$('#inp_' + i + '_' + ( o + arrSize*2 +5 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'qtyobj.' + key ) );
+	    			  .val( eval ( 'orderQty0.' + key ) );
 				}
-    			//dwr.util.setValue( 'qsz24_'+ i , qtyobj.s24 );//需要知道 json 的 key 才能使用的方法，現已不用
+    			//dwr.util.setValue( 'qsz24_'+ i , orderQty0.s24 );//需要知道 json 的 key 才能使用的方法，現已不用
     		    //小計
     		   var sum = 0;
     		   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是庫位尺寸及數量，i是列索引

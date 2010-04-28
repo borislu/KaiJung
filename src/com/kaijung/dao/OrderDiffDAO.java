@@ -31,43 +31,80 @@ public class OrderDiffDAO {
 		String wareCond = null;  
 		if( new WarehouseDAO().isExisted( wareid ) ){
 			isExisted = true;
-			wareCond = " AND o.wareId = w.oid = :wareid "; // 若庫位(專櫃)存在才加條件，若不存在則不分專櫃全選
+			wareCond = " AND o.warehouse.oid = w.oid = :wareid AND k.warehouse.oid = :wareid"; // 若庫位(專櫃)存在才加條件，若不存在則不分專櫃全選
 		}else{
-			wareCond = " AND o.wareId = w.oid "; // 若庫位(專櫃)不存在，不分專櫃全選
+			wareCond = " AND o.warehouse.oid = w.oid "; // 若庫位(專櫃)不存在，不分專櫃全選
 		}
 		
 		Query query = XPersistence.getManager()
-		.createNativeQuery("SELECT DISTINCT * "
-		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i" 
-		+" WHERE d.orderStore_oid = o.oid "
+		.createQuery(
+		"SELECT d, k"
+		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k" 
+		+" WHERE d.orderStore.oid = o.oid "
 		+ wareCond
-		+" AND d.itemid = i.oid" 
-		, "detailsAndOrder"); //
+		+" AND d.item.oid = i.oid" 
+		+" AND d.item.oid = k.item.oid" 
+		); //
 		if( isExisted ){
 			query.setParameter("wareid", wareid );
 		}
 		/*
-		SELECT DISTINCT * 
-		FROM OrderStore o, OrderStoreD d, Warehouse w, Item i 
-		WHERE d.orderStore_oid = o.oid 
-		AND o.wareId = w.oid = 1 
-		AND d.itemid = i.oid 
+		.createNativeQuery(
+		"SELECT o.oid"
+		+", o.remark, o.readCode, o.wareId, o.createTime, o.createBy, o.modifyTime, o.modifyBy"
+		+", d.itemid, d.quantity, d.isCustOrder, d.orderStore_oid "
+		+", k.itemid, k.quantity, k.wareId "
+		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k" 
+		+" WHERE d.orderStore_oid = o.oid "
+		+ wareCond
+		+" AND d.itemid = i.oid" 
+		+" AND d.itemid = k.itemid" 
+		, "detailsAndOrder"); //
+
+			SELECT DISTINCT * 
+			FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k
+			WHERE d.orderStore_oid = o.oid 
+			AND o.wareId = w.oid = 1 
+			AND d.itemid = i.oid 
+			AND d.itemid = k.itemid
+			AND k.wareId = 1 
 		 */
 		
-		List <Object[]> objAryList = query.getResultList();
+		List <Object[]> orderDList = query.getResultList();
+		logger.debug( "OrderDiffDAO.getOrderDiff: orderList size: " + orderDList.size() );
 
-		for (Object[] objAry : objAryList) {
+		for (Object[] objAry : orderDList) {
+			logger.debug( "OrderDiffDAO.getOrderDiff: objAry length: " + objAry.length );
 			OrderDiffBean diff = new OrderDiffBean();
 			
-			OrderStore order = (OrderStore) objAry[0];
-			OrderStoreD orderD = (OrderStoreD) objAry[1];
+			OrderStoreD orderD = (OrderStoreD) objAry[0];
+			OrderStore order = orderD.getOrderStore();
+			Stock stock = (Stock) objAry[1];
 			
 			diff.setWareName( order.getWarehouse().getName() );
 			diff.setArticleno( orderD.getItem().getArticleno() );
 			diff.setColorName( orderD.getItem().getColor().getSname() );
 			diff.setOrderQty( orderD.getQuantity() );
+			diff.setIsCustOrder( orderD.getIsCustOrder() );
+			diff.setStockQty( stock.getQuantity() ) ;
 			list.add( diff );
-		}
+	    }
+
+//		for (Object[] objAry : orderList) {
+//			logger.debug( "OrderDiffDAO.getOrderDiff: objAry length: " + objAry.length );
+//			OrderDiffBean diff = new OrderDiffBean();
+//			
+//			OrderStore order = (OrderStore) objAry[0];
+//			OrderStoreD orderD = (OrderStoreD) objAry[1];
+//			Stock stock = (Stock) objAry[2];
+//			
+//			diff.setWareName( order.getWarehouse().getName() );
+//			diff.setArticleno( orderD.getItem().getArticleno() );
+//			diff.setColorName( orderD.getItem().getColor().getSname() );
+//			diff.setStockQty( stock.getQuantity() ) ;
+//			diff.setOrderQty( orderD.getQuantity() );
+//			list.add( diff );
+//		}
 		return list;
 	}
 

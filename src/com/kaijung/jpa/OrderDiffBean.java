@@ -23,7 +23,7 @@ public class OrderDiffBean implements Serializable {
 	private String stockQty; // 庫位尺寸及數量(json)
 	private String salesQty; // 銷售速度尺寸及數量(json)
 	private String orderQty; // 訂貨尺寸及數量(json)
-	private int custOrderQty; //客訂數量
+	private String isCustOrder; //是否客訂
 	private String sendQty; // 出貨尺寸及數量(json)
 	private String placeQty; // 庫架尺寸及數量(json)
 	private String markQty; // 備貨尺寸及數量(json)
@@ -69,12 +69,6 @@ public class OrderDiffBean implements Serializable {
 	}
 	public void setOrderQty(String orderQty) {
 		this.orderQty = orderQty;
-	}
-	public int getCustOrderQty() {
-		return custOrderQty;
-	}
-	public void setCustOrderQty(int custOrderQty) {
-		this.custOrderQty = custOrderQty;
 	}
 	public String getSendQty() {
 		return sendQty;
@@ -129,5 +123,11 @@ public class OrderDiffBean implements Serializable {
 	}
 	public void setStoreOrderRank(int storeOrderRank) {
 		this.storeOrderRank = storeOrderRank;
+	}
+	public String getIsCustOrder() {
+		return isCustOrder;
+	}
+	public void setIsCustOrder(String isCustOrder) {
+		this.isCustOrder = isCustOrder;
 	}
 }

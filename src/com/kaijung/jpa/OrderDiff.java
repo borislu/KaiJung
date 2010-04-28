@@ -16,8 +16,11 @@ import java.util.*;
  */
 @SqlResultSetMapping(name="detailsAndOrder", 
 	entities={
-		@EntityResult ( entityClass = OrderStore.class), 
-		@EntityResult ( entityClass = OrderStoreD.class)
+//		@EntityResult ( entityClass = OrderStore.class) 
+//		,@EntityResult ( entityClass = OrderStoreD.class)
+//		,@EntityResult ( entityClass = Warehouse.class)
+//		,@EntityResult ( entityClass = Item.class)
+//		,@EntityResult ( entityClass = Stock.class)
 	}
 )
 
@@ -37,11 +40,11 @@ public class OrderDiff implements Serializable {
 	@Id //@Hidden
 //	@TableGenerator(
 //	    name="SequenceGenerator", table="SequenceGen", 
-//	    pkColumnName="oid", valueColumnName="value", 
-//	    pkColumnValue="orderMark.oid", initialValue=1, allocationSize=1
+//	    pkColumnName="difid", valueColumnName="value", 
+//	    pkColumnValue="orderDiff.oid", initialValue=1, allocationSize=1
 //	)
 //	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
-	private String oid;
+	private int difid;
 
 	@DisplaySize(6) @Transient
 	public String getWare() { return ""; } // 專櫃，無資料庫對應
@@ -88,12 +91,12 @@ public class OrderDiff implements Serializable {
 	@DisplaySize(6) @Transient
 	public String getStoreOrderRank() { return ""; } // 專櫃訂貨排名，無資料庫對應
 
-	public String getOid() {
-		return oid;
+	public int getDifid() {
+		return difid;
 	}
 
-	public void setOid(String oid) {
-		this.oid = oid;
+	public void setDifid(int difid) {
+		this.difid = difid;
 	}
 
 }
