@@ -26,9 +26,9 @@ public class OrderMarkD implements Serializable {
 	private int oid;
 
 //	private String importDid;
-	@ManyToOne @DescriptionsList(descriptionProperties = "name")
-	@JoinColumn(name="importDid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
-	private ImportD importD;
+//	@ManyToOne @DescriptionsList(descriptionProperties = "name")
+//	@JoinColumn(name="importDid",referencedColumnName="oid")// name:本表格的fk，但物件內不用宣告；referencedColumnName:對應表格的pk
+//	private ImportD importD;
 
 //	private int itemid;
 	@ManyToOne @DescriptionsList(descriptionProperties = "name")
@@ -122,14 +122,6 @@ public class OrderMarkD implements Serializable {
 
 	public void setOid(int oid) {
 		this.oid = oid;
-	}
-
-	public ImportD getImportD() {
-		return importD;
-	}
-
-	public void setImportD(ImportD importD) {
-		this.importD = importD;
 	}
 
 	public String getPresetQty() {

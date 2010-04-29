@@ -38,14 +38,17 @@ public class OrderDiffDAO {
 		
 		Query query = XPersistence.getManager()
 		.createQuery(
-		"SELECT d, k, sd"
-		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k, OrderSender s, OrderSenderD sd, OrderPickSend ops" 
+		"SELECT d, k, sd, pd, md"
+		+" FROM OrderStore o, OrderStoreD d, Warehouse w, Item i, Stock k, OrderSender s, OrderSenderD sd, OrderPickSend ops"
+		+" ,OrderPlaceD pd, OrderMarkD md"
 		+" WHERE d.orderStore.oid = o.oid"
 		+" AND ops.orderDid = d.oid"
 		+" AND ops.sendDid = sd.oid"
 		+ wareCond
 		+" AND d.item.oid = i.oid" 
 		+" AND d.item.oid = k.item.oid" 
+		+" AND d.item.oid = pd.item.oid" 
+		+" AND d.item.oid = md.item.oid" 
 		); //
 		if( isExisted ){
 			query.setParameter("wareid", wareid );
@@ -83,14 +86,20 @@ public class OrderDiffDAO {
 			OrderStore order = orderD.getOrderStore();
 			Stock stock = (Stock) objAry[1];
 			OrderSenderD senderD = (OrderSenderD) objAry[2];
+			OrderPlaceD placeD = (OrderPlaceD) objAry[3];
+			OrderMarkD markD = (OrderMarkD) objAry[4];
+			
 			
 			diff.setWareName( order.getWarehouse().getName() );
 			diff.setArticleno( orderD.getItem().getArticleno() );
 			diff.setColorName( orderD.getItem().getColor().getSname() );
-			diff.setOrderQty( orderD.getQuantity() );
+			diff.setOrderQty( orderD.getQuantity() );//訂貨尺寸及數量
 			diff.setIsCustOrder( orderD.getIsCustOrder() );
-			diff.setStockQty( stock.getQuantity() ) ;
-			diff.setSendQty( senderD.getComfirmQty() );
+			diff.setStockQty( stock.getQuantity() ) ;//庫位尺寸及數量
+			diff.setSendQty( senderD.getComfirmQty() );//出貨尺寸及數量
+			diff.setPlaceQty( placeD.getRealQty() );//庫架尺寸及數量
+			diff.setMarkQty( markD.getRealQty() );//備貨尺寸及數量
+			diff.setPreMarkQty( markD.getPresetQty() );//待備貨尺寸及數量
 			list.add( diff );
 	    }
 

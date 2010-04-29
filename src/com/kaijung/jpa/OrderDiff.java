@@ -14,15 +14,15 @@ import java.util.*;
  * 訂貨差異分析(無對應資料庫表格)
  * 
  */
-@SqlResultSetMapping(name="detailsAndOrder", 
-	entities={
+//@SqlResultSetMapping(name="detailsAndOrder", 
+//	entities={
 //		@EntityResult ( entityClass = OrderStore.class) 
 //		,@EntityResult ( entityClass = OrderStoreD.class)
 //		,@EntityResult ( entityClass = Warehouse.class)
 //		,@EntityResult ( entityClass = Item.class)
 //		,@EntityResult ( entityClass = Stock.class)
-	}
-)
+//	}
+//)
 
 @Entity
 //@Views( {
@@ -32,7 +32,7 @@ import java.util.*;
 //})
 @Tab(properties="ware, articleno, color, 24, 26, 28, 30, 32, 24, 26, 28, 30, 32, 24, 26, 28, 30, 32, sum, isCustOrder" +
 	", 24, 26, 28, 30, 32, sum, 24, 26, 28, 30, 32, sum, 24, 26, 28, 30, 32, sum, 24, 26, 28, 30, 32, sum" +
-	", 24, 26, 28, 30, 32, sum, broken, salesRank, orderRank, storeSalesRank, storeOrderRank" 
+	", broken, salesRank, orderRank, storeSalesRank, storeOrderRank" 
 )
 public class OrderDiff implements Serializable {
 	private static final long serialVersionUID = 1L;
