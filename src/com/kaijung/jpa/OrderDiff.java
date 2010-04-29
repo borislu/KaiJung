@@ -2,13 +2,7 @@ package com.kaijung.jpa;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import org.openxava.annotations.*;
-
-import com.kaijung.calculators.*;
-
-import java.util.*;
-
 
 /**
  * 訂貨差異分析(無對應資料庫表格)
@@ -38,14 +32,11 @@ public class OrderDiff implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id //@Hidden
-//	@TableGenerator(
-//	    name="SequenceGenerator", table="SequenceGen", 
-//	    pkColumnName="difid", valueColumnName="value", 
-//	    pkColumnValue="orderDiff.oid", initialValue=1, allocationSize=1
-//	)
-//	@GeneratedValue(strategy = GenerationType.TABLE, generator="SequenceGenerator")
-	private int difid;
+	private String oid;
 
+	@DisplaySize(6) @Transient
+	public String getOid() { return ""; } // 識別碼，無資料庫對應
+	
 	@DisplaySize(6) @Transient
 	public String getWare() { return ""; } // 專櫃，無資料庫對應
 	
@@ -90,13 +81,5 @@ public class OrderDiff implements Serializable {
 
 	@DisplaySize(6) @Transient
 	public String getStoreOrderRank() { return ""; } // 專櫃訂貨排名，無資料庫對應
-
-	public int getDifid() {
-		return difid;
-	}
-
-	public void setDifid(int difid) {
-		this.difid = difid;
-	}
 
 }
