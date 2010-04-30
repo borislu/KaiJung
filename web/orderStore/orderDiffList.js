@@ -59,47 +59,72 @@ function load(){//讀取訂單和對應的統計資料
 	    			$('#inp_' + i + '_' + ( k + 4 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
 	    			  .val( eval ( 'stockQty.' + key ) );
 				}
-				var o=0;
+				var o=0, o_sum = 0;
 				for (var key in orderQty){ // 訂貨尺寸數量
 					//alert('key: '+ key);
 	    			//alert( eval ( 'orderQty0.' + key ) );
 					o++;
-	    			$('#inp_' + i + '_' + ( o + arrSize*2 +4 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'orderQty.' + key ) );
+					var qt = eval ( 'orderQty.' + key );
+	    			$('#inp_' + i + '_' + ( o + arrSize*2 +4 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, ( o + arrSize*2 +4 ) 是要跳過 尺寸數量 之前的幾個欄位
+	    			  .val( qt );
+	    			o_sum += parseInt ( qt );
 				}
-				var s=0;
+    		    //訂貨數量小計
+    			$('#inp_' + i + '_' + ( arrSize*3 +5 ) ).val( o_sum );
+				
+				var s=0, s_sum = 0;
 				for (var key in sendQty){ // 出貨尺寸數量
 					s++;
+					var qt = eval ( 'sendQty.' + key );
 	    			$('#inp_' + i + '_' + ( s + arrSize*3 +6 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'sendQty.' + key ) );
+	    			  .val( qt );
+	    			s_sum += parseInt ( qt );
 				}
-				var p=0;
+    		    //出貨數量小計
+    			$('#inp_' + i + '_' + ( arrSize*4 +7 ) ).val( s_sum );
+    			
+				var p=0, p_sum = 0;
 				for (var key in placeQty){ // 庫架尺寸數量
 					p++;
+					var qt = eval ( 'placeQty.' + key );
 	    			$('#inp_' + i + '_' + ( p + arrSize*4 +7 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'placeQty.' + key ) );
+	    			  .val( qt );
+	    			p_sum += parseInt ( qt );
 				}
-				var m=0;
+    		    //庫架數量小計
+    			$('#inp_' + i + '_' + ( arrSize*5 +8 ) ).val( p_sum );
+    			
+				var m=0, m_sum = 0;
 				for (var key in markQty){ // 備貨尺寸數量
 					m++;
+					var qt = eval ( 'markQty.' + key );
 	    			$('#inp_' + i + '_' + ( m + arrSize*5 +8 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'markQty.' + key ) );
+	    			  .val( qt );
+	    			m_sum += parseInt ( qt );
 				}
-				var r=0;
+    		    //備貨數量小計
+    			$('#inp_' + i + '_' + ( arrSize*6 +9 ) ).val( m_sum );
+    			
+				var r=0, r_sum = 0;
 				for (var key in preMarkQty){ // 待備貨尺寸數量
 					r++;
+					var qt = eval ( 'preMarkQty.' + key );
 	    			$('#inp_' + i + '_' + ( r + arrSize*6 +9 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, 5 是要跳過 尺寸數量 之前的幾個欄位
-	    			  .val( eval ( 'preMarkQty.' + key ) );
+	    			  .val( qt );
+	    			r_sum += parseInt ( qt );
 				}
+    		    //待備貨數量小計
+    			$('#inp_' + i + '_' + ( arrSize*7 +10 ) ).val( r_sum );
+    			
 				
+				
+    			$('#inp_' + i + '_' + ( arrSize*7 +12 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, ( arrSize*7 +11 ) 是要跳過 尺寸數量 之前的欄位
+    			  .val( diff_set[i].salesRank ); // 銷售排名
+				
+    			$('#inp_' + i + '_' + ( arrSize*7 +13 ) ) //在 newRow() 23 行，動態產生的 input 已設定的 id, ( arrSize*7 +11 ) 是要跳過 尺寸數量 之前的欄位
+    			  .val( diff_set[i].orderRank ); // 訂貨排名
 				
     			//dwr.util.setValue( 'qsz24_'+ i , orderQty0.s24 );//需要知道 json 的 key 才能使用的方法，現已不用
-    		    //小計
-    		   var sum = 0;
-    		   $("input[id^=\"qsz\"][id$=\""+ i +"\"]").each( function(){//開頭qsz是庫位尺寸及數量，i是列索引
-    		       sum += parseInt ( $(this).val(), 10 );
-    		    });
-    		   $('#sum_'+ i).val( sum );
     		}//for
     });
 }

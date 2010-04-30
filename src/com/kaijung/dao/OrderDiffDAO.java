@@ -94,6 +94,8 @@ public class OrderDiffDAO {
 			diff.setArticleno( orderD.getItem().getArticleno() );
 			diff.setColorName( orderD.getItem().getColor().getSname() );
 			diff.setOrderQty( orderD.getQuantity() );//訂貨尺寸及數量
+			diff.setSalesRank( orderD.getItem().getSalesRank() );//銷售排名
+			diff.setOrderRank( orderD.getItem().getOrderRank() );//訂貨排名
 			diff.setIsCustOrder( orderD.getIsCustOrder() );
 			diff.setStockQty( stock.getQuantity() ) ;//庫位尺寸及數量
 			diff.setSendQty( senderD.getComfirmQty() );//出貨尺寸及數量

@@ -119,7 +119,7 @@ public class Item implements Serializable {
 
 	private int salestypeid;
 
-    @Temporal( TemporalType.TIMESTAMP)
+   @Temporal( TemporalType.TIMESTAMP)
 	private Date sdate;
 
 	private String shortdesc;
@@ -152,8 +152,13 @@ public class Item implements Serializable {
 	private String vendor;
 
 	private String vendoritemno;
+	
+	private int salesRank;
+	
+	private int orderRank;
+	
 
-    public Item() {
+   public Item() {
     }
 
 	public int getOid() {
@@ -562,6 +567,22 @@ public class Item implements Serializable {
 
 	public void setItemUnit(ItemUnit itemUnit) {
 		this.itemUnit = itemUnit;
+	}
+
+	public int getSalesRank() {
+		return salesRank;
+	}
+
+	public void setSalesRank(int salesRank) {
+		this.salesRank = salesRank;
+	}
+
+	public int getOrderRank() {
+		return orderRank;
+	}
+
+	public void setOrderRank(int orderRank) {
+		this.orderRank = orderRank;
 	}
 
 }
